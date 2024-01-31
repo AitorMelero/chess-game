@@ -1,7 +1,13 @@
-export const Square: React.FC = () => {
+interface Props {
+  isWhite: boolean
+}
+
+export const Square: React.FC<Props> = ({ isWhite }) => {
+  const bgColor = `${isWhite ? 'bg-light-square' : 'bg-dark-square'}`
+
   return (
-    <h1 className="text-3xl font-bold underline">
+    <div className={bgColor}>
       Square
-    </h1>
+    </div>
   )
 }
