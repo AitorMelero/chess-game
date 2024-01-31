@@ -4,7 +4,6 @@ const App = (): JSX.Element => {
   return (
     <>
       <Square isWhite={false} />
-      <Square isWhite={true} />
     </>
   )
 }
