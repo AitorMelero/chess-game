@@ -8,7 +8,8 @@ export default {
     extend: {
       colors: {
         'dark-square': '#779952',
-        'light-square': '#edeed1'
+        'light-square': '#edeed1',
+        'selected-square': '#ffff33'
       }
     },
   },
