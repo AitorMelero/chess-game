@@ -14,7 +14,6 @@ export const Square: React.FC<Props> = ({ xPosition, yPosition }) => {
   const isPossibleMove = false
   const bgSelectedColor = `bg-selected-square ${isSelected ? 'bg-opacity-60' : 'bg-opacity-0'}`
   const bgPossibleMoveColor = `bg-black ${isPossibleMove ? 'bg-opacity-20' : 'bg-opacity-0'}`
-  const sizeDelete = ' w-24 h-24'
 
   useEffect(() => {
     const hasNumberCoordinate = xPosition === 1
@@ -36,7 +35,7 @@ export const Square: React.FC<Props> = ({ xPosition, yPosition }) => {
   }, [])
 
   return (
-    <div className={bgColor + sizeDelete + ' relative'}>
+    <div className={bgColor + ' relative'}>
       <p className={coordinateColor + ' absolute top-1 left-2 font-semibold text-xl'}>
         {number}
       </p>

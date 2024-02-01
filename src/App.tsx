@@ -1,9 +1,11 @@
-import { Square } from './components/Square'
+import { ChessBoard } from './components/ChessBoard'
 
 const App = (): JSX.Element => {
   return (
     <>
-      <Square xPosition={1} yPosition={1} />
+      <main className='flex justify-center items-center'>
+        <ChessBoard />
+      </main>
     </>
   )
 }
