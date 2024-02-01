@@ -5,7 +5,7 @@ export const ChessBoard: React.FC = () => {
   const { squarePositions } = useSquarePositions()
 
   return (
-    <div className='grid grid-cols-8 w-1/2 h-[66vh]'>
+    <div className='grid grid-cols-8 w-[45vw] h-[45vw]'>
       {
         squarePositions.map(({ xPosition, yPosition }) => (
           <Square key={xPosition.toString() + yPosition.toString()} xPosition={xPosition} yPosition={yPosition} />
