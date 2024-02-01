@@ -1,11 +1,12 @@
 import { useSquare } from '../hooks/useSquare'
 
 interface Props {
+  children?: JSX.Element
   xPosition: number
   yPosition: number
 }
 
-export const Square: React.FC<Props> = ({ xPosition, yPosition }) => {
+export const Square: React.FC<Props> = ({ children, xPosition, yPosition }) => {
   const { bgColor, coordinateColor, numberPosition, letterPosition } = useSquare({ xPosition, yPosition })
   const isSelected = false
   const isPossibleMove = false
@@ -22,6 +23,7 @@ export const Square: React.FC<Props> = ({ xPosition, yPosition }) => {
       </p>
       <div className={bgSelectedColor + ' w-full h-full flex justify-center items-center'}>
         <div className={bgPossibleMoveColor + ' w-1/4 h-1/4 rounded-full'} />
+        {children}
       </div>
     </div>
   )
