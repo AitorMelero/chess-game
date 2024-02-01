@@ -36,10 +36,10 @@ export const Square: React.FC<Props> = ({ xPosition, yPosition }) => {
 
   return (
     <div className={bgColor + ' relative'}>
-      <p className={coordinateColor + ' absolute top-1 left-2 font-semibold text-xl'}>
+      <p className={coordinateColor + ' absolute top-1 left-2 font-semibold text-[8px] sm:text-sm lg:text-lg xl:text-xl'}>
         {number}
       </p>
-      <p className={coordinateColor + ' absolute bottom-1 right-2 font-semibold text-xl'}>
+      <p className={coordinateColor + ' absolute bottom-1 right-2 font-semibold text-[8px] sm:text-sm lg:text-lg xl:text-xl'}>
         {letter}
       </p>
       <div className={bgSelectedColor + ' w-full h-full flex justify-center items-center'}>
