@@ -22,17 +22,50 @@ export const Piece: React.FC<Props> = ({
     const selectedSquareElement = document.getElementById(
       `selected-square-${xPosition}-${yPosition}`
     )
+    const nextSquareButtonElement = document.getElementById(
+      `button-square-${xPosition}-${yPosition + 1}`
+    )
+    const moveAction = () => { movePiece(xPosition, yPosition, xPosition, yPosition + 1) }
 
-    if (possibleMoveElement !== null && selectedSquareElement !== null) {
+    if (possibleMoveElement !== null && selectedSquareElement !== null && nextSquareButtonElement !== null) {
       if (isSelected) {
         possibleMoveElement.className = 'not-possible-move-square'
         selectedSquareElement.className = 'not-selected-square'
+        nextSquareButtonElement.removeEventListener('click', moveAction, true)
       } else {
         possibleMoveElement.className = 'possible-move-square'
         selectedSquareElement.className = 'selected-square'
+        nextSquareButtonElement.addEventListener('click', moveAction, true)
       }
 
+      // setXPosition(xPosition)
+      // setYPosition(yPosition)
+
       setIsSelected(!isSelected)
+    }
+  }
+
+  const movePiece = (
+    currentXPosition: number,
+    currentYPosition: number,
+    newXPosition: number,
+    newYPosition: number
+  ): void => {
+    const currentSquareElement = document.getElementById(
+      `selected-square-${currentXPosition}-${currentYPosition}`
+    )
+    const nextSquareElement = document.getElementById(
+      `selected-square-${newXPosition}-${newYPosition}`
+    )
+
+    if (currentSquareElement !== null && nextSquareElement !== null) {
+      // const currentPieceElement = currentSquareElement.childNodes[1]
+      const currentPieceElement = currentSquareElement.lastChild
+      // currentSquareElement.removeChild(currentSquareElement.childNodes[1])
+      if (currentPieceElement !== null) {
+        currentSquareElement.removeChild(currentPieceElement)
+        nextSquareElement.appendChild(currentPieceElement)
+      }
     }
   }
 
