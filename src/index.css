@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer components {
+  .selected-square {
+    @apply bg-selected-square bg-opacity-60 w-full h-full flex justify-center items-center
+  }
+  .not-selected-square {
+    @apply bg-selected-square bg-opacity-0 w-full h-full flex justify-center items-center
+  }
   .possible-move-square {
     @apply bg-black bg-opacity-20 w-1/4 h-1/4 rounded-full z-10;
   }

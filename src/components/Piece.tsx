@@ -16,20 +16,24 @@ export const Piece: React.FC<Props> = ({
   const [isSelected, setIsSelected] = useState(false)
 
   const selectPossiblesMoves = (): void => {
-    const possibleMoveElementId = `possible-move-square-${xPosition}-${yPosition + 1}`
+    const possibleMoveElement = document.getElementById(
+      `possible-move-square-${xPosition}-${yPosition + 1}`
+    )
+    const selectedSquareElement = document.getElementById(
+      `selected-square-${xPosition}-${yPosition}`
+    )
 
-    const possibleMoveElement = document.getElementById(possibleMoveElementId)
-    if (possibleMoveElement !== null) {
+    if (possibleMoveElement !== null && selectedSquareElement !== null) {
       if (isSelected) {
         possibleMoveElement.className = 'not-possible-move-square'
+        selectedSquareElement.className = 'not-selected-square'
       } else {
         possibleMoveElement.className = 'possible-move-square'
+        selectedSquareElement.className = 'selected-square'
       }
 
       setIsSelected(!isSelected)
     }
-
-    console.log('Select Possibles Moves')
   }
 
   return (
