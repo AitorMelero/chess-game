@@ -49,39 +49,39 @@ export const useChessBoard = (): useSquarePositionsType => {
 
     if (isPawn(yPosition)) {
       if (isWhite) {
-        piece = <Piece pieceSVG={whitePawnImage} />
+        piece = <Piece pieceSVG={whitePawnImage} initXPosition={xPosition} initYPosition={yPosition} />
       } else {
-        piece = <Piece pieceSVG={blackPawnImage} />
+        piece = <Piece pieceSVG={blackPawnImage} initXPosition={xPosition} initYPosition={yPosition} />
       }
     } else if (isRook(xPosition, yPosition)) {
       if (isWhite) {
-        piece = <Piece pieceSVG={whiteRookImage} />
+        piece = <Piece pieceSVG={whiteRookImage} initXPosition={xPosition} initYPosition={yPosition} />
       } else {
-        piece = <Piece pieceSVG={blackRookImage} />
+        piece = <Piece pieceSVG={blackRookImage} initXPosition={xPosition} initYPosition={yPosition} />
       }
     } else if (isKnight(xPosition, yPosition)) {
       if (isWhite) {
-        piece = <Piece pieceSVG={whiteKnightImage} />
+        piece = <Piece pieceSVG={whiteKnightImage} initXPosition={xPosition} initYPosition={yPosition} />
       } else {
-        piece = <Piece pieceSVG={blackKnightImage} />
+        piece = <Piece pieceSVG={blackKnightImage} initXPosition={xPosition} initYPosition={yPosition} />
       }
     } else if (isBishop(xPosition, yPosition)) {
       if (isWhite) {
-        piece = <Piece pieceSVG={whiteBishopImage} />
+        piece = <Piece pieceSVG={whiteBishopImage} initXPosition={xPosition} initYPosition={yPosition} />
       } else {
-        piece = <Piece pieceSVG={blackBishopImage} />
+        piece = <Piece pieceSVG={blackBishopImage} initXPosition={xPosition} initYPosition={yPosition} />
       }
     } else if (isQueen(xPosition, yPosition)) {
       if (isWhite) {
-        piece = <Piece pieceSVG={whiteQueenImage} />
+        piece = <Piece pieceSVG={whiteQueenImage} initXPosition={xPosition} initYPosition={yPosition} />
       } else {
-        piece = <Piece pieceSVG={blackQueenImage} />
+        piece = <Piece pieceSVG={blackQueenImage} initXPosition={xPosition} initYPosition={yPosition} />
       }
     } else if (isKing(xPosition, yPosition)) {
       if (isWhite) {
-        piece = <Piece pieceSVG={whiteKingImage} />
+        piece = <Piece pieceSVG={whiteKingImage} initXPosition={xPosition} initYPosition={yPosition} />
       } else {
-        piece = <Piece pieceSVG={blackKingImage} />
+        piece = <Piece pieceSVG={blackKingImage} initXPosition={xPosition} initYPosition={yPosition} />
       }
     }
 
