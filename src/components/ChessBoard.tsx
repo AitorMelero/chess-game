@@ -1,12 +1,13 @@
 import { useSquarePositions } from '../hooks/useSquarePositions'
 import { Piece } from './Piece'
 import { Square } from './Square'
-import pawn from '../assets/pawn.svg'
-import rook from '../assets/rook.svg'
-import knight from '../assets/knight.svg'
-import bishop from '../assets/bishop.svg'
-import queen from '../assets/queen.svg'
-import king from '../assets/king.svg'
+// import pawn from '../assets/pawn.svg'
+import pawn from '../assets/wp.png'
+import rook from '../assets/wr.png'
+import knight from '../assets/wn.png'
+import bishop from '../assets/wb.png'
+import queen from '../assets/wq.png'
+import king from '../assets/wk.png'
 
 export const ChessBoard: React.FC = () => {
   const { squarePositions } = useSquarePositions()
