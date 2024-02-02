@@ -1,10 +1,16 @@
 import { Piece } from '../components/Piece'
-import pawn from '../assets/wp.png'
-import rook from '../assets/wr.png'
-import knight from '../assets/wn.png'
-import bishop from '../assets/wb.png'
-import queen from '../assets/wq.png'
-import king from '../assets/wk.png'
+import whitePawn from '../assets/wp.png'
+import whiteRook from '../assets/wr.png'
+import whiteKnight from '../assets/wn.png'
+import whiteBishop from '../assets/wb.png'
+import whiteQueen from '../assets/wq.png'
+import whiteKing from '../assets/wk.png'
+import blackPawn from '../assets/bp.png'
+import blackRook from '../assets/br.png'
+import blackKnight from '../assets/bn.png'
+import blackBishop from '../assets/bb.png'
+import blackQueen from '../assets/bq.png'
+import blackKing from '../assets/bk.png'
 
 interface squarePositionsType {
   xPosition: number
@@ -58,20 +64,45 @@ export const useChessBoard = (): useSquarePositionsType => {
     const isKing =
       (yPosition === 8 && xPosition === 5) ||
       (yPosition === 1 && xPosition === 5)
+    const isWhite = yPosition <= 2
     let piece = <></>
 
     if (isPawn) {
-      piece = <Piece pieceSVG={pawn} />
+      if (isWhite) {
+        piece = <Piece pieceSVG={whitePawn} />
+      } else {
+        piece = <Piece pieceSVG={blackPawn} />
+      }
     } else if (isRook) {
-      piece = <Piece pieceSVG={rook} />
+      if (isWhite) {
+        piece = <Piece pieceSVG={whiteRook} />
+      } else {
+        piece = <Piece pieceSVG={blackRook} />
+      }
     } else if (isKnight) {
-      piece = <Piece pieceSVG={knight} />
+      if (isWhite) {
+        piece = <Piece pieceSVG={whiteKnight} />
+      } else {
+        piece = <Piece pieceSVG={blackKnight} />
+      }
     } else if (isBishop) {
-      piece = <Piece pieceSVG={bishop} />
+      if (isWhite) {
+        piece = <Piece pieceSVG={whiteBishop} />
+      } else {
+        piece = <Piece pieceSVG={blackBishop} />
+      }
     } else if (isQueen) {
-      piece = <Piece pieceSVG={queen} />
+      if (isWhite) {
+        piece = <Piece pieceSVG={whiteQueen} />
+      } else {
+        piece = <Piece pieceSVG={blackQueen} />
+      }
     } else if (isKing) {
-      piece = <Piece pieceSVG={king} />
+      if (isWhite) {
+        piece = <Piece pieceSVG={whiteKing} />
+      } else {
+        piece = <Piece pieceSVG={blackKing} />
+      }
     }
 
     return piece

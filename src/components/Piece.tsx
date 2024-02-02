@@ -8,7 +8,7 @@ export const Piece: React.FC<Props> = ({ pieceSVG }) => {
       className='absolute w-full h-full flex justify-center items-center'
       onClick={() => { console.log('Click the piece!') }}
     >
-      <img src={pieceSVG} className='w-[80%] h-[80%]' alt="Chess Piece" />
+      <img src={pieceSVG} className='w-[85%] h-[85%]' alt="Chess Piece" />
     </button>
   )
 }
