@@ -4,7 +4,7 @@ import { type SquareProps, type PositionCoordinate } from '../types/Square'
 import { Square } from './Square'
 
 export const ChessBoard: React.FC = () => {
-  const { isPositionSelected, getPieceFromInitPosition } = useChessBoard()
+  const { isPositionSelected, isNextPossibleSquare, getPieceFromInitPosition } = useChessBoard()
   const [squares, setSquares] = useState<JSX.Element[]>([])
   const [selectedSquares, setSelectedSquares] = useState<PositionCoordinate[]>([])
   const [nextPossibleSquares, setNextPossibleSquares] = useState<PositionCoordinate[]>([])
@@ -13,12 +13,17 @@ export const ChessBoard: React.FC = () => {
     setSquares(updateSquares())
   }, [])
 
+  useEffect(() => {
+    setSquares(updateSquares())
+  }, [nextPossibleSquares])
+
   const updateSquares: ChessBoardType['updateSquares'] = () => {
     const squareElements: JSX.Element[] = []
 
     for (let y = 8; y > 0; y--) {
       for (let x = 1; x <= 8; x++) {
         const isSelected = isPositionSelected(x, y, selectedSquares)
+        const isPossibleNextSquare = isNextPossibleSquare(x, y, nextPossibleSquares)
         const piece = getPieceFromInitPosition(x, y)
         const square = (
           <Square
@@ -27,7 +32,7 @@ export const ChessBoard: React.FC = () => {
             yPosition={y}
             piece={piece}
             isSelected={isSelected}
-            isPossibleMove={false}
+            isPossibleMove={isPossibleNextSquare}
             paintNextPossibleSquares={paintNextPossibleSquares}
           />
         )
@@ -52,12 +57,12 @@ export const ChessBoard: React.FC = () => {
 
     setSelectedSquares([currentPosition])
     setNextPossibleSquares(possibleMovesCoordinate)
-    setSquares(updateSquares())
+    setSquares([])
   }
 
   return (
     <div className="grid grid-cols-8 w-[90vw] h-[90vw] lg:w-[70vw] lg:h-[70vw] xl:w-[45vw] xl:h-[45vw] min-w-80 min-h-80">
-      {squares}
+      {squares.map(square => (square))}
     </div>
   )
 }

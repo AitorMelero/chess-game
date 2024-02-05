@@ -22,6 +22,7 @@ interface useChessBoardType {
     xPosition: number,
     yPosition: number
   ) => JSX.Element | undefined
+  isNextPossibleSquare: (xPosition: number, yPosition: number, nextPossibleSquares: PositionCoordinate[]) => boolean
   isPositionSelected: (xPosition: number, yPosition: number, selectedSquares: PositionCoordinate[]) => boolean
 }
 
@@ -84,6 +85,17 @@ export const useChessBoard = (): useChessBoardType => {
     })
 
     return isSelected
+  }
+
+  const isNextPossibleSquare = (xPosition: number, yPosition: number, nextPossibleSquares: PositionCoordinate[]): boolean => {
+    let isNextPossibleSquare = false
+    nextPossibleSquares.forEach(square => {
+      if (square.xPosition === xPosition && square.yPosition === yPosition) {
+        isNextPossibleSquare = true
+      }
+    })
+
+    return isNextPossibleSquare
   }
 
   const getPieceFromInitPosition = (
@@ -181,6 +193,7 @@ export const useChessBoard = (): useChessBoardType => {
 
   return {
     getPieceFromInitPosition,
+    isNextPossibleSquare,
     isPositionSelected
   }
 }
