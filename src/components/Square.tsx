@@ -1,23 +1,30 @@
 import { useState } from 'react'
 import { useSquare } from '../hooks/useSquare'
+import { type SquareProps } from '../types/Square'
 
-interface Props {
-  xPosition: number
-  yPosition: number
-  piece?: JSX.Element
-  isSelected: boolean
-  isPossibleMove: boolean
-}
-
-export const Square: React.FC<Props> = ({ xPosition, yPosition, piece, isSelected: selected, isPossibleMove: possibleMove }) => {
+export const Square: React.FC<SquareProps> = ({
+  xPosition,
+  yPosition,
+  piece,
+  isSelected: selected,
+  isPossibleMove: possibleMove,
+  paintNextPossibleSquares
+}) => {
   const { bgColor, coordinateColor, numberPosition, letterPosition } = useSquare({ xPosition, yPosition })
   const [isDisabled, setIsDisabled] = useState(piece === undefined)
   const [isSelected, setIsSelected] = useState(selected)
   const [isPossibleMove, setIsPossibleMove] = useState(possibleMove)
 
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault()
+    paintNextPossibleSquares(xPosition, yPosition)
+    setIsSelected(!isSelected)
+  }
+
   return (
     <button
       disabled={isDisabled}
+      onClick={handleClick}
       className={bgColor + ' relative font-semibold text-[8px] sm:text-sm lg:text-lg xl:text-xl'}
     >
       <p className={coordinateColor + ' absolute top-1 left-2'}>

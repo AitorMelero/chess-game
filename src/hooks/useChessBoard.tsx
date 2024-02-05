@@ -14,21 +14,48 @@ import {
   whiteRookImage
 } from '../assets/Pieces/index'
 import { Square } from '../components/Square'
+import { type SquareProps, type PositionCoordinate } from '../types/Square'
+import { useEffect, useState } from 'react'
 
-interface useSquarePositionsType {
-  getSquares: () => JSX.Element[]
+interface useChessBoardType {
   getPieceFromInitPosition: (
     xPosition: number,
     yPosition: number
   ) => JSX.Element | undefined
+  isPositionSelected: (xPosition: number, yPosition: number, selectedSquares: PositionCoordinate[]) => boolean
 }
 
-export const useChessBoard = (): useSquarePositionsType => {
-  const getSquares = (): JSX.Element[] => {
+export const useChessBoard = (): useChessBoardType => {
+  const [squares, setSquares] = useState<JSX.Element[]>([])
+  const [selectedPositions, setSelectedPositions] = useState<PositionCoordinate[]>([])
+  const [nextPossibleSquares, setNextPossibleSquares] = useState<PositionCoordinate[]>([])
+
+  useEffect(() => {
+    // setSquares(updateSquares())
+  }, [selectedPositions])
+
+  const paintNextPossibleSquares: SquareProps['paintNextPossibleSquares'] = (currentXPosition, currentYPosition) => {
+    const currentPosition: PositionCoordinate = {
+      xPosition: currentXPosition,
+      yPosition: currentYPosition
+    }
+    const possibleMovesCoordinate: PositionCoordinate[] = [
+      {
+        xPosition: currentXPosition,
+        yPosition: currentYPosition + 1
+      }
+    ]
+
+    setSelectedPositions([currentPosition])
+    setNextPossibleSquares(possibleMovesCoordinate)
+  }
+
+  const updateSquares: useChessBoardType['updateSquares'] = (selectedSquares, nextPossibleSquares) => {
     const squareElements: JSX.Element[] = []
 
     for (let y = 8; y > 0; y--) {
       for (let x = 1; x <= 8; x++) {
+        const isSelected = isPositionSelected(x, y, selectedSquares)
         const piece = getPieceFromInitPosition(x, y)
         const square = (
           <Square
@@ -36,8 +63,9 @@ export const useChessBoard = (): useSquarePositionsType => {
             xPosition={x}
             yPosition={y}
             piece={piece}
-            isSelected={false}
+            isSelected={isSelected}
             isPossibleMove={false}
+            paintNextPossibleSquares={paintNextPossibleSquares}
           />
         )
         squareElements.push(square)
@@ -45,6 +73,17 @@ export const useChessBoard = (): useSquarePositionsType => {
     }
 
     return squareElements
+  }
+
+  const isPositionSelected = (xPosition: number, yPosition: number, selectedSquares: PositionCoordinate[]): boolean => {
+    let isSelected = false
+    selectedSquares.forEach(square => {
+      if (square.xPosition === xPosition && square.yPosition === yPosition) {
+        isSelected = true
+      }
+    })
+
+    return isSelected
   }
 
   const getPieceFromInitPosition = (
@@ -142,6 +181,6 @@ export const useChessBoard = (): useSquarePositionsType => {
 
   return {
     getPieceFromInitPosition,
-    getSquares
+    isPositionSelected
   }
 }
