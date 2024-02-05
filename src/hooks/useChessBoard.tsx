@@ -30,7 +30,16 @@ export const useChessBoard = (): useSquarePositionsType => {
     for (let y = 8; y > 0; y--) {
       for (let x = 1; x <= 8; x++) {
         const piece = getPieceFromInitPosition(x, y)
-        const square = <Square key={x + '-' + y} xPosition={x} yPosition={y} piece={piece} />
+        const square = (
+          <Square
+            key={x + '-' + y}
+            xPosition={x}
+            yPosition={y}
+            piece={piece}
+            isSelected={false}
+            isPossibleMove={false}
+          />
+        )
         squareElements.push(square)
       }
     }
@@ -91,34 +100,44 @@ export const useChessBoard = (): useSquarePositionsType => {
   }
 
   const isRook = (xPosition: number, yPosition: number): boolean => {
-    return (yPosition === 8 && xPosition === 1) ||
+    return (
+      (yPosition === 8 && xPosition === 1) ||
       (yPosition === 8 && xPosition === 8) ||
       (yPosition === 1 && xPosition === 1) ||
       (yPosition === 1 && xPosition === 8)
+    )
   }
 
   const isKnight = (xPosition: number, yPosition: number): boolean => {
-    return (yPosition === 8 && xPosition === 2) ||
+    return (
+      (yPosition === 8 && xPosition === 2) ||
       (yPosition === 8 && xPosition === 7) ||
       (yPosition === 1 && xPosition === 2) ||
       (yPosition === 1 && xPosition === 7)
+    )
   }
 
   const isBishop = (xPosition: number, yPosition: number): boolean => {
-    return (yPosition === 8 && xPosition === 3) ||
+    return (
+      (yPosition === 8 && xPosition === 3) ||
       (yPosition === 8 && xPosition === 6) ||
       (yPosition === 1 && xPosition === 3) ||
       (yPosition === 1 && xPosition === 6)
+    )
   }
 
   const isQueen = (xPosition: number, yPosition: number): boolean => {
-    return (yPosition === 8 && xPosition === 4) ||
+    return (
+      (yPosition === 8 && xPosition === 4) ||
       (yPosition === 1 && xPosition === 4)
+    )
   }
 
   const isKing = (xPosition: number, yPosition: number): boolean => {
-    return (yPosition === 8 && xPosition === 5) ||
+    return (
+      (yPosition === 8 && xPosition === 5) ||
       (yPosition === 1 && xPosition === 5)
+    )
   }
 
   return {

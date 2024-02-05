@@ -5,24 +5,29 @@ interface Props {
   xPosition: number
   yPosition: number
   piece?: JSX.Element
+  isSelected: boolean
+  isPossibleMove: boolean
 }
 
-export const Square: React.FC<Props> = ({ xPosition, yPosition, piece }) => {
+export const Square: React.FC<Props> = ({ xPosition, yPosition, piece, isSelected: selected, isPossibleMove: possibleMove }) => {
   const { bgColor, coordinateColor, numberPosition, letterPosition } = useSquare({ xPosition, yPosition })
   const [isDisabled, setIsDisabled] = useState(piece === undefined)
+  const [isSelected, setIsSelected] = useState(selected)
+  const [isPossibleMove, setIsPossibleMove] = useState(possibleMove)
 
   return (
-    <button disabled={isDisabled} id={`square-${xPosition}-${yPosition}`} className={bgColor + ' relative font-semibold text-[8px] sm:text-sm lg:text-lg xl:text-xl'}>
+    <button
+      disabled={isDisabled}
+      className={bgColor + ' relative font-semibold text-[8px] sm:text-sm lg:text-lg xl:text-xl'}
+    >
       <p className={coordinateColor + ' absolute top-1 left-2'}>
         {numberPosition}
       </p>
       <p className={coordinateColor + ' absolute bottom-1 right-2'}>
         {letterPosition}
       </p>
-      <div id={`selected-square-${xPosition}-${yPosition}`} className={'not-selected-square'}>
-        <div id={`button-square-${xPosition}-${yPosition}`} className={'not-selected-square'}>
-          <div id={`possible-move-square-${xPosition}-${yPosition}`} className={'not-possible-move-square'} />
-        </div>
+      <div className={`${isSelected ? 'selected-square' : 'not-selected-square'}`}>
+        <div className={`${isPossibleMove ? 'possible-move-square' : 'not-possible-move-square'}`} />
         {piece}
       </div>
     </button>
