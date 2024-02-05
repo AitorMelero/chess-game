@@ -13,14 +13,10 @@ import {
   whiteQueenImage,
   whiteRookImage
 } from '../assets/Pieces/index'
-
-interface squarePositionsType {
-  xPosition: number
-  yPosition: number
-}
+import { Square } from '../components/Square'
 
 interface useSquarePositionsType {
-  getSquarePositions: () => squarePositionsType[]
+  getSquares: () => JSX.Element[]
   getPieceFromInitPosition: (
     xPosition: number,
     yPosition: number
@@ -28,16 +24,18 @@ interface useSquarePositionsType {
 }
 
 export const useChessBoard = (): useSquarePositionsType => {
-  const getSquarePositions = (): squarePositionsType[] => {
-    const squarePositions: squarePositionsType[] = []
+  const getSquares = (): JSX.Element[] => {
+    const squareElements: JSX.Element[] = []
 
     for (let y = 8; y > 0; y--) {
       for (let x = 1; x <= 8; x++) {
-        squarePositions.push({ xPosition: x, yPosition: y })
+        const piece = getPieceFromInitPosition(x, y)
+        const square = <Square key={x + '-' + y} xPosition={x} yPosition={y} piece={piece} />
+        squareElements.push(square)
       }
     }
 
-    return squarePositions
+    return squareElements
   }
 
   const getPieceFromInitPosition = (
@@ -49,39 +47,39 @@ export const useChessBoard = (): useSquarePositionsType => {
 
     if (isPawn(yPosition)) {
       if (isWhite) {
-        piece = <Piece pieceSVG={whitePawnImage} initXPosition={xPosition} initYPosition={yPosition} />
+        piece = <Piece svgImage={whitePawnImage} />
       } else {
-        piece = <Piece pieceSVG={blackPawnImage} initXPosition={xPosition} initYPosition={yPosition} />
+        piece = <Piece svgImage={blackPawnImage} />
       }
     } else if (isRook(xPosition, yPosition)) {
       if (isWhite) {
-        piece = <Piece pieceSVG={whiteRookImage} initXPosition={xPosition} initYPosition={yPosition} />
+        piece = <Piece svgImage={whiteRookImage} />
       } else {
-        piece = <Piece pieceSVG={blackRookImage} initXPosition={xPosition} initYPosition={yPosition} />
+        piece = <Piece svgImage={blackRookImage} />
       }
     } else if (isKnight(xPosition, yPosition)) {
       if (isWhite) {
-        piece = <Piece pieceSVG={whiteKnightImage} initXPosition={xPosition} initYPosition={yPosition} />
+        piece = <Piece svgImage={whiteKnightImage} />
       } else {
-        piece = <Piece pieceSVG={blackKnightImage} initXPosition={xPosition} initYPosition={yPosition} />
+        piece = <Piece svgImage={blackKnightImage} />
       }
     } else if (isBishop(xPosition, yPosition)) {
       if (isWhite) {
-        piece = <Piece pieceSVG={whiteBishopImage} initXPosition={xPosition} initYPosition={yPosition} />
+        piece = <Piece svgImage={whiteBishopImage} />
       } else {
-        piece = <Piece pieceSVG={blackBishopImage} initXPosition={xPosition} initYPosition={yPosition} />
+        piece = <Piece svgImage={blackBishopImage} />
       }
     } else if (isQueen(xPosition, yPosition)) {
       if (isWhite) {
-        piece = <Piece pieceSVG={whiteQueenImage} initXPosition={xPosition} initYPosition={yPosition} />
+        piece = <Piece svgImage={whiteQueenImage} />
       } else {
-        piece = <Piece pieceSVG={blackQueenImage} initXPosition={xPosition} initYPosition={yPosition} />
+        piece = <Piece svgImage={blackQueenImage} />
       }
     } else if (isKing(xPosition, yPosition)) {
       if (isWhite) {
-        piece = <Piece pieceSVG={whiteKingImage} initXPosition={xPosition} initYPosition={yPosition} />
+        piece = <Piece svgImage={whiteKingImage} />
       } else {
-        piece = <Piece pieceSVG={blackKingImage} initXPosition={xPosition} initYPosition={yPosition} />
+        piece = <Piece svgImage={blackKingImage} />
       }
     }
 
@@ -125,6 +123,6 @@ export const useChessBoard = (): useSquarePositionsType => {
 
   return {
     getPieceFromInitPosition,
-    getSquarePositions
+    getSquares
   }
 }
