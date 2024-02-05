@@ -20,7 +20,7 @@ interface useSquarePositionsType {
   getPieceFromInitPosition: (
     xPosition: number,
     yPosition: number
-  ) => JSX.Element
+  ) => JSX.Element | undefined
 }
 
 export const useChessBoard = (): useSquarePositionsType => {
@@ -41,9 +41,9 @@ export const useChessBoard = (): useSquarePositionsType => {
   const getPieceFromInitPosition = (
     xPosition: number,
     yPosition: number
-  ): JSX.Element => {
+  ): JSX.Element | undefined => {
     const isWhite = yPosition <= 2
-    let piece = <></>
+    let piece: JSX.Element | undefined
 
     if (isPawn(yPosition)) {
       if (isWhite) {

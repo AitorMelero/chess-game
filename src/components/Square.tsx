@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useSquare } from '../hooks/useSquare'
 
 interface Props {
@@ -8,9 +9,10 @@ interface Props {
 
 export const Square: React.FC<Props> = ({ xPosition, yPosition, piece }) => {
   const { bgColor, coordinateColor, numberPosition, letterPosition } = useSquare({ xPosition, yPosition })
+  const [isDisabled, setIsDisabled] = useState(piece === undefined)
 
   return (
-    <div id={`square-${xPosition}-${yPosition}`} className={bgColor + ' relative font-semibold text-[8px] sm:text-sm lg:text-lg xl:text-xl'}>
+    <button disabled={isDisabled} id={`square-${xPosition}-${yPosition}`} className={bgColor + ' relative font-semibold text-[8px] sm:text-sm lg:text-lg xl:text-xl'}>
       <p className={coordinateColor + ' absolute top-1 left-2'}>
         {numberPosition}
       </p>
@@ -18,11 +20,11 @@ export const Square: React.FC<Props> = ({ xPosition, yPosition, piece }) => {
         {letterPosition}
       </p>
       <div id={`selected-square-${xPosition}-${yPosition}`} className={'not-selected-square'}>
-        <button id={`button-square-${xPosition}-${yPosition}`} className={'not-selected-square'}>
+        <div id={`button-square-${xPosition}-${yPosition}`} className={'not-selected-square'}>
           <div id={`possible-move-square-${xPosition}-${yPosition}`} className={'not-possible-move-square'} />
-        </button>
+        </div>
         {piece}
       </div>
-    </div>
+    </button>
   )
 }
