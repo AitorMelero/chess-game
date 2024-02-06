@@ -1,11 +1,6 @@
-interface UseSquare {
-  bgColor: string
-  coordinateColor: string
-  numberPosition: string
-  letterPosition: string
-}
+import { type UseSquare } from '../types/Square'
 
-export const useSquare = ({ xPosition, yPosition }: { xPosition: number, yPosition: number }): UseSquare => {
+export const useSquare = (xPosition: number, yPosition: number): UseSquare => {
   const getBgColor = (): string => {
     const isBlack = (xPosition + yPosition) % 2 === 0
     let bgColor = 'bg-light-square'
