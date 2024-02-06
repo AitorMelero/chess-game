@@ -32,7 +32,7 @@ export abstract class PieceModel implements PieceModelType {
         }
       }
     } catch (error) {
-      console.log('Paint In Square Error')
+      console.log('Piece Paint In Square Error')
     }
   }
 
@@ -46,7 +46,7 @@ export abstract class PieceModel implements PieceModelType {
         }
       }
     } catch (error) {
-      console.log('Unpaint In Square Error')
+      console.log('Piece Unpaint In Square Error')
     }
   }
 }
