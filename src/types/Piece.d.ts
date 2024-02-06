@@ -1,8 +1,7 @@
-import { type PlayerModelType } from './Player'
 import { type SquareModelType } from './Square'
 
 export interface PieceModelType {
-  get player(): PlayerModelType
+  get isWhite(): boolean
   get image(): string
   get square(): SquareModelType | undefined
   set square(square: SquareModelType | undefined): void

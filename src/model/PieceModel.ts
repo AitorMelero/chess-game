@@ -1,20 +1,19 @@
 import { type PieceModelType } from '../types/Piece'
-import { type PlayerModelType } from '../types/Player'
 import { type SquareModelType } from '../types/Square'
 
 export abstract class PieceModel implements PieceModelType {
-  readonly #player: PlayerModelType
+  readonly #isWhite: boolean
   readonly #image: string
   #square: SquareModelType | undefined
 
-  constructor (image: string, player: PlayerModelType) {
-    this.#player = player
+  constructor (image: string, isWhite: boolean) {
+    this.#isWhite = isWhite
     this.#image = image
     this.#square = undefined
   }
 
-  get player (): PlayerModelType {
-    return this.#player
+  get isWhite (): boolean {
+    return this.#isWhite
   }
 
   get image (): string {

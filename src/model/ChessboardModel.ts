@@ -16,34 +16,53 @@ export class ChessboardModel implements ChessboardModelType {
   constructor () {
     this.#players = [new PlayerModel(true), new PlayerModel(false)]
     this.#pieces = []
-    this.#squares = this.getInitSquares()
+    this.#squares = []
     this.#possibleNextSquares = []
     this.#currentPiece = null
+    this.createChessboard()
   }
 
-  private getInitSquares (): SquareModelType[] {
+  private createChessboard (): void {
+    this.createSquares()
+    this.createPieces()
+  }
+
+  private createSquares (): void {
     const CHESSBOARD_LEN = 8
-    const squares: SquareModelType[] = []
 
     // Create squares from left top to right bottom
     for (let y = CHESSBOARD_LEN; y > 0; y--) {
       for (let x = 1; x <= CHESSBOARD_LEN; x++) {
         const newSquare = new SquareModel(x, y)
-        squares.push(newSquare)
-        // Delete: test white pawn
-        if (y === 2) {
-          const playerWhite = this.#players.find(player => player.isWhite)
-          if (playerWhite !== undefined) {
-            const newWhitePawn = new PawnModel(playerWhite)
-            newWhitePawn.square = newSquare
-            newWhitePawn.paintInSquare()
-            this.#pieces.push(newWhitePawn)
-          }
-        }
+        this.#squares.push(newSquare)
       }
     }
+  }
 
-    return squares
+  private createPieces (): void {
+    this.createPawns()
+  }
+
+  private createPawns (): void {
+    const WHITE_PAWNS_Y_POSITION = 2
+    const BLACK_PAWNS_Y_POSITION = 7
+    const isWhite = true
+
+    // Create white pawns
+    this.#squares.filter(square => square.yPosition === WHITE_PAWNS_Y_POSITION).forEach(square => {
+      const newWhitePawn = new PawnModel(isWhite)
+      newWhitePawn.square = square
+      newWhitePawn.paintInSquare()
+      this.#pieces.push(newWhitePawn)
+    })
+
+    // Create black pawns
+    this.#squares.filter(square => square.yPosition === BLACK_PAWNS_Y_POSITION).forEach(square => {
+      const newWhitePawn = new PawnModel(!isWhite)
+      newWhitePawn.square = square
+      newWhitePawn.paintInSquare()
+      this.#pieces.push(newWhitePawn)
+    })
   }
 
   get players (): PlayerModelType[] {
