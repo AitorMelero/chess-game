@@ -22,7 +22,31 @@ export abstract class PieceModel implements PieceModelType {
     this.#square = square
   }
 
-  paintInSquare (): void {}
+  paintInSquare (): void {
+    try {
+      if (this.#square !== null) {
+        const squareElementId = `square-piece-${this.#square.xPosition}-${this.#square.yPosition}`
+        const squareElement = document.getElementById(squareElementId)
+        if (squareElement !== null) {
+          squareElement.outerHTML = `<img src={${this.#svgImage}} className="w-[85%] h-[85%]" alt="Chess Piece" />`
+        }
+      }
+    } catch (error) {
+      console.log('Paint In Square Error')
+    }
+  }
 
-  unpaintInSquare (): void {}
+  unpaintInSquare (): void {
+    try {
+      if (this.#square !== null) {
+        const squareElementId = `square-piece-${this.#square.xPosition}-${this.#square.yPosition}`
+        const squareElement = document.getElementById(squareElementId)
+        if (squareElement !== null) {
+          squareElement.querySelector('img')?.remove()
+        }
+      }
+    } catch (error) {
+      console.log('Unpaint In Square Error')
+    }
+  }
 }
