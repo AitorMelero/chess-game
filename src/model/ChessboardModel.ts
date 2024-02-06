@@ -1,6 +1,7 @@
 import { type ChessboardModelType } from '../types/Chessboard'
 import { type PieceModelType } from '../types/Piece'
 import { type SquareModelType } from '../types/Square'
+import { PawnModel } from './PawnModel'
 import { SquareModel } from './SquareModel'
 
 export class ChessboardModel implements ChessboardModelType {
@@ -10,10 +11,10 @@ export class ChessboardModel implements ChessboardModelType {
   readonly #pieces: PieceModelType[]
 
   constructor () {
+    this.#pieces = []
     this.#squares = this.getInitSquares()
     this.#possibleNextSquares = []
     this.#currentPiece = null
-    this.#pieces = []
   }
 
   private getInitSquares (): SquareModelType[] {
@@ -23,7 +24,14 @@ export class ChessboardModel implements ChessboardModelType {
     // Create squares from left top to right bottom
     for (let y = CHESSBOARD_LEN; y > 0; y--) {
       for (let x = 1; x <= CHESSBOARD_LEN; x++) {
-        squares.push(new SquareModel(x, y))
+        const newSquare = new SquareModel(x, y)
+        squares.push(newSquare)
+        // Delete: test white pawn
+        if (y === 2) {
+          const newWhitePawn = new PawnModel({ xPosition: x, yPosition: y })
+          newWhitePawn.square = newSquare
+          this.#pieces.push(newWhitePawn)
+        }
       }
     }
 

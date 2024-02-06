@@ -27,7 +27,7 @@ export interface UseSquare {
   letterPosition: string
 }
 
-// export interface PositionCoordinate {
-//   xPosition: number
-//   yPosition: number
-// }
+export interface SquarePosition {
+  xPosition: number
+  yPosition: number
+}

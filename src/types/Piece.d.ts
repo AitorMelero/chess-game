@@ -1,9 +1,10 @@
-import { type SquareModelType } from './Square'
+import { type SquarePosition, type SquareModelType } from './Square'
 
 export interface PieceModelType {
   get svgImage(): string
-  get square(): SquareModelType | null
-  set square(square: SquareModelType | null): void
+  get initPosition(): SquarePosition
+  get square(): SquareModelType | undefined
+  set square(square: SquareModelType | undefined): void
   paintInSquare: () => void
   unpaintInSquare: () => void
 }

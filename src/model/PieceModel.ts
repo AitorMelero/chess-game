@@ -1,34 +1,40 @@
 import { type PieceModelType } from '../types/Piece'
-import { type SquareModelType } from '../types/Square'
+import { type SquarePosition, type SquareModelType } from '../types/Square'
 
 export abstract class PieceModel implements PieceModelType {
   readonly #svgImage: string
-  #square: SquareModelType | null
+  readonly #initPosition: SquarePosition
+  #square: SquareModelType | undefined
 
-  constructor (svgImage: string) {
+  constructor (svgImage: string, initPosition: SquarePosition) {
     this.#svgImage = svgImage
-    this.#square = null
+    this.#initPosition = initPosition
+    this.#square = undefined
   }
 
   get svgImage (): string {
     return this.#svgImage
   }
 
-  get square (): SquareModelType | null {
+  get initPosition (): SquarePosition {
+    return this.#initPosition
+  }
+
+  get square (): SquareModelType | undefined {
     return this.#square
   }
 
-  set square (square: SquareModelType | null) {
+  set square (square: SquareModelType | undefined) {
     this.#square = square
   }
 
   paintInSquare (): void {
     try {
-      if (this.#square !== null) {
+      if (this.#square !== undefined) {
         const squareElementId = `square-piece-${this.#square.xPosition}-${this.#square.yPosition}`
         const squareElement = document.getElementById(squareElementId)
         if (squareElement !== null) {
-          squareElement.outerHTML = `<img src={${this.#svgImage}} className="w-[85%] h-[85%]" alt="Chess Piece" />`
+          squareElement.innerHTML = `<img src=${this.#svgImage} alt="Chess Piece" />`
         }
       }
     } catch (error) {
@@ -38,7 +44,7 @@ export abstract class PieceModel implements PieceModelType {
 
   unpaintInSquare (): void {
     try {
-      if (this.#square !== null) {
+      if (this.#square !== undefined) {
         const squareElementId = `square-piece-${this.#square.xPosition}-${this.#square.yPosition}`
         const squareElement = document.getElementById(squareElementId)
         if (squareElement !== null) {
