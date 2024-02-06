@@ -28,8 +28,7 @@ export class ChessboardModel implements ChessboardModelType {
         squares.push(newSquare)
         // Delete: test white pawn
         if (y === 2) {
-          const newWhitePawn = new PawnModel({ xPosition: x, yPosition: y })
-          newWhitePawn.square = newSquare
+          const newWhitePawn = new PawnModel(newSquare)
           this.#pieces.push(newWhitePawn)
         }
       }

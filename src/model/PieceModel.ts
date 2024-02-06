@@ -1,23 +1,17 @@
 import { type PieceModelType } from '../types/Piece'
-import { type SquarePosition, type SquareModelType } from '../types/Square'
+import { type SquareModelType } from '../types/Square'
 
 export abstract class PieceModel implements PieceModelType {
   readonly #svgImage: string
-  readonly #initPosition: SquarePosition
   #square: SquareModelType | undefined
 
-  constructor (svgImage: string, initPosition: SquarePosition) {
+  constructor (svgImage: string, square: SquareModelType) {
     this.#svgImage = svgImage
-    this.#initPosition = initPosition
-    this.#square = undefined
+    this.#square = square
   }
 
   get svgImage (): string {
     return this.#svgImage
-  }
-
-  get initPosition (): SquarePosition {
-    return this.#initPosition
   }
 
   get square (): SquareModelType | undefined {
