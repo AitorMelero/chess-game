@@ -30,35 +30,23 @@ export abstract class PieceModel implements PieceModelType {
 
   paintInSquare (): void {
     try {
-      if (this.#square !== undefined) {
-        const squarePieceElementId = `square-piece-${this.#square.xPosition}-${this.#square.yPosition}`
-        const squarePieceElement = document.getElementById(squarePieceElementId)
-        const squareElement = document.getElementById(this.#square.squareIdElement) as HTMLButtonElement
-        if (squarePieceElement !== null) {
-          squarePieceElement.innerHTML = `<img src=${this.#image} alt="Chess Piece" />`
-          // Enable square button
-          squareElement.disabled = false
-        }
+      if (this.square !== undefined && this.square.isPainted) {
+        this.square.paintPiece(this.image)
+        this.square.enableButton()
       }
     } catch (error) {
-      console.log('Piece Paint In Square Error')
+      console.error('Error: Piece Paint In Square\n', error)
     }
   }
 
   unpaintInSquare (): void {
     try {
-      if (this.#square !== undefined) {
-        const squarePieceElementId = `square-piece-${this.#square.xPosition}-${this.#square.yPosition}`
-        const squarePieceElement = document.getElementById(squarePieceElementId)
-        const squareElement = document.getElementById(this.#square.squareIdElement) as HTMLButtonElement
-        if (squarePieceElement !== null) {
-          squarePieceElement.querySelector('img')?.remove()
-          // Disabled square button
-          squareElement.disabled = true
-        }
+      if (this.square !== undefined && this.square.isPainted) {
+        this.square.unpaintPiece()
+        this.square.disableButton()
       }
     } catch (error) {
-      console.log('Piece Unpaint In Square Error')
+      console.error('Error: Piece Unpaint In Square\n', error)
     }
   }
 }

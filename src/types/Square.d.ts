@@ -10,14 +10,21 @@ export interface SquareModelType {
   get squarePossibleMoveIdElement(): string
   get piece(): PieceModelType | undefined
   set piece(piece: PieceModelType | undefined): void
+  get squarePieceIdElement(): string
+  get isPainted(): boolean
   paintSelected: () => void
   unpaintSelected: () => void
   paintPossibleMove: () => void
   unpaintPossibleMove: () => void
+  enableButton: () => void
+  disableButton: () => void
+  paintPiece: (imagePiece: string) => void
+  unpaintPiece: () => void
 }
 
 export interface SquareProps {
   squareModel: SquareModelType
+  handleClick: () => void
 }
 
 export interface UseSquare {

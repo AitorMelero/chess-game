@@ -10,6 +10,7 @@ export class SquareModel implements SquareModelType {
   #isPossibleMove: boolean
   readonly #squarePossibleMoveIdElement: string
   #piece: PieceModelType | undefined
+  readonly #squarePieceIdElement: string
 
   constructor (xPosition: number, yPosition: number) {
     this.#xPosition = xPosition
@@ -20,6 +21,7 @@ export class SquareModel implements SquareModelType {
     this.#isPossibleMove = false
     this.#squarePossibleMoveIdElement = `square-possible-move-${xPosition}-${yPosition}`
     this.#piece = undefined
+    this.#squarePieceIdElement = `square-piece-${xPosition}-${yPosition}`
   }
 
   get xPosition (): number {
@@ -58,59 +60,97 @@ export class SquareModel implements SquareModelType {
     this.#piece = piece
   }
 
+  get squarePieceIdElement (): string {
+    return this.#squarePieceIdElement
+  }
+
+  get isPainted (): boolean {
+    return document.getElementById(this.squareIdElement) !== null
+  }
+
   paintSelected (): void {
     try {
-      const squareSelectedElement = document.getElementById(this.#squareSelectedIdElement)
+      const squareSelectedElement = document.getElementById(this.squareSelectedIdElement)
       if (squareSelectedElement !== null) {
         squareSelectedElement.className = 'selected-square'
         this.#isSelected = true
       }
     } catch (error) {
-      console.log('Square Paint Selected Error')
+      console.log('Error: Square Paint Selected\n', error)
     }
   }
 
   unpaintSelected (): void {
     try {
-      const squareSelectedElement = document.getElementById(this.#squareSelectedIdElement)
+      const squareSelectedElement = document.getElementById(this.squareSelectedIdElement)
       if (squareSelectedElement !== null) {
         squareSelectedElement.className = 'not-selected-square'
         this.#isSelected = false
       }
     } catch (error) {
-      console.log('Square Unpaint Selected Error')
+      console.log('Error: Square Unpaint Selected\n', error)
     }
   }
 
   paintPossibleMove (): void {
     try {
-      const squareElement = document.getElementById(this.#squareIdElement) as HTMLButtonElement
-      const squarePossibleMoveElement = document.getElementById(this.#squarePossibleMoveIdElement)
-      if (squareElement !== null && squarePossibleMoveElement !== null) {
-        // Enable square button
-        squareElement.disabled = false
-        // Paint possible move
+      const squarePossibleMoveElement = document.getElementById(this.squarePossibleMoveIdElement)
+      if (squarePossibleMoveElement !== null) {
+        this.enableButton()
         squarePossibleMoveElement.className = 'possible-move-square'
         this.#isPossibleMove = true
       }
     } catch (error) {
-      console.log('Square Paint Possible Move Error')
+      console.log('Error: Square Paint Possible Move\n', error)
     }
   }
 
   unpaintPossibleMove (): void {
     try {
-      const squareElement = document.getElementById(this.#squareIdElement) as HTMLButtonElement
-      const squarePossibleMoveElement = document.getElementById(this.#squarePossibleMoveIdElement)
-      if (squareElement !== null && squarePossibleMoveElement !== null) {
-        // Disable (or not) square button
-        squareElement.disabled = this.#piece === null
-        // Unpaint possible move
+      const squarePossibleMoveElement = document.getElementById(this.squarePossibleMoveIdElement)
+      if (squarePossibleMoveElement !== null) {
+        this.disableButton()
         squarePossibleMoveElement.className = 'not-possible-move-square'
         this.#isPossibleMove = false
       }
     } catch (error) {
       console.log('Square Unpaint Possible Move Error')
+    }
+  }
+
+  enableButton (): void {
+    const squareElement = document.getElementById(this.squareIdElement) as HTMLButtonElement
+    if (squareElement !== null) {
+      squareElement.disabled = false
+    } else {
+      throw new Error('Square Enable Button')
+    }
+  }
+
+  disableButton (): void {
+    const squareElement = document.getElementById(this.squareIdElement) as HTMLButtonElement
+    if (squareElement !== null) {
+      squareElement.disabled = true
+    } else {
+      throw new Error('Square Disable Button')
+    }
+  }
+
+  paintPiece (imagePiece: string): void {
+    const squarePieceElement = document.getElementById(this.squarePieceIdElement)
+    if (squarePieceElement !== null) {
+      squarePieceElement.innerHTML = `<img src=${imagePiece} alt="Chess Piece" />`
+    } else {
+      throw new Error('Square Paint Piece')
+    }
+  }
+
+  unpaintPiece (): void {
+    const squarePieceElement = document.getElementById(this.squarePieceIdElement)
+    if (squarePieceElement !== null) {
+      squarePieceElement.querySelector('img')?.remove()
+    } else {
+      throw new Error('Square Unpaint Piece')
     }
   }
 }
