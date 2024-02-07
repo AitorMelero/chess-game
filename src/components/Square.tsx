@@ -11,7 +11,7 @@ export const Square: React.FC<SquareProps> = ({ squareModel }) => {
   return (
     <button
       id={squareModel.squareIdElement}
-      disabled={squareModel.piece === null}
+      disabled={squareModel.piece === undefined}
       onClick={handleClick}
       className={bgColor + ' relative font-semibold text-[8px] sm:text-sm lg:text-lg xl:text-xl'}
     >

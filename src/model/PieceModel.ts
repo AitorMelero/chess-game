@@ -31,10 +31,13 @@ export abstract class PieceModel implements PieceModelType {
   paintInSquare (): void {
     try {
       if (this.#square !== undefined) {
-        const squareElementId = `square-piece-${this.#square.xPosition}-${this.#square.yPosition}`
-        const squareElement = document.getElementById(squareElementId)
-        if (squareElement !== null) {
-          squareElement.innerHTML = `<img src=${this.#image} alt="Chess Piece" />`
+        const squarePieceElementId = `square-piece-${this.#square.xPosition}-${this.#square.yPosition}`
+        const squarePieceElement = document.getElementById(squarePieceElementId)
+        const squareElement = document.getElementById(this.#square.squareIdElement) as HTMLButtonElement
+        if (squarePieceElement !== null) {
+          squarePieceElement.innerHTML = `<img src=${this.#image} alt="Chess Piece" />`
+          // Enable square button
+          squareElement.disabled = false
         }
       }
     } catch (error) {
@@ -45,10 +48,13 @@ export abstract class PieceModel implements PieceModelType {
   unpaintInSquare (): void {
     try {
       if (this.#square !== undefined) {
-        const squareElementId = `square-piece-${this.#square.xPosition}-${this.#square.yPosition}`
-        const squareElement = document.getElementById(squareElementId)
-        if (squareElement !== null) {
-          squareElement.querySelector('img')?.remove()
+        const squarePieceElementId = `square-piece-${this.#square.xPosition}-${this.#square.yPosition}`
+        const squarePieceElement = document.getElementById(squarePieceElementId)
+        const squareElement = document.getElementById(this.#square.squareIdElement) as HTMLButtonElement
+        if (squarePieceElement !== null) {
+          squarePieceElement.querySelector('img')?.remove()
+          // Disabled square button
+          squareElement.disabled = true
         }
       }
     } catch (error) {
