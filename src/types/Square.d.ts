@@ -8,8 +8,8 @@ export interface SquareModelType {
   get squareSelectedIdElement(): string
   get isPossibleMove(): boolean
   get squarePossibleMoveIdElement(): string
-  get piece(): PieceModelType | null
-  set piece(piece: PieceModelType | null): void
+  get piece(): PieceModelType | undefined
+  set piece(piece: PieceModelType | undefined): void
   paintSelected: () => void
   unpaintSelected: () => void
   paintPossibleMove: () => void

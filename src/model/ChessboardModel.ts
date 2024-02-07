@@ -1,4 +1,4 @@
-import { blackBishopPositionFilter, blackKingPositionFilter, blackKnightPositionFilter, blackPawnPositionFilter, blackQueenPositionFilter, blackRookPositionFilter, filterPieces, whiteBishopPositionFilter, whiteKingPositionFilter, whiteKnightPositionFilter, whitePawnPositionFilter, whiteQueenPositionFilter, whiteRookPositionFilter } from '../helpers/PIeceFilters'
+import { blackBishopPositionFilter, blackKingPositionFilter, blackKnightPositionFilter, blackPawnPositionFilter, blackQueenPositionFilter, blackRookPositionFilter, filterPieces, whiteBishopPositionFilter, whiteKingPositionFilter, whiteKnightPositionFilter, whitePawnPositionFilter, whiteQueenPositionFilter, whiteRookPositionFilter } from '../helpers/PieceFilters'
 import { type ChessboardModelType } from '../types/Chessboard'
 import { type PieceModelType } from '../types/Piece'
 import { type PlayerModelType } from '../types/Player'
@@ -16,7 +16,7 @@ export class ChessboardModel implements ChessboardModelType {
   readonly #players: PlayerModelType[]
   readonly #squares: SquareModelType[]
   readonly #possibleNextSquares: SquareModelType[]
-  readonly #currentPiece: PieceModelType | null
+  readonly #currentPiece: PieceModelType | undefined
   readonly #pieces: PieceModelType[]
 
   constructor () {
@@ -24,7 +24,7 @@ export class ChessboardModel implements ChessboardModelType {
     this.#pieces = []
     this.#squares = []
     this.#possibleNextSquares = []
-    this.#currentPiece = null
+    this.#currentPiece = undefined
     this.createChessboard()
   }
 
@@ -127,7 +127,7 @@ export class ChessboardModel implements ChessboardModelType {
     return this.#possibleNextSquares
   }
 
-  get currentPiece (): PieceModelType | null {
+  get currentPiece (): PieceModelType | undefined {
     return this.#currentPiece
   }
 

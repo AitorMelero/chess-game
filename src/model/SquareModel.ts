@@ -9,7 +9,7 @@ export class SquareModel implements SquareModelType {
   readonly #squareSelectedIdElement: string
   #isPossibleMove: boolean
   readonly #squarePossibleMoveIdElement: string
-  #piece: PieceModelType | null
+  #piece: PieceModelType | undefined
 
   constructor (xPosition: number, yPosition: number) {
     this.#xPosition = xPosition
@@ -19,7 +19,7 @@ export class SquareModel implements SquareModelType {
     this.#squareSelectedIdElement = `square-selected-${xPosition}-${yPosition}`
     this.#isPossibleMove = false
     this.#squarePossibleMoveIdElement = `square-possible-move-${xPosition}-${yPosition}`
-    this.#piece = null
+    this.#piece = undefined
   }
 
   get xPosition (): number {
@@ -50,11 +50,11 @@ export class SquareModel implements SquareModelType {
     return this.#squarePossibleMoveIdElement
   }
 
-  get piece (): PieceModelType | null {
+  get piece (): PieceModelType | undefined {
     return this.#piece
   }
 
-  set piece (piece: PieceModelType | null) {
+  set piece (piece: PieceModelType | undefined) {
     this.#piece = piece
   }
 

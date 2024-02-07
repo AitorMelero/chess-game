@@ -6,7 +6,7 @@ export interface ChessboardModelType {
   get players(): PlayerModelType[]
   get squares(): SquareModelType[]
   get possibleNextSquares(): SquareModelType[]
-  get currentPiece(): PieceModelType | null
+  get currentPiece(): PieceModelType | undefined
   get pieces(): PieceModelType[]
 }
 
