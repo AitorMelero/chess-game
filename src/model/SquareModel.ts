@@ -1,7 +1,9 @@
+import { type ChessboardModelType } from '../types/Chessboard'
 import { type PieceModelType } from '../types/Piece'
 import { type SquareModelType } from '../types/Square'
 
 export class SquareModel implements SquareModelType {
+  readonly #chessboard: ChessboardModelType
   readonly #xPosition: number
   readonly #yPosition: number
   readonly #squareIdElement: string
@@ -12,7 +14,8 @@ export class SquareModel implements SquareModelType {
   #piece: PieceModelType | undefined
   readonly #squarePieceIdElement: string
 
-  constructor (xPosition: number, yPosition: number) {
+  constructor (chessboard: ChessboardModelType, xPosition: number, yPosition: number) {
+    this.#chessboard = chessboard
     this.#xPosition = xPosition
     this.#yPosition = yPosition
     this.#squareIdElement = `square-${xPosition}-${yPosition}`
@@ -22,6 +25,10 @@ export class SquareModel implements SquareModelType {
     this.#squarePossibleMoveIdElement = `square-possible-move-${xPosition}-${yPosition}`
     this.#piece = undefined
     this.#squarePieceIdElement = `square-piece-${xPosition}-${yPosition}`
+  }
+
+  get chessboard (): ChessboardModelType {
+    return this.#chessboard
   }
 
   get xPosition (): number {
@@ -122,6 +129,7 @@ export class SquareModel implements SquareModelType {
     const squareElement = document.getElementById(this.squareIdElement) as HTMLButtonElement
     if (squareElement !== null) {
       squareElement.disabled = false
+      squareElement.onclick = () => { this.chessboard.clickSquare(this) }
     } else {
       throw new Error('Square Enable Button')
     }
@@ -131,6 +139,7 @@ export class SquareModel implements SquareModelType {
     const squareElement = document.getElementById(this.squareIdElement) as HTMLButtonElement
     if (squareElement !== null) {
       squareElement.disabled = true
+      squareElement.removeAttribute('onclick')
     } else {
       throw new Error('Square Disable Button')
     }

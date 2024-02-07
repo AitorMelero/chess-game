@@ -1,6 +1,8 @@
+import { type ChessboardModelType } from './Chessboard'
 import { type PieceModelType } from './Piece'
 
 export interface SquareModelType {
+  get chessboard(): ChessboardModelType
   get xPosition(): number
   get yPosition(): number
   get squareIdElement(): string
@@ -24,7 +26,6 @@ export interface SquareModelType {
 
 export interface SquareProps {
   squareModel: SquareModelType
-  handleClick: () => void
 }
 
 export interface UseSquare {

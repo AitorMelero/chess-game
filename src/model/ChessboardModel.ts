@@ -39,7 +39,7 @@ export class ChessboardModel implements ChessboardModelType {
     // Create squares from left top to right bottom
     for (let y = CHESSBOARD_LEN; y > 0; y--) {
       for (let x = 1; x <= CHESSBOARD_LEN; x++) {
-        const newSquare = new SquareModel(x, y)
+        const newSquare = new SquareModel(this, x, y)
         this.squares.push(newSquare)
       }
     }

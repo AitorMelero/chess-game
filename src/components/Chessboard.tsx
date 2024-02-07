@@ -9,8 +9,7 @@ export const Chessboard: React.FC<ChessboardProps> = ({ chessboardModel }) => {
   // Load and paint the squares
   useEffect(() => {
     setSquares(chessboardModel.squares.map(square => {
-      const handleClick = (): void => { chessboardModel.clickSquare(square) }
-      const returnedSquare = <Square key={square.squareIdElement} squareModel={square} handleClick={handleClick} />
+      const returnedSquare = <Square key={square.squareIdElement} squareModel={square} />
       return returnedSquare
     }))
     setIsLoadingBoard(false)

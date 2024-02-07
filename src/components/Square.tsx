@@ -1,19 +1,14 @@
 import { useSquare } from '../hooks/useSquare'
 import { type SquareProps } from '../types/Square'
 
-export const Square: React.FC<SquareProps> = ({ squareModel, handleClick: clickFunction }) => {
-  const { bgColor, coordinateColor, numberPosition, letterPosition } = useSquare(squareModel.xPosition, squareModel.yPosition)
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
-    event.preventDefault()
-    clickFunction()
-  }
+export const Square: React.FC<SquareProps> = ({ squareModel }) => {
+  const { bgColor, coordinateColor, numberPosition, letterPosition } =
+    useSquare(squareModel.xPosition, squareModel.yPosition)
 
   return (
     <button
       id={squareModel.squareIdElement}
-      // disabled={squareModel.piece === undefined}
-      onClick={handleClick}
+      disabled={squareModel.piece === undefined}
       className={bgColor + ' relative font-semibold text-[8px] sm:text-sm lg:text-lg xl:text-xl'}
     >
       <p className={coordinateColor + ' absolute top-1 left-2'}>
