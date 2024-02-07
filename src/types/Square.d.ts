@@ -20,7 +20,7 @@ export interface SquareModelType {
   unpaintPossibleMove: () => void
   enableButton: () => void
   disableButton: () => void
-  paintPiece: (imagePiece: string) => void
+  paintPiece: (piece: PieceModelType) => void
   unpaintPiece: () => void
 }
 

@@ -17,7 +17,7 @@ export const Chessboard: React.FC<ChessboardProps> = ({ chessboardModel }) => {
 
   // Paint the pieces
   useEffect(() => {
-    chessboardModel.pieces.forEach(piece => { piece.paintInSquare() })
+    chessboardModel.createPieces()
   }, [isLoadingBoard])
 
   return (

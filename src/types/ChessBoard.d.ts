@@ -5,8 +5,9 @@ import { type SquareModelType } from './Square'
 export interface ChessboardModelType {
   get players(): PlayerModelType[]
   get squares(): SquareModelType[]
-  get currentPiece(): PieceModelType | undefined
   get pieces(): PieceModelType[]
+  get currentPiece(): PieceModelType | undefined
+  createPieces: () => void
   clickSquare: (squareClicked: SquareModelType) => void
 }
 

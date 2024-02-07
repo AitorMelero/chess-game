@@ -17,8 +17,8 @@ import {
 export class ChessboardModel implements ChessboardModelType {
   readonly #players: PlayerModelType[]
   readonly #squares: SquareModelType[]
-  readonly #currentPiece: PieceModelType | undefined
-  readonly #pieces: PieceModelType[]
+  #currentPiece: PieceModelType | undefined
+  #pieces: PieceModelType[]
 
   constructor () {
     this.#players = [new PlayerModel(true), new PlayerModel(false)]
@@ -30,7 +30,6 @@ export class ChessboardModel implements ChessboardModelType {
 
   private createChessboard (): void {
     this.createSquares()
-    this.createPieces()
   }
 
   private createSquares (): void {
@@ -45,8 +44,35 @@ export class ChessboardModel implements ChessboardModelType {
     }
   }
 
-  private createPieces (): void {
+  private paintPieceInSquare (
+    piece: PieceModelType,
+    square: SquareModelType
+  ): void {
+    piece.paintInSquare(square)
+    this.pieces.push(piece)
+  }
+
+  get players (): PlayerModelType[] {
+    return this.#players
+  }
+
+  get squares (): SquareModelType[] {
+    return this.#squares
+  }
+
+  get currentPiece (): PieceModelType | undefined {
+    return this.#currentPiece
+  }
+
+  get pieces (): PieceModelType[] {
+    return this.#pieces
+  }
+
+  createPieces (): void {
     const isWhite = true
+
+    // Init pieces
+    this.#pieces = []
 
     // Pawns
     PieceFilters.positionFilter(this.squares, (square) =>
@@ -133,35 +159,32 @@ export class ChessboardModel implements ChessboardModelType {
     })
   }
 
-  private paintPieceInSquare (
-    piece: PieceModelType,
-    square: SquareModelType
-  ): void {
-    piece.square = square
-    piece.paintInSquare()
-    this.pieces.push(piece)
-  }
-
-  get players (): PlayerModelType[] {
-    return this.#players
-  }
-
-  get squares (): SquareModelType[] {
-    return this.#squares
-  }
-
-  get currentPiece (): PieceModelType | undefined {
-    return this.#currentPiece
-  }
-
-  get pieces (): PieceModelType[] {
-    return this.#pieces
-  }
-
   clickSquare = (squareClicked: SquareModelType): void => {
-    const xSquare = squareClicked.xPosition
-    const ySquare = squareClicked.yPosition
+    // TODO: Unpaint previous selected square
+    if (this.#currentPiece !== undefined && this.#currentPiece.square !== undefined) {
+      this.unselectSquare(this.#currentPiece.square)
+    }
+    // TODO: Paint and unpaint selected square
+    if (squareClicked !== undefined) {
+      if (squareClicked.isSelected) {
+        this.unselectSquare(squareClicked)
+        this.#currentPiece = undefined
+      } else {
+        this.selectSquare(squareClicked)
+        this.#currentPiece = squareClicked.piece
+      }
+    }
+    // TODO: Save or unsave current piece
+    // TODO: Paint and unpaint next possible moves square
+  }
 
-    console.log('X: ', xSquare, ', Y: ', ySquare)
+  private selectSquare (squareSelected: SquareModelType): void {
+    // TODO: Paint selected square
+    squareSelected.paintSelected()
+  }
+
+  private unselectSquare (squareUnselected: SquareModelType): void {
+    // TODO: Unpaint selected square
+    squareUnselected.unpaintSelected()
   }
 }

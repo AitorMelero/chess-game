@@ -28,11 +28,12 @@ export abstract class PieceModel implements PieceModelType {
     this.#square = square
   }
 
-  paintInSquare (): void {
+  paintInSquare (square: SquareModelType): void {
     try {
-      if (this.square !== undefined && this.square.isPainted) {
-        this.square.paintPiece(this.image)
-        this.square.enableButton()
+      if (square !== undefined && square.isPainted) {
+        square.paintPiece(this)
+        square.enableButton()
+        this.square = square
       }
     } catch (error) {
       console.error('Error: Piece Paint In Square\n', error)

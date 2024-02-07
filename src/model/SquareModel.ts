@@ -145,10 +145,11 @@ export class SquareModel implements SquareModelType {
     }
   }
 
-  paintPiece (imagePiece: string): void {
+  paintPiece (piece: PieceModelType): void {
     const squarePieceElement = document.getElementById(this.squarePieceIdElement)
     if (squarePieceElement !== null) {
-      squarePieceElement.innerHTML = `<img src=${imagePiece} alt="Chess Piece" />`
+      squarePieceElement.innerHTML = `<img src=${piece.image} alt="Chess Piece" />`
+      this.piece = piece
     } else {
       throw new Error('Square Paint Piece')
     }
