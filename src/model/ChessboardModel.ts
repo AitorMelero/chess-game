@@ -3,14 +3,16 @@ import { type ChessboardModelType } from '../types/Chessboard'
 import { type PieceModelType } from '../types/Piece'
 import { type PlayerModelType } from '../types/Player'
 import { type SquareModelType } from '../types/Square'
-import { BishopModel } from './BishopModel'
-import { KingModel } from './KingModel'
-import { KnightModel } from './KnightModel'
-import { PawnModel } from './PawnModel'
-import { PlayerModel } from './PlayerModel'
-import { QueenModel } from './QueenModel'
-import { RookModel } from './RookModel'
-import { SquareModel } from './SquareModel'
+import {
+  BishopModel,
+  KingModel,
+  KnightModel,
+  PawnModel,
+  PlayerModel,
+  QueenModel,
+  RookModel,
+  SquareModel
+} from '.'
 
 export class ChessboardModel implements ChessboardModelType {
   readonly #players: PlayerModelType[]
