@@ -1,4 +1,4 @@
-import { blackBishopPositionFilter, blackKingPositionFilter, blackKnightPositionFilter, blackPawnPositionFilter, blackQueenPositionFilter, blackRookPositionFilter, filterPieces, whiteBishopPositionFilter, whiteKingPositionFilter, whiteKnightPositionFilter, whitePawnPositionFilter, whiteQueenPositionFilter, whiteRookPositionFilter } from '../helpers/PieceFilters'
+import { PieceFilters } from '../helpers'
 import { type ChessboardModelType } from '../types/Chessboard'
 import { type PieceModelType } from '../types/Piece'
 import { type PlayerModelType } from '../types/Player'
@@ -49,67 +49,94 @@ export class ChessboardModel implements ChessboardModelType {
     const isWhite = true
 
     // Pawns
-    filterPieces(this.#squares, square => whitePawnPositionFilter(square)).forEach(square => {
+    PieceFilters.positionFilter(this.#squares, (square) =>
+      PieceFilters.whitePawnPositionFilter(square)
+    ).forEach((square) => {
       const piece = new PawnModel(isWhite)
       this.paintPieceInSquare(piece, square)
     })
-    filterPieces(this.#squares, square => blackPawnPositionFilter(square)).forEach(square => {
+    PieceFilters.positionFilter(this.#squares, (square) =>
+      PieceFilters.blackPawnPositionFilter(square)
+    ).forEach((square) => {
       const piece = new PawnModel(!isWhite)
       this.paintPieceInSquare(piece, square)
     })
 
     // Rooks
-    filterPieces(this.#squares, square => whiteRookPositionFilter(square)).forEach(square => {
+    PieceFilters.positionFilter(this.#squares, (square) =>
+      PieceFilters.whiteRookPositionFilter(square)
+    ).forEach((square) => {
       const piece = new RookModel(isWhite)
       this.paintPieceInSquare(piece, square)
     })
-    filterPieces(this.#squares, square => blackRookPositionFilter(square)).forEach(square => {
+    PieceFilters.positionFilter(this.#squares, (square) =>
+      PieceFilters.blackRookPositionFilter(square)
+    ).forEach((square) => {
       const piece = new RookModel(!isWhite)
       this.paintPieceInSquare(piece, square)
     })
 
     // Knights
-    filterPieces(this.#squares, square => whiteKnightPositionFilter(square)).forEach(square => {
+    PieceFilters.positionFilter(this.#squares, (square) =>
+      PieceFilters.whiteKnightPositionFilter(square)
+    ).forEach((square) => {
       const piece = new KnightModel(isWhite)
       this.paintPieceInSquare(piece, square)
     })
-    filterPieces(this.#squares, square => blackKnightPositionFilter(square)).forEach(square => {
+    PieceFilters.positionFilter(this.#squares, (square) =>
+      PieceFilters.blackKnightPositionFilter(square)
+    ).forEach((square) => {
       const piece = new KnightModel(!isWhite)
       this.paintPieceInSquare(piece, square)
     })
 
     // Bishops
-    filterPieces(this.#squares, square => whiteBishopPositionFilter(square)).forEach(square => {
+    PieceFilters.positionFilter(this.#squares, (square) =>
+      PieceFilters.whiteBishopPositionFilter(square)
+    ).forEach((square) => {
       const piece = new BishopModel(isWhite)
       this.paintPieceInSquare(piece, square)
     })
-    filterPieces(this.#squares, square => blackBishopPositionFilter(square)).forEach(square => {
+    PieceFilters.positionFilter(this.#squares, (square) =>
+      PieceFilters.blackBishopPositionFilter(square)
+    ).forEach((square) => {
       const piece = new BishopModel(!isWhite)
       this.paintPieceInSquare(piece, square)
     })
 
     // Queens
-    filterPieces(this.#squares, square => whiteQueenPositionFilter(square)).forEach(square => {
+    PieceFilters.positionFilter(this.#squares, (square) =>
+      PieceFilters.whiteQueenPositionFilter(square)
+    ).forEach((square) => {
       const piece = new QueenModel(isWhite)
       this.paintPieceInSquare(piece, square)
     })
-    filterPieces(this.#squares, square => blackQueenPositionFilter(square)).forEach(square => {
+    PieceFilters.positionFilter(this.#squares, (square) =>
+      PieceFilters.blackQueenPositionFilter(square)
+    ).forEach((square) => {
       const piece = new QueenModel(!isWhite)
       this.paintPieceInSquare(piece, square)
     })
 
     // Kings
-    filterPieces(this.#squares, square => whiteKingPositionFilter(square)).forEach(square => {
+    PieceFilters.positionFilter(this.#squares, (square) =>
+      PieceFilters.whiteKingPositionFilter(square)
+    ).forEach((square) => {
       const piece = new KingModel(isWhite)
       this.paintPieceInSquare(piece, square)
     })
-    filterPieces(this.#squares, square => blackKingPositionFilter(square)).forEach(square => {
+    PieceFilters.positionFilter(this.#squares, (square) =>
+      PieceFilters.blackKingPositionFilter(square)
+    ).forEach((square) => {
       const piece = new KingModel(!isWhite)
       this.paintPieceInSquare(piece, square)
     })
   }
 
-  private paintPieceInSquare (piece: PieceModelType, square: SquareModelType): void {
+  private paintPieceInSquare (
+    piece: PieceModelType,
+    square: SquareModelType
+  ): void {
     piece.square = square
     piece.paintInSquare()
     this.#pieces.push(piece)
