@@ -6,6 +6,7 @@ export const Chessboard: React.FC<ChessboardProps> = ({ chessboardModel }) => {
   const [squares, setSquares] = useState<JSX.Element[]>([])
   const [isLoadingBoard, setIsLoadingBoard] = useState(true)
 
+  // Load and paint the squares
   useEffect(() => {
     setSquares(chessboardModel.squares.map(square => (
       <Square key={square.squareIdElement} squareModel={square}/>
@@ -13,6 +14,7 @@ export const Chessboard: React.FC<ChessboardProps> = ({ chessboardModel }) => {
     setIsLoadingBoard(false)
   }, [])
 
+  // Paint the pieces
   useEffect(() => {
     chessboardModel.pieces.forEach(piece => { piece.paintInSquare() })
   }, [isLoadingBoard])
