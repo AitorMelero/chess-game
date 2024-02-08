@@ -2,7 +2,7 @@ import { PieceFilters } from '../helpers'
 import { type ChessboardModelType } from '../types/Chessboard'
 import { type PieceModelType } from '../types/Piece'
 import { type PlayerModelType } from '../types/Player'
-import { type SquareModelType } from '../types/Square'
+import { type SquarePosition, type SquareModelType } from '../types/Square'
 import {
   BishopModel,
   KingModel,
@@ -101,6 +101,14 @@ export class ChessboardModel implements ChessboardModelType {
 
   get pieces (): PieceModelType[] {
     return this.#pieces
+  }
+
+  getSquareFromPosition (squarePosition: SquarePosition): SquareModelType | undefined {
+    return this.squares.find(
+      square =>
+        square.xPosition === squarePosition.xPosition &&
+        square.yPosition === squarePosition.yPosition
+    )
   }
 
   createPieces (): void {
