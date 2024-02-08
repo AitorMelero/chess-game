@@ -160,16 +160,19 @@ export class ChessboardModel implements ChessboardModelType {
   }
 
   clickSquare = (squareClicked: SquareModelType): void => {
-    // TODO: Paint and unpaint selected square
-    if (squareClicked !== undefined) {
-      if (squareClicked.isSelected) {
-        this.unselectSquare(squareClicked)
-        this.#currentPiece = undefined
-      } else {
-        // TODO: Unpaint previous selected square
-        if (this.#currentPiece !== undefined && this.#currentPiece.square !== undefined) {
-          this.unselectSquare(this.#currentPiece.square)
+    if (squareClicked.isSelected) {
+      this.unselectSquare(squareClicked)
+      this.#currentPiece = undefined
+    } else {
+      if (this.currentPiece?.square !== undefined) {
+        if (squareClicked.isPossibleMove) {
+          this.selectPossibleMoveSquare(squareClicked)
+        } else {
+          this.unselectSquare(this.currentPiece.square)
+          this.selectSquare(squareClicked)
+          this.#currentPiece = squareClicked.piece
         }
+      } else {
         this.selectSquare(squareClicked)
         this.#currentPiece = squareClicked.piece
       }
@@ -177,16 +180,22 @@ export class ChessboardModel implements ChessboardModelType {
   }
 
   private selectSquare (squareSelected: SquareModelType): void {
-    // TODO: Paint selected square
     squareSelected.paintSelected()
-    // TODO: Paint next possible moves square
     squareSelected.piece?.calculatePossibleNextSquares().forEach(square => { square.paintPossibleMove() })
   }
 
   private unselectSquare (squareUnselected: SquareModelType): void {
-    // TODO: Unpaint selected square
     squareUnselected.unpaintSelected()
-    // TODO: Unpaint next possible moves square
     squareUnselected.piece?.calculatePossibleNextSquares().forEach(square => { square.unpaintPossibleMove() })
+  }
+
+  private selectPossibleMoveSquare (squaredSelected: SquareModelType): void {
+    if (this.#currentPiece !== undefined && this.#currentPiece.square !== undefined) {
+      this.unselectSquare(this.#currentPiece.square)
+      this.#currentPiece.unpaintInSquare()
+      this.#currentPiece.paintInSquare(squaredSelected)
+      squaredSelected.paintSelected()
+      // this.#currentPiece = undefined
+    }
   }
 }

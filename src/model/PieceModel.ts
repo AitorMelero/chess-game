@@ -49,6 +49,7 @@ export abstract class PieceModel implements PieceModelType {
       if (this.square !== undefined && this.square.isPainted) {
         this.square.unpaintPiece()
         this.square.disableButton()
+        this.square = undefined
       }
     } catch (error) {
       console.error('Error: Piece Unpaint In Square\n', error)

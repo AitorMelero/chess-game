@@ -159,6 +159,7 @@ export class SquareModel implements SquareModelType {
     const squarePieceElement = document.getElementById(this.squarePieceIdElement)
     if (squarePieceElement !== null) {
       squarePieceElement.querySelector('img')?.remove()
+      this.piece = undefined
     } else {
       throw new Error('Square Unpaint Piece')
     }
