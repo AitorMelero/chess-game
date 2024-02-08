@@ -16,12 +16,17 @@ import {
 
 export class ChessboardModel implements ChessboardModelType {
   readonly #players: PlayerModelType[]
+  #currentPlayer: PlayerModelType
   readonly #squares: SquareModelType[]
   #currentPiece: PieceModelType | undefined
   #pieces: PieceModelType[]
 
   constructor () {
-    this.#players = [new PlayerModel(true), new PlayerModel(false)]
+    const isWhite = true
+    const whitePlayer = new PlayerModel(isWhite)
+    const blackPlayer = new PlayerModel(!isWhite)
+    this.#players = [whitePlayer, blackPlayer]
+    this.#currentPlayer = whitePlayer
     this.#pieces = []
     this.#squares = []
     this.#currentPiece = undefined
@@ -54,6 +59,10 @@ export class ChessboardModel implements ChessboardModelType {
 
   get players (): PlayerModelType[] {
     return this.#players
+  }
+
+  get currentPlayer (): PlayerModelType {
+    return this.#currentPlayer
   }
 
   get squares (): SquareModelType[] {
@@ -160,21 +169,25 @@ export class ChessboardModel implements ChessboardModelType {
   }
 
   clickSquare = (squareClicked: SquareModelType): void => {
-    if (squareClicked.isSelected) {
-      this.unselectSquare(squareClicked)
-      this.#currentPiece = undefined
-    } else {
-      if (this.currentPiece?.square !== undefined) {
-        if (squareClicked.isPossibleMove) {
-          this.selectPossibleMoveSquare(squareClicked)
+    const isYourTurn = squareClicked.piece?.isWhite === this.currentPlayer.isWhite || squareClicked.isPossibleMove
+
+    if (isYourTurn) {
+      if (squareClicked.isSelected) {
+        this.unselectSquare(squareClicked)
+        this.#currentPiece = undefined
+      } else {
+        if (this.currentPiece?.square !== undefined) {
+          if (squareClicked.isPossibleMove) {
+            this.selectPossibleMoveSquare(squareClicked)
+          } else {
+            this.unselectSquare(this.currentPiece.square)
+            this.selectSquare(squareClicked)
+            this.#currentPiece = squareClicked.piece
+          }
         } else {
-          this.unselectSquare(this.currentPiece.square)
           this.selectSquare(squareClicked)
           this.#currentPiece = squareClicked.piece
         }
-      } else {
-        this.selectSquare(squareClicked)
-        this.#currentPiece = squareClicked.piece
       }
     }
   }
@@ -190,12 +203,17 @@ export class ChessboardModel implements ChessboardModelType {
   }
 
   private selectPossibleMoveSquare (squaredSelected: SquareModelType): void {
-    if (this.#currentPiece !== undefined && this.#currentPiece.square !== undefined) {
-      this.unselectSquare(this.#currentPiece.square)
-      this.#currentPiece.unpaintInSquare()
-      this.#currentPiece.paintInSquare(squaredSelected)
+    if (this.currentPiece?.square !== undefined) {
+      this.unselectSquare(this.currentPiece.square)
+      this.currentPiece.unpaintInSquare()
+      this.currentPiece.paintInSquare(squaredSelected)
       squaredSelected.paintSelected()
-      // this.#currentPiece = undefined
+
+      // Change player turn
+      const newCurrentPlayer = this.players.find(player => player !== this.currentPlayer)
+      if (newCurrentPlayer !== undefined) {
+        this.#currentPlayer = newCurrentPlayer
+      }
     }
   }
 }

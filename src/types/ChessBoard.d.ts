@@ -4,6 +4,7 @@ import { type SquareModelType } from './Square'
 
 export interface ChessboardModelType {
   get players(): PlayerModelType[]
+  get currentPlayer(): PlayerModelType
   get squares(): SquareModelType[]
   get pieces(): PieceModelType[]
   get currentPiece(): PieceModelType | undefined
