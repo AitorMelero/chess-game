@@ -1,6 +1,41 @@
 import { type ChessboardModelType } from '../types/Chessboard'
 import { type SquareModelType, type SquarePosition } from '../types/Square'
 
+export const getRookNextPossibleMoves = (square: SquareModelType): SquareModelType[] => {
+  let nextPossibleSquares: SquareModelType[] = []
+
+  if (square.piece !== undefined) {
+    const piecePosition: SquarePosition = { xPosition: square.xPosition, yPosition: square.yPosition }
+    const chessboard = square.chessboard
+
+    // Up move
+    nextPossibleSquares = [
+      ...nextPossibleSquares,
+      ...calculatePossibleNextUpSquares(piecePosition, chessboard, square.piece.isWhite)
+    ]
+
+    // Right move
+    nextPossibleSquares = [
+      ...nextPossibleSquares,
+      ...calculatePossibleNextRightSquares(piecePosition, chessboard, square.piece.isWhite)
+    ]
+
+    // Down move
+    nextPossibleSquares = [
+      ...nextPossibleSquares,
+      ...calculatePossibleNextDownSquares(piecePosition, chessboard, square.piece.isWhite)
+    ]
+
+    // Left move
+    nextPossibleSquares = [
+      ...nextPossibleSquares,
+      ...calculatePossibleNextLeftSquares(piecePosition, chessboard, square.piece.isWhite)
+    ]
+  }
+
+  return nextPossibleSquares
+}
+
 export const getBishopNextPossibleMoves = (square: SquareModelType): SquareModelType[] => {
   let nextPossibleSquares: SquareModelType[] = []
 
@@ -32,8 +67,112 @@ export const getBishopNextPossibleMoves = (square: SquareModelType): SquareModel
     // Up-Left move
     nextPossibleSquares = [
       ...nextPossibleSquares,
-      ...calculatePossibleNextLeftSquares(piecePosition, chessboard, square.piece.isWhite)
+      ...calculatePossibleNextUpLeftSquares(piecePosition, chessboard, square.piece.isWhite)
     ]
+  }
+
+  return nextPossibleSquares
+}
+
+const calculatePossibleNextUpSquares = (
+  piecePosition: SquarePosition,
+  chessboard: ChessboardModelType,
+  isWhite: boolean
+): SquareModelType[] => {
+  const nextPossibleSquares: SquareModelType[] = []
+  let isAllMove = false
+
+  for (let y = piecePosition.yPosition + 1; y <= 8 && !isAllMove; y++) {
+    const position: SquarePosition = { xPosition: piecePosition.xPosition, yPosition: y }
+    const loopCurrentSquare = chessboard.getSquareFromPosition(position)
+    if (loopCurrentSquare !== undefined) {
+      if (loopCurrentSquare.piece !== undefined) {
+        if (loopCurrentSquare.piece.isWhite !== isWhite) {
+          nextPossibleSquares.push(loopCurrentSquare)
+        }
+        isAllMove = true
+      } else {
+        nextPossibleSquares.push(loopCurrentSquare)
+      }
+    }
+  }
+
+  return nextPossibleSquares
+}
+
+const calculatePossibleNextRightSquares = (
+  piecePosition: SquarePosition,
+  chessboard: ChessboardModelType,
+  isWhite: boolean
+): SquareModelType[] => {
+  const nextPossibleSquares: SquareModelType[] = []
+  let isAllMove = false
+
+  for (let x = piecePosition.xPosition + 1; x <= 8 && !isAllMove; x++) {
+    const position: SquarePosition = { xPosition: x, yPosition: piecePosition.yPosition }
+    const loopCurrentSquare = chessboard.getSquareFromPosition(position)
+    if (loopCurrentSquare !== undefined) {
+      if (loopCurrentSquare.piece !== undefined) {
+        if (loopCurrentSquare.piece.isWhite !== isWhite) {
+          nextPossibleSquares.push(loopCurrentSquare)
+        }
+        isAllMove = true
+      } else {
+        nextPossibleSquares.push(loopCurrentSquare)
+      }
+    }
+  }
+
+  return nextPossibleSquares
+}
+
+const calculatePossibleNextDownSquares = (
+  piecePosition: SquarePosition,
+  chessboard: ChessboardModelType,
+  isWhite: boolean
+): SquareModelType[] => {
+  const nextPossibleSquares: SquareModelType[] = []
+  let isAllMove = false
+
+  for (let y = piecePosition.yPosition - 1; y > 0 && !isAllMove; y--) {
+    const position: SquarePosition = { xPosition: piecePosition.xPosition, yPosition: y }
+    const loopCurrentSquare = chessboard.getSquareFromPosition(position)
+    if (loopCurrentSquare !== undefined) {
+      if (loopCurrentSquare.piece !== undefined) {
+        if (loopCurrentSquare.piece.isWhite !== isWhite) {
+          nextPossibleSquares.push(loopCurrentSquare)
+        }
+        isAllMove = true
+      } else {
+        nextPossibleSquares.push(loopCurrentSquare)
+      }
+    }
+  }
+
+  return nextPossibleSquares
+}
+
+const calculatePossibleNextLeftSquares = (
+  piecePosition: SquarePosition,
+  chessboard: ChessboardModelType,
+  isWhite: boolean
+): SquareModelType[] => {
+  const nextPossibleSquares: SquareModelType[] = []
+  let isAllMove = false
+
+  for (let x = piecePosition.xPosition - 1; x > 0 && !isAllMove; x--) {
+    const position: SquarePosition = { xPosition: x, yPosition: piecePosition.yPosition }
+    const loopCurrentSquare = chessboard.getSquareFromPosition(position)
+    if (loopCurrentSquare !== undefined) {
+      if (loopCurrentSquare.piece !== undefined) {
+        if (loopCurrentSquare.piece.isWhite !== isWhite) {
+          nextPossibleSquares.push(loopCurrentSquare)
+        }
+        isAllMove = true
+      } else {
+        nextPossibleSquares.push(loopCurrentSquare)
+      }
+    }
   }
 
   return nextPossibleSquares
@@ -141,7 +280,7 @@ const calculatePossibleNextDownLeftSquares = (
   return nextPossibleSquares
 }
 
-const calculatePossibleNextLeftSquares = (
+const calculatePossibleNextUpLeftSquares = (
   piecePosition: SquarePosition,
   chessboard: ChessboardModelType,
   isWhite: boolean
