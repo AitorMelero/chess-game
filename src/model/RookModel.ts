@@ -1,3 +1,4 @@
+import { type ChessboardModelType } from '../types/Chessboard'
 import { type SquarePosition, type SquareModelType } from '../types/Square'
 import { PieceModel } from './PieceModel'
 
@@ -9,82 +10,136 @@ export class RookModel extends PieceModel {
     super(image, isWhite)
   }
 
-  calculatePossibleNextSquares (): SquareModelType[] {
+  private calculatePossibleNextUpSquares (
+    piecePosition: SquarePosition,
+    chessboard: ChessboardModelType
+  ): SquareModelType[] {
     const nextPossibleSquares: SquareModelType[] = []
+    let isAllMove = false
+
+    for (let y = piecePosition.yPosition + 1; y <= 8 && !isAllMove; y++) {
+      const position: SquarePosition = { xPosition: piecePosition.xPosition, yPosition: y }
+      const loopCurrentSquare = chessboard.getSquareFromPosition(position)
+      if (loopCurrentSquare !== undefined) {
+        if (loopCurrentSquare.piece !== undefined) {
+          if (loopCurrentSquare.piece.isWhite !== this.isWhite) {
+            nextPossibleSquares.push(loopCurrentSquare)
+          }
+          isAllMove = true
+        } else {
+          nextPossibleSquares.push(loopCurrentSquare)
+        }
+      }
+    }
+
+    return nextPossibleSquares
+  }
+
+  private calculatePossibleNextRightSquares (
+    piecePosition: SquarePosition,
+    chessboard: ChessboardModelType
+  ): SquareModelType[] {
+    const nextPossibleSquares: SquareModelType[] = []
+    let isAllMove = false
+
+    for (let x = piecePosition.xPosition + 1; x <= 8 && !isAllMove; x++) {
+      const position: SquarePosition = { xPosition: x, yPosition: piecePosition.yPosition }
+      const loopCurrentSquare = chessboard.getSquareFromPosition(position)
+      if (loopCurrentSquare !== undefined) {
+        if (loopCurrentSquare.piece !== undefined) {
+          if (loopCurrentSquare.piece.isWhite !== this.isWhite) {
+            nextPossibleSquares.push(loopCurrentSquare)
+          }
+          isAllMove = true
+        } else {
+          nextPossibleSquares.push(loopCurrentSquare)
+        }
+      }
+    }
+
+    return nextPossibleSquares
+  }
+
+  private calculatePossibleNextDownSquares (
+    piecePosition: SquarePosition,
+    chessboard: ChessboardModelType
+  ): SquareModelType[] {
+    const nextPossibleSquares: SquareModelType[] = []
+    let isAllMove = false
+
+    for (let y = piecePosition.yPosition - 1; y > 0 && !isAllMove; y--) {
+      const position: SquarePosition = { xPosition: piecePosition.xPosition, yPosition: y }
+      const loopCurrentSquare = chessboard.getSquareFromPosition(position)
+      if (loopCurrentSquare !== undefined) {
+        if (loopCurrentSquare.piece !== undefined) {
+          if (loopCurrentSquare.piece.isWhite !== this.isWhite) {
+            nextPossibleSquares.push(loopCurrentSquare)
+          }
+          isAllMove = true
+        } else {
+          nextPossibleSquares.push(loopCurrentSquare)
+        }
+      }
+    }
+
+    return nextPossibleSquares
+  }
+
+  private calculatePossibleNextLeftSquares (
+    piecePosition: SquarePosition,
+    chessboard: ChessboardModelType
+  ): SquareModelType[] {
+    const nextPossibleSquares: SquareModelType[] = []
+    let isAllMove = false
+
+    for (let x = piecePosition.xPosition - 1; x > 0 && !isAllMove; x--) {
+      const position: SquarePosition = { xPosition: x, yPosition: piecePosition.yPosition }
+      const loopCurrentSquare = chessboard.getSquareFromPosition(position)
+      if (loopCurrentSquare !== undefined) {
+        if (loopCurrentSquare.piece !== undefined) {
+          if (loopCurrentSquare.piece.isWhite !== this.isWhite) {
+            nextPossibleSquares.push(loopCurrentSquare)
+          }
+          isAllMove = true
+        } else {
+          nextPossibleSquares.push(loopCurrentSquare)
+        }
+      }
+    }
+
+    return nextPossibleSquares
+  }
+
+  calculatePossibleNextSquares (): SquareModelType[] {
+    let nextPossibleSquares: SquareModelType[] = []
 
     if (this.square !== undefined) {
-      const pieceXPosition = this.square.xPosition
-      const pieceYPosition = this.square.yPosition
+      const piecePosition: SquarePosition = { xPosition: this.square.xPosition, yPosition: this.square.yPosition }
       const chessboard = this.square.chessboard
-      let isAllUpMove = false
-      let isAllRightMove = false
-      let isAllDownMove = false
-      let isAllLeftMove = false
 
       // Up move
-      for (let y = pieceYPosition + 1; y <= 8 && !isAllUpMove; y++) {
-        const position: SquarePosition = { xPosition: pieceXPosition, yPosition: y }
-        const loopCurrentSquare = chessboard.getSquareFromPosition(position)
-        console.log(loopCurrentSquare)
-        if (loopCurrentSquare !== undefined) {
-          if (loopCurrentSquare.piece !== undefined) {
-            if (loopCurrentSquare.piece.isWhite !== this.isWhite) {
-              nextPossibleSquares.push(loopCurrentSquare)
-            }
-            isAllUpMove = true
-          } else {
-            nextPossibleSquares.push(loopCurrentSquare)
-          }
-        }
-      }
+      nextPossibleSquares = [
+        ...nextPossibleSquares,
+        ...this.calculatePossibleNextUpSquares(piecePosition, chessboard)
+      ]
 
       // Right move
-      for (let x = pieceXPosition + 1; x <= 8 && !isAllRightMove; x++) {
-        const position: SquarePosition = { xPosition: x, yPosition: pieceYPosition }
-        const loopCurrentSquare = chessboard.getSquareFromPosition(position)
-        if (loopCurrentSquare !== undefined) {
-          if (loopCurrentSquare.piece !== undefined) {
-            if (loopCurrentSquare.piece.isWhite !== this.isWhite) {
-              nextPossibleSquares.push(loopCurrentSquare)
-            }
-            isAllRightMove = true
-          } else {
-            nextPossibleSquares.push(loopCurrentSquare)
-          }
-        }
-      }
+      nextPossibleSquares = [
+        ...nextPossibleSquares,
+        ...this.calculatePossibleNextRightSquares(piecePosition, chessboard)
+      ]
 
       // Down move
-      for (let y = pieceYPosition - 1; y > 0 && !isAllDownMove; y--) {
-        const position: SquarePosition = { xPosition: pieceXPosition, yPosition: y }
-        const loopCurrentSquare = chessboard.getSquareFromPosition(position)
-        if (loopCurrentSquare !== undefined) {
-          if (loopCurrentSquare.piece !== undefined) {
-            if (loopCurrentSquare.piece.isWhite !== this.isWhite) {
-              nextPossibleSquares.push(loopCurrentSquare)
-            }
-            isAllDownMove = true
-          } else {
-            nextPossibleSquares.push(loopCurrentSquare)
-          }
-        }
-      }
+      nextPossibleSquares = [
+        ...nextPossibleSquares,
+        ...this.calculatePossibleNextDownSquares(piecePosition, chessboard)
+      ]
 
       // Left move
-      for (let x = pieceXPosition - 1; x > 0 && !isAllLeftMove; x--) {
-        const position: SquarePosition = { xPosition: x, yPosition: pieceYPosition }
-        const loopCurrentSquare = chessboard.getSquareFromPosition(position)
-        if (loopCurrentSquare !== undefined) {
-          if (loopCurrentSquare.piece !== undefined) {
-            if (loopCurrentSquare.piece.isWhite !== this.isWhite) {
-              nextPossibleSquares.push(loopCurrentSquare)
-            }
-            isAllLeftMove = true
-          } else {
-            nextPossibleSquares.push(loopCurrentSquare)
-          }
-        }
-      }
+      nextPossibleSquares = [
+        ...nextPossibleSquares,
+        ...this.calculatePossibleNextLeftSquares(piecePosition, chessboard)
+      ]
     }
 
     return nextPossibleSquares
