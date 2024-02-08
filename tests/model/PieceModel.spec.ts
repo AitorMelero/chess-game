@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test'
 import { PawnModel } from '../../src/model/PawnModel'
 import { SquareModel } from '../../src/model/SquareModel'
+import { ChessboardModel } from '../../src/model'
 
 test.describe('PieceModel Testing', () => {
   // Pawn piece as example
@@ -11,7 +12,8 @@ test.describe('PieceModel Testing', () => {
   const blackPiece = new PawnModel(!isWhite)
   const xPosition = 1
   const yPosition = 1
-  const squareModel = new SquareModel(xPosition, yPosition)
+  const chessboard = new ChessboardModel()
+  const squareModel = new SquareModel(chessboard, xPosition, yPosition)
 
   test('debería devolver el valor isWhite correcto', () => {
     expect(whitePiece.isWhite).toBeTruthy()

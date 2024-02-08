@@ -1,6 +1,7 @@
 import test, { expect } from '@playwright/test'
 import { SquareModel } from '../../src/model/SquareModel'
 import { PawnModel } from '../../src/model/PawnModel'
+import { ChessboardModel } from '../../src/model'
 
 test.describe('SquareModel Testing', () => {
   const xPosition = 1
@@ -8,7 +9,8 @@ test.describe('SquareModel Testing', () => {
   const squareIdElement = `square-${xPosition}-${yPosition}`
   const squareSelectedIdElement = `square-selected-${xPosition}-${yPosition}`
   const squarePossibleMoveIdElement = `square-possible-move-${xPosition}-${yPosition}`
-  const square = new SquareModel(xPosition, yPosition)
+  const chessboard = new ChessboardModel()
+  const square = new SquareModel(chessboard, xPosition, yPosition)
   const isWhitePiece = true
   const piece = new PawnModel(isWhitePiece)
 
