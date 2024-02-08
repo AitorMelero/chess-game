@@ -1,3 +1,5 @@
+import { getBishopNextPossibleMoves, getRookNextPossibleMoves } from '../helpers'
+import { type SquareModelType } from '../types/Square'
 import { PieceModel } from './PieceModel'
 
 export class QueenModel extends PieceModel {
@@ -6,5 +8,16 @@ export class QueenModel extends PieceModel {
     const blackQueenImage = './src/assets/Pieces/bq.png'
     const image = isWhite ? whiteQueenImage : blackQueenImage
     super(image, isWhite)
+  }
+
+  calculatePossibleNextSquares (): SquareModelType[] {
+    let nextPossibleSquares: SquareModelType[] = []
+
+    if (this.square !== undefined) {
+      nextPossibleSquares = getRookNextPossibleMoves(this.square)
+      nextPossibleSquares = [...nextPossibleSquares, ...getBishopNextPossibleMoves(this.square)]
+    }
+
+    return nextPossibleSquares
   }
 }
