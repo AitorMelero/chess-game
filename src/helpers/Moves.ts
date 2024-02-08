@@ -1,6 +1,18 @@
 import { type ChessboardModelType } from '../types/Chessboard'
 import { type SquareModelType, type SquarePosition } from '../types/Square'
 
+export const getKingNextPossibleMoves = (square: SquareModelType): SquareModelType[] => {
+  // const otherKing = square.chessboard.pieces.find(piece => piece is typeof KingModel )
+  let nextPossibleSquares: SquareModelType[] = []
+
+  if (square.piece !== undefined) {
+    // const otherKingPossibleMoves = getMovesWithoutAdjacentKing(otherKing.)
+    nextPossibleSquares = getMovesWithoutAdjacentKing(square)
+  }
+
+  return nextPossibleSquares
+}
+
 export const getRookNextPossibleMoves = (square: SquareModelType): SquareModelType[] => {
   let nextPossibleSquares: SquareModelType[] = []
 
@@ -69,6 +81,30 @@ export const getBishopNextPossibleMoves = (square: SquareModelType): SquareModel
       ...nextPossibleSquares,
       ...calculatePossibleNextUpLeftSquares(piecePosition, chessboard, square.piece.isWhite)
     ]
+  }
+
+  return nextPossibleSquares
+}
+
+const getMovesWithoutAdjacentKing = (square: SquareModelType): SquareModelType[] => {
+  let nextPossibleSquares: SquareModelType[] = []
+
+  if (square.piece !== undefined) {
+    nextPossibleSquares = [
+      ...getRookNextPossibleMoves(square),
+      ...getBishopNextPossibleMoves(square)
+    ].filter(filterSquare => {
+      return (
+        (filterSquare.xPosition === square.xPosition && filterSquare.yPosition === square.yPosition + 1) ||
+          (filterSquare.xPosition === square.xPosition + 1 && filterSquare.yPosition === square.yPosition + 1) ||
+          (filterSquare.xPosition === square.xPosition + 1 && filterSquare.yPosition === square.yPosition) ||
+          (filterSquare.xPosition === square.xPosition + 1 && filterSquare.yPosition === square.yPosition - 1) ||
+          (filterSquare.xPosition === square.xPosition && filterSquare.yPosition === square.yPosition - 1) ||
+          (filterSquare.xPosition === square.xPosition - 1 && filterSquare.yPosition === square.yPosition - 1) ||
+          (filterSquare.xPosition === square.xPosition - 1 && filterSquare.yPosition === square.yPosition) ||
+          (filterSquare.xPosition === square.xPosition - 1 && filterSquare.yPosition === square.yPosition + 1)
+      )
+    })
   }
 
   return nextPossibleSquares
