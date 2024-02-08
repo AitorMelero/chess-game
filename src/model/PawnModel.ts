@@ -62,11 +62,10 @@ export class PawnModel extends PieceModel {
   }
 
   calculatePossibleNextSquares (): SquareModelType[] {
-    const currentSquare = this.square
     let nextPossibleSquares: SquareModelType[] = []
 
-    if (currentSquare !== undefined) {
-      nextPossibleSquares = currentSquare.chessboard.squares.filter(
+    if (this.square !== undefined) {
+      nextPossibleSquares = this.square.chessboard.squares.filter(
         square =>
           (square.piece !== undefined && square.piece.isWhite !== this.isWhite && this.pawnCanEatPiece(square)) ||
           (this.isSquareInPossibleMove(square) && square.piece === undefined)
