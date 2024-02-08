@@ -174,17 +174,19 @@ export class ChessboardModel implements ChessboardModelType {
         this.#currentPiece = squareClicked.piece
       }
     }
-    // TODO: Save or unsave current piece
-    // TODO: Paint and unpaint next possible moves square
   }
 
   private selectSquare (squareSelected: SquareModelType): void {
     // TODO: Paint selected square
     squareSelected.paintSelected()
+    // TODO: Paint next possible moves square
+    squareSelected.piece?.calculatePossibleNextSquares().forEach(square => { square.paintPossibleMove() })
   }
 
   private unselectSquare (squareUnselected: SquareModelType): void {
     // TODO: Unpaint selected square
     squareUnselected.unpaintSelected()
+    // TODO: Unpaint next possible moves square
+    squareUnselected.piece?.calculatePossibleNextSquares().forEach(square => { square.unpaintPossibleMove() })
   }
 }

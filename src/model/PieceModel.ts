@@ -28,6 +28,10 @@ export abstract class PieceModel implements PieceModelType {
     this.#square = square
   }
 
+  calculatePossibleNextSquares (): SquareModelType[] {
+    return []
+  }
+
   paintInSquare (square: SquareModelType): void {
     try {
       if (square !== undefined && square.isPainted) {
