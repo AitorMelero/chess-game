@@ -160,16 +160,16 @@ export class ChessboardModel implements ChessboardModelType {
   }
 
   clickSquare = (squareClicked: SquareModelType): void => {
-    // TODO: Unpaint previous selected square
-    if (this.#currentPiece !== undefined && this.#currentPiece.square !== undefined) {
-      this.unselectSquare(this.#currentPiece.square)
-    }
     // TODO: Paint and unpaint selected square
     if (squareClicked !== undefined) {
       if (squareClicked.isSelected) {
         this.unselectSquare(squareClicked)
         this.#currentPiece = undefined
       } else {
+        // TODO: Unpaint previous selected square
+        if (this.#currentPiece !== undefined && this.#currentPiece.square !== undefined) {
+          this.unselectSquare(this.#currentPiece.square)
+        }
         this.selectSquare(squareClicked)
         this.#currentPiece = squareClicked.piece
       }
