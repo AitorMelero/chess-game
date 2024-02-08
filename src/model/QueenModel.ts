@@ -14,8 +14,10 @@ export class QueenModel extends PieceModel {
     let nextPossibleSquares: SquareModelType[] = []
 
     if (this.square !== undefined) {
-      nextPossibleSquares = getRookNextPossibleMoves(this.square)
-      nextPossibleSquares = [...nextPossibleSquares, ...getBishopNextPossibleMoves(this.square)]
+      nextPossibleSquares = [
+        ...getRookNextPossibleMoves(this.square),
+        ...getBishopNextPossibleMoves(this.square)
+      ]
     }
 
     return nextPossibleSquares
