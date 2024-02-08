@@ -116,7 +116,9 @@ export class SquareModel implements SquareModelType {
     try {
       const squarePossibleMoveElement = document.getElementById(this.squarePossibleMoveIdElement)
       if (squarePossibleMoveElement !== null) {
-        this.disableButton()
+        if (this.piece === undefined) {
+          this.disableButton()
+        }
         squarePossibleMoveElement.className = 'not-possible-move-square'
         this.#isPossibleMove = false
       }
