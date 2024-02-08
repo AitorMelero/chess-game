@@ -16,19 +16,19 @@ import {
 
 export class ChessboardModel implements ChessboardModelType {
   readonly #players: PlayerModelType[]
-  #currentPlayer: PlayerModelType
   readonly #squares: SquareModelType[]
-  #currentPiece: PieceModelType | undefined
+  #currentPlayer: PlayerModelType
   #pieces: PieceModelType[]
+  #currentPiece: PieceModelType | undefined
 
   constructor () {
     const isWhite = true
     const whitePlayer = new PlayerModel(isWhite)
     const blackPlayer = new PlayerModel(!isWhite)
     this.#players = [whitePlayer, blackPlayer]
+    this.#squares = []
     this.#currentPlayer = whitePlayer
     this.#pieces = []
-    this.#squares = []
     this.#currentPiece = undefined
     this.createChessboard()
   }
@@ -55,6 +55,32 @@ export class ChessboardModel implements ChessboardModelType {
   ): void {
     piece.paintInSquare(square)
     this.pieces.push(piece)
+  }
+
+  private selectSquare (squareSelected: SquareModelType): void {
+    squareSelected.paintSelected()
+    squareSelected.piece?.calculatePossibleNextSquares().forEach(square => { square.paintPossibleMove() })
+    this.#currentPiece = squareSelected.piece
+  }
+
+  private unselectSquare (squareUnselected: SquareModelType): void {
+    squareUnselected.unpaintSelected()
+    squareUnselected.piece?.calculatePossibleNextSquares().forEach(square => { square.unpaintPossibleMove() })
+  }
+
+  private selectPossibleMoveSquare (squaredSelected: SquareModelType): void {
+    if (this.currentPiece?.square !== undefined) {
+      this.unselectSquare(this.currentPiece.square)
+      this.currentPiece.unpaintInSquare()
+      this.currentPiece.paintInSquare(squaredSelected)
+      squaredSelected.paintSelected()
+
+      // Change player turn
+      const newCurrentPlayer = this.players.find(player => player !== this.currentPlayer)
+      if (newCurrentPlayer !== undefined) {
+        this.#currentPlayer = newCurrentPlayer
+      }
+    }
   }
 
   get players (): PlayerModelType[] {
@@ -182,37 +208,10 @@ export class ChessboardModel implements ChessboardModelType {
           } else {
             this.unselectSquare(this.currentPiece.square)
             this.selectSquare(squareClicked)
-            this.#currentPiece = squareClicked.piece
           }
         } else {
           this.selectSquare(squareClicked)
-          this.#currentPiece = squareClicked.piece
         }
-      }
-    }
-  }
-
-  private selectSquare (squareSelected: SquareModelType): void {
-    squareSelected.paintSelected()
-    squareSelected.piece?.calculatePossibleNextSquares().forEach(square => { square.paintPossibleMove() })
-  }
-
-  private unselectSquare (squareUnselected: SquareModelType): void {
-    squareUnselected.unpaintSelected()
-    squareUnselected.piece?.calculatePossibleNextSquares().forEach(square => { square.unpaintPossibleMove() })
-  }
-
-  private selectPossibleMoveSquare (squaredSelected: SquareModelType): void {
-    if (this.currentPiece?.square !== undefined) {
-      this.unselectSquare(this.currentPiece.square)
-      this.currentPiece.unpaintInSquare()
-      this.currentPiece.paintInSquare(squaredSelected)
-      squaredSelected.paintSelected()
-
-      // Change player turn
-      const newCurrentPlayer = this.players.find(player => player !== this.currentPlayer)
-      if (newCurrentPlayer !== undefined) {
-        this.#currentPlayer = newCurrentPlayer
       }
     }
   }
