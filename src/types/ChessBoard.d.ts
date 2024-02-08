@@ -1,6 +1,6 @@
 import { type PieceModelType } from './Piece'
 import { type PlayerModelType } from './Player'
-import { type SquareModelType } from './Square'
+import { type SquarePosition, type SquareModelType } from './Square'
 
 export interface ChessboardModelType {
   get players(): PlayerModelType[]
@@ -8,6 +8,7 @@ export interface ChessboardModelType {
   get squares(): SquareModelType[]
   get pieces(): PieceModelType[]
   get currentPiece(): PieceModelType | undefined
+  getSquareFromPosition: (squarePosition: SquarePosition) => SquareModelType | undefined
   createPieces: () => void
   clickSquare: (squareClicked: SquareModelType) => void
 }
