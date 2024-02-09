@@ -23,14 +23,28 @@ export class PawnModel extends PieceModel {
     const yPositions: number[] = []
 
     if (this.square !== undefined) {
+      const possibleXPosition = this.square.xPosition
+      let possibleYPosition: number
+      let possibleSquare: SquareModelType | undefined
+
       if (this.isWhite) {
-        yPositions.push(this.square.yPosition + 1)
-        if (isFirstMove) {
+        possibleYPosition = this.square.yPosition + 1
+        yPositions.push(possibleYPosition)
+        possibleSquare = this.square.chessboard.getSquareFromPosition({
+          xPosition: possibleXPosition,
+          yPosition: possibleYPosition
+        })
+        if (isFirstMove && possibleSquare?.piece === undefined) {
           yPositions.push(this.square.yPosition + 2)
         }
       } else {
-        yPositions.push(this.square.yPosition - 1)
-        if (isFirstMove) {
+        possibleYPosition = this.square.yPosition - 1
+        yPositions.push(possibleYPosition)
+        possibleSquare = this.square.chessboard.getSquareFromPosition({
+          xPosition: possibleXPosition,
+          yPosition: possibleYPosition
+        })
+        if (isFirstMove && possibleSquare?.piece === undefined) {
           yPositions.push(this.square.yPosition - 2)
         }
       }
