@@ -2,12 +2,21 @@ import { type ChessboardModelType } from '../types/Chessboard'
 import { type SquareModelType, type SquarePosition } from '../types/Square'
 
 export const getKingNextPossibleMoves = (square: SquareModelType): SquareModelType[] => {
-  // const otherKing = square.chessboard.pieces.find(piece => piece is typeof KingModel )
   let nextPossibleSquares: SquareModelType[] = []
+  let otherKingPossibleMoves: SquareModelType[] = []
 
   if (square.piece !== undefined) {
-    // const otherKingPossibleMoves = getMovesWithoutAdjacentKing(otherKing.)
-    nextPossibleSquares = getMovesWithoutAdjacentKing(square)
+    const isWhite = square.piece.isWhite
+    const otherKing = isWhite ? square.chessboard.blackKing : square.chessboard.whiteKing
+
+    if (otherKing?.square !== undefined) {
+      otherKingPossibleMoves = getMovesWithoutAdjacentKing(otherKing.square)
+    }
+    nextPossibleSquares = getMovesWithoutAdjacentKing(square).filter(
+      possibleSquare => otherKingPossibleMoves.find(
+        otherKingSquare => otherKingSquare === possibleSquare
+      ) === undefined
+    )
   }
 
   return nextPossibleSquares

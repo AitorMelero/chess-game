@@ -8,6 +8,8 @@ export interface ChessboardModelType {
   get squares(): SquareModelType[]
   get pieces(): PieceModelType[]
   get currentPiece(): PieceModelType | undefined
+  get whiteKing(): PieceModelType | undefined
+  get blackKing(): PieceModelType | undefined
   getSquareFromPosition: (squarePosition: SquarePosition) => SquareModelType | undefined
   createPieces: () => void
   clickSquare: (squareClicked: SquareModelType) => void

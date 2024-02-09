@@ -17,6 +17,8 @@ import {
 export class ChessboardModel implements ChessboardModelType {
   readonly #players: PlayerModelType[]
   readonly #squares: SquareModelType[]
+  #whiteKing: PieceModelType | undefined
+  #blackKing: PieceModelType | undefined
   #currentPlayer: PlayerModelType
   #pieces: PieceModelType[]
   #currentPiece: PieceModelType | undefined
@@ -27,6 +29,8 @@ export class ChessboardModel implements ChessboardModelType {
     const blackPlayer = new PlayerModel(!isWhite)
     this.#players = [whitePlayer, blackPlayer]
     this.#squares = []
+    this.#whiteKing = undefined
+    this.#blackKing = undefined
     this.#currentPlayer = whitePlayer
     this.#pieces = []
     this.#currentPiece = undefined
@@ -93,6 +97,14 @@ export class ChessboardModel implements ChessboardModelType {
 
   get squares (): SquareModelType[] {
     return this.#squares
+  }
+
+  get whiteKing (): PieceModelType | undefined {
+    return this.#whiteKing
+  }
+
+  get blackKing (): PieceModelType | undefined {
+    return this.#blackKing
   }
 
   get currentPiece (): PieceModelType | undefined {
@@ -192,12 +204,14 @@ export class ChessboardModel implements ChessboardModelType {
       PieceFilters.whiteKingPositionFilter(square)
     ).forEach((square) => {
       const piece = new KingModel(isWhite)
+      this.#whiteKing = piece
       this.paintPieceInSquare(piece, square)
     })
     PieceFilters.positionFilter(this.squares, (square) =>
       PieceFilters.blackKingPositionFilter(square)
     ).forEach((square) => {
       const piece = new KingModel(!isWhite)
+      this.#blackKing = piece
       this.paintPieceInSquare(piece, square)
     })
   }
