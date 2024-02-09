@@ -1,21 +1,15 @@
+import { type KingModel } from '../model'
 import { type ChessboardModelType } from '../types/Chessboard'
 import { type SquareModelType, type SquarePosition } from '../types/Square'
 
 export const getKingNextPossibleMoves = (square: SquareModelType): SquareModelType[] => {
   let nextPossibleSquares: SquareModelType[] = []
-  let otherKingPossibleMoves: SquareModelType[] = []
 
   if (square.piece !== undefined) {
-    const isWhite = square.piece.isWhite
-    const otherKing = isWhite ? square.chessboard.blackKing : square.chessboard.whiteKing
+    const king: KingModel = square.piece as KingModel
 
-    if (otherKing?.square !== undefined) {
-      otherKingPossibleMoves = getMovesWithoutAdjacentKing(otherKing.square)
-    }
-    nextPossibleSquares = getMovesWithoutAdjacentKing(square).filter(
-      possibleSquare => otherKingPossibleMoves.find(
-        otherKingSquare => otherKingSquare === possibleSquare
-      ) === undefined
+    nextPossibleSquares = getTotalMovesKing(square).filter(
+      possibleSquare => !isKingCheckMove(king, possibleSquare)
     )
   }
 
@@ -95,7 +89,7 @@ export const getBishopNextPossibleMoves = (square: SquareModelType): SquareModel
   return nextPossibleSquares
 }
 
-const getMovesWithoutAdjacentKing = (square: SquareModelType): SquareModelType[] => {
+const getTotalMovesKing = (square: SquareModelType): SquareModelType[] => {
   let nextPossibleSquares: SquareModelType[] = []
 
   if (square.piece !== undefined) {
@@ -117,6 +111,36 @@ const getMovesWithoutAdjacentKing = (square: SquareModelType): SquareModelType[]
   }
 
   return nextPossibleSquares
+}
+
+const isKingCheckMove = (king: KingModel, square: SquareModelType): boolean => {
+  const chessboard = square.chessboard
+  const currentKingSquare = king.square
+  const currentSquarePiece = square.piece
+  const allOpponentPieces = king.isWhite
+    ? chessboard.pieces.filter(piece => !piece.isWhite && piece !== chessboard.blackKing)
+    : chessboard.pieces.filter(piece => piece.isWhite && piece !== chessboard.whiteKing)
+  let allOpponentPossibleMoves: SquareModelType[] = []
+
+  // Simulate the king move
+  king.square = square
+  square.piece = king
+
+  // Add oppenent pieces moves
+  if (king.isWhite && chessboard.blackKing?.square !== undefined) {
+    allOpponentPossibleMoves = [...allOpponentPossibleMoves, ...getTotalMovesKing(chessboard.blackKing.square)]
+  } else if (!king.isWhite && chessboard.whiteKing?.square !== undefined) {
+    allOpponentPossibleMoves = [...allOpponentPossibleMoves, ...getTotalMovesKing(chessboard.whiteKing.square)]
+  }
+  allOpponentPieces.forEach(piece => {
+    allOpponentPossibleMoves = [...allOpponentPossibleMoves, ...piece.calculatePossibleNextSquares()]
+  })
+
+  // Undone simulate the king move
+  king.square = currentKingSquare
+  square.piece = currentSquarePiece
+
+  return allOpponentPossibleMoves.find(opponentSquare => opponentSquare === square) !== undefined
 }
 
 const calculatePossibleNextUpSquares = (
