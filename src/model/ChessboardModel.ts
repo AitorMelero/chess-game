@@ -17,8 +17,8 @@ import {
 export class ChessboardModel implements ChessboardModelType {
   readonly #players: PlayerModelType[]
   readonly #squares: SquareModelType[]
-  readonly #whiteKing: PieceModelType | undefined
-  readonly #blackKing: PieceModelType | undefined
+  #whiteKing: PieceModelType | undefined
+  #blackKing: PieceModelType | undefined
   #currentPlayer: PlayerModelType
   #pieces: PieceModelType[]
   #currentPiece: PieceModelType | undefined
@@ -150,76 +150,76 @@ export class ChessboardModel implements ChessboardModelType {
     })
 
     // Rooks
-    // PieceFilters.positionFilter(this.squares, (square) =>
-    //   PieceFilters.whiteRookPositionFilter(square)
-    // ).forEach((square) => {
-    //   const piece = new RookModel(isWhite)
-    //   this.paintPieceInSquare(piece, square)
-    // })
-    // PieceFilters.positionFilter(this.squares, (square) =>
-    //   PieceFilters.blackRookPositionFilter(square)
-    // ).forEach((square) => {
-    //   const piece = new RookModel(!isWhite)
-    //   this.paintPieceInSquare(piece, square)
-    // })
+    PieceFilters.positionFilter(this.squares, (square) =>
+      PieceFilters.whiteRookPositionFilter(square)
+    ).forEach((square) => {
+      const piece = new RookModel(isWhite)
+      this.paintPieceInSquare(piece, square)
+    })
+    PieceFilters.positionFilter(this.squares, (square) =>
+      PieceFilters.blackRookPositionFilter(square)
+    ).forEach((square) => {
+      const piece = new RookModel(!isWhite)
+      this.paintPieceInSquare(piece, square)
+    })
 
     // Knights
-    // PieceFilters.positionFilter(this.squares, (square) =>
-    //   PieceFilters.whiteKnightPositionFilter(square)
-    // ).forEach((square) => {
-    //   const piece = new KnightModel(isWhite)
-    //   this.paintPieceInSquare(piece, square)
-    // })
-    // PieceFilters.positionFilter(this.squares, (square) =>
-    //   PieceFilters.blackKnightPositionFilter(square)
-    // ).forEach((square) => {
-    //   const piece = new KnightModel(!isWhite)
-    //   this.paintPieceInSquare(piece, square)
-    // })
+    PieceFilters.positionFilter(this.squares, (square) =>
+      PieceFilters.whiteKnightPositionFilter(square)
+    ).forEach((square) => {
+      const piece = new KnightModel(isWhite)
+      this.paintPieceInSquare(piece, square)
+    })
+    PieceFilters.positionFilter(this.squares, (square) =>
+      PieceFilters.blackKnightPositionFilter(square)
+    ).forEach((square) => {
+      const piece = new KnightModel(!isWhite)
+      this.paintPieceInSquare(piece, square)
+    })
 
     // Bishops
-    // PieceFilters.positionFilter(this.squares, (square) =>
-    //   PieceFilters.whiteBishopPositionFilter(square)
-    // ).forEach((square) => {
-    //   const piece = new BishopModel(isWhite)
-    //   this.paintPieceInSquare(piece, square)
-    // })
-    // PieceFilters.positionFilter(this.squares, (square) =>
-    //   PieceFilters.blackBishopPositionFilter(square)
-    // ).forEach((square) => {
-    //   const piece = new BishopModel(!isWhite)
-    //   this.paintPieceInSquare(piece, square)
-    // })
+    PieceFilters.positionFilter(this.squares, (square) =>
+      PieceFilters.whiteBishopPositionFilter(square)
+    ).forEach((square) => {
+      const piece = new BishopModel(isWhite)
+      this.paintPieceInSquare(piece, square)
+    })
+    PieceFilters.positionFilter(this.squares, (square) =>
+      PieceFilters.blackBishopPositionFilter(square)
+    ).forEach((square) => {
+      const piece = new BishopModel(!isWhite)
+      this.paintPieceInSquare(piece, square)
+    })
 
     // Queens
-    // PieceFilters.positionFilter(this.squares, (square) =>
-    //   PieceFilters.whiteQueenPositionFilter(square)
-    // ).forEach((square) => {
-    //   const piece = new QueenModel(isWhite)
-    //   this.paintPieceInSquare(piece, square)
-    // })
-    // PieceFilters.positionFilter(this.squares, (square) =>
-    //   PieceFilters.blackQueenPositionFilter(square)
-    // ).forEach((square) => {
-    //   const piece = new QueenModel(!isWhite)
-    //   this.paintPieceInSquare(piece, square)
-    // })
+    PieceFilters.positionFilter(this.squares, (square) =>
+      PieceFilters.whiteQueenPositionFilter(square)
+    ).forEach((square) => {
+      const piece = new QueenModel(isWhite)
+      this.paintPieceInSquare(piece, square)
+    })
+    PieceFilters.positionFilter(this.squares, (square) =>
+      PieceFilters.blackQueenPositionFilter(square)
+    ).forEach((square) => {
+      const piece = new QueenModel(!isWhite)
+      this.paintPieceInSquare(piece, square)
+    })
 
     // Kings
-    // PieceFilters.positionFilter(this.squares, (square) =>
-    //   PieceFilters.whiteKingPositionFilter(square)
-    // ).forEach((square) => {
-    //   const piece = new KingModel(isWhite)
-    //   this.#whiteKing = piece
-    //   this.paintPieceInSquare(piece, square)
-    // })
-    // PieceFilters.positionFilter(this.squares, (square) =>
-    //   PieceFilters.blackKingPositionFilter(square)
-    // ).forEach((square) => {
-    //   const piece = new KingModel(!isWhite)
-    //   this.#blackKing = piece
-    //   this.paintPieceInSquare(piece, square)
-    // })
+    PieceFilters.positionFilter(this.squares, (square) =>
+      PieceFilters.whiteKingPositionFilter(square)
+    ).forEach((square) => {
+      const piece = new KingModel(isWhite)
+      this.#whiteKing = piece
+      this.paintPieceInSquare(piece, square)
+    })
+    PieceFilters.positionFilter(this.squares, (square) =>
+      PieceFilters.blackKingPositionFilter(square)
+    ).forEach((square) => {
+      const piece = new KingModel(!isWhite)
+      this.#blackKing = piece
+      this.paintPieceInSquare(piece, square)
+    })
   }
 
   clickSquare = (squareClicked: SquareModelType): void => {
@@ -290,6 +290,11 @@ export class ChessboardModel implements ChessboardModelType {
         newPiece.paintInSquare(this.currentChangePawn.square)
         this.#pieces = [...this.pieces.filter(piece => piece !== this.currentChangePawn), newPiece]
         this.#currentChangePawn = undefined
+
+        const popupElement = document.getElementById('popup-root')
+        if (popupElement instanceof HTMLDivElement) {
+          popupElement.hidden = true
+        }
       }
     }
   }

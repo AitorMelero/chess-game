@@ -21,16 +21,18 @@ export const PopupChoosePiece: React.FC<Props> = ({ isLoading, onChoosePiece }) 
         <></>
           )
         : (
-        <section className="bg-slate-600 rounded-lg p-5">
-          <header className="text-white text-lg">Choose a piece</header>
-          <br />
-          <div className="flex flex-row justify-between">
-            <ButtonChoosePiece id='button-choose-queen' image={queenImage} onChoosePiece={onChoosePiece} />
-            <ButtonChoosePiece id='button-choose-bishop' image={bishopImage} onChoosePiece={onChoosePiece} />
-            <ButtonChoosePiece id='button-choose-knight'image={knightImage} onChoosePiece={onChoosePiece} />
-            <ButtonChoosePiece id='button-choose-rook' image={rookImage} onChoosePiece={onChoosePiece} />
-          </div>
-        </section>
+          <section className='h-[100vh] w-[100vw] bg-transparent flex flex-row justify-center items-center'>
+            <article className="bg-slate-600 rounded-lg p-5">
+              <header className="text-white text-lg">Choose a piece</header>
+              <br />
+              <div className="flex flex-row justify-between">
+                <ButtonChoosePiece id='button-choose-queen' image={queenImage} onChoosePiece={onChoosePiece} />
+                <ButtonChoosePiece id='button-choose-bishop' image={bishopImage} onChoosePiece={onChoosePiece} />
+                <ButtonChoosePiece id='button-choose-knight'image={knightImage} onChoosePiece={onChoosePiece} />
+                <ButtonChoosePiece id='button-choose-rook' image={rookImage} onChoosePiece={onChoosePiece} />
+              </div>
+            </article>
+          </section>
           )}
     </Popup>
   )
