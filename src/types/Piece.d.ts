@@ -9,3 +9,5 @@ export interface PieceModelType {
   paintInSquare: (square: SquareModelType) => void
   unpaintInSquare: () => void
 }
+
+type NewChoosePiece = 'Queen' | 'Bishop' | 'Knight' | 'Rook'

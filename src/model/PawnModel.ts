@@ -88,4 +88,15 @@ export class PawnModel extends PieceModel {
 
     return nextPossibleSquares
   }
+
+  paintInSquare (square: SquareModelType): void {
+    const isWhiteChange = square.yPosition === 8 && this.isWhite
+    const isBlackChange = square.yPosition === 1 && !this.isWhite
+
+    if (isWhiteChange || isBlackChange) {
+      square.chessboard.showChangePawnModal(this)
+    }
+
+    super.paintInSquare(square)
+  }
 }

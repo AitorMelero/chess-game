@@ -1,6 +1,6 @@
 import { PieceFilters } from '../helpers'
 import { type ChessboardModelType } from '../types/Chessboard'
-import { type PieceModelType } from '../types/Piece'
+import { type NewChoosePiece, type PieceModelType } from '../types/Piece'
 import { type PlayerModelType } from '../types/Player'
 import { type SquarePosition, type SquareModelType } from '../types/Square'
 import {
@@ -17,11 +17,12 @@ import {
 export class ChessboardModel implements ChessboardModelType {
   readonly #players: PlayerModelType[]
   readonly #squares: SquareModelType[]
-  #whiteKing: PieceModelType | undefined
-  #blackKing: PieceModelType | undefined
+  readonly #whiteKing: PieceModelType | undefined
+  readonly #blackKing: PieceModelType | undefined
   #currentPlayer: PlayerModelType
   #pieces: PieceModelType[]
   #currentPiece: PieceModelType | undefined
+  #currentChangePawn: PieceModelType | undefined
 
   constructor () {
     const isWhite = true
@@ -34,6 +35,7 @@ export class ChessboardModel implements ChessboardModelType {
     this.#currentPlayer = whitePlayer
     this.#pieces = []
     this.#currentPiece = undefined
+    this.#currentChangePawn = undefined
     this.createChessboard()
   }
 
@@ -115,6 +117,10 @@ export class ChessboardModel implements ChessboardModelType {
     return this.#pieces
   }
 
+  get currentChangePawn (): PieceModelType | undefined {
+    return this.#currentChangePawn
+  }
+
   getSquareFromPosition (squarePosition: SquarePosition): SquareModelType | undefined {
     return this.squares.find(
       square =>
@@ -144,76 +150,76 @@ export class ChessboardModel implements ChessboardModelType {
     })
 
     // Rooks
-    PieceFilters.positionFilter(this.squares, (square) =>
-      PieceFilters.whiteRookPositionFilter(square)
-    ).forEach((square) => {
-      const piece = new RookModel(isWhite)
-      this.paintPieceInSquare(piece, square)
-    })
-    PieceFilters.positionFilter(this.squares, (square) =>
-      PieceFilters.blackRookPositionFilter(square)
-    ).forEach((square) => {
-      const piece = new RookModel(!isWhite)
-      this.paintPieceInSquare(piece, square)
-    })
+    // PieceFilters.positionFilter(this.squares, (square) =>
+    //   PieceFilters.whiteRookPositionFilter(square)
+    // ).forEach((square) => {
+    //   const piece = new RookModel(isWhite)
+    //   this.paintPieceInSquare(piece, square)
+    // })
+    // PieceFilters.positionFilter(this.squares, (square) =>
+    //   PieceFilters.blackRookPositionFilter(square)
+    // ).forEach((square) => {
+    //   const piece = new RookModel(!isWhite)
+    //   this.paintPieceInSquare(piece, square)
+    // })
 
     // Knights
-    PieceFilters.positionFilter(this.squares, (square) =>
-      PieceFilters.whiteKnightPositionFilter(square)
-    ).forEach((square) => {
-      const piece = new KnightModel(isWhite)
-      this.paintPieceInSquare(piece, square)
-    })
-    PieceFilters.positionFilter(this.squares, (square) =>
-      PieceFilters.blackKnightPositionFilter(square)
-    ).forEach((square) => {
-      const piece = new KnightModel(!isWhite)
-      this.paintPieceInSquare(piece, square)
-    })
+    // PieceFilters.positionFilter(this.squares, (square) =>
+    //   PieceFilters.whiteKnightPositionFilter(square)
+    // ).forEach((square) => {
+    //   const piece = new KnightModel(isWhite)
+    //   this.paintPieceInSquare(piece, square)
+    // })
+    // PieceFilters.positionFilter(this.squares, (square) =>
+    //   PieceFilters.blackKnightPositionFilter(square)
+    // ).forEach((square) => {
+    //   const piece = new KnightModel(!isWhite)
+    //   this.paintPieceInSquare(piece, square)
+    // })
 
     // Bishops
-    PieceFilters.positionFilter(this.squares, (square) =>
-      PieceFilters.whiteBishopPositionFilter(square)
-    ).forEach((square) => {
-      const piece = new BishopModel(isWhite)
-      this.paintPieceInSquare(piece, square)
-    })
-    PieceFilters.positionFilter(this.squares, (square) =>
-      PieceFilters.blackBishopPositionFilter(square)
-    ).forEach((square) => {
-      const piece = new BishopModel(!isWhite)
-      this.paintPieceInSquare(piece, square)
-    })
+    // PieceFilters.positionFilter(this.squares, (square) =>
+    //   PieceFilters.whiteBishopPositionFilter(square)
+    // ).forEach((square) => {
+    //   const piece = new BishopModel(isWhite)
+    //   this.paintPieceInSquare(piece, square)
+    // })
+    // PieceFilters.positionFilter(this.squares, (square) =>
+    //   PieceFilters.blackBishopPositionFilter(square)
+    // ).forEach((square) => {
+    //   const piece = new BishopModel(!isWhite)
+    //   this.paintPieceInSquare(piece, square)
+    // })
 
     // Queens
-    PieceFilters.positionFilter(this.squares, (square) =>
-      PieceFilters.whiteQueenPositionFilter(square)
-    ).forEach((square) => {
-      const piece = new QueenModel(isWhite)
-      this.paintPieceInSquare(piece, square)
-    })
-    PieceFilters.positionFilter(this.squares, (square) =>
-      PieceFilters.blackQueenPositionFilter(square)
-    ).forEach((square) => {
-      const piece = new QueenModel(!isWhite)
-      this.paintPieceInSquare(piece, square)
-    })
+    // PieceFilters.positionFilter(this.squares, (square) =>
+    //   PieceFilters.whiteQueenPositionFilter(square)
+    // ).forEach((square) => {
+    //   const piece = new QueenModel(isWhite)
+    //   this.paintPieceInSquare(piece, square)
+    // })
+    // PieceFilters.positionFilter(this.squares, (square) =>
+    //   PieceFilters.blackQueenPositionFilter(square)
+    // ).forEach((square) => {
+    //   const piece = new QueenModel(!isWhite)
+    //   this.paintPieceInSquare(piece, square)
+    // })
 
     // Kings
-    PieceFilters.positionFilter(this.squares, (square) =>
-      PieceFilters.whiteKingPositionFilter(square)
-    ).forEach((square) => {
-      const piece = new KingModel(isWhite)
-      this.#whiteKing = piece
-      this.paintPieceInSquare(piece, square)
-    })
-    PieceFilters.positionFilter(this.squares, (square) =>
-      PieceFilters.blackKingPositionFilter(square)
-    ).forEach((square) => {
-      const piece = new KingModel(!isWhite)
-      this.#blackKing = piece
-      this.paintPieceInSquare(piece, square)
-    })
+    // PieceFilters.positionFilter(this.squares, (square) =>
+    //   PieceFilters.whiteKingPositionFilter(square)
+    // ).forEach((square) => {
+    //   const piece = new KingModel(isWhite)
+    //   this.#whiteKing = piece
+    //   this.paintPieceInSquare(piece, square)
+    // })
+    // PieceFilters.positionFilter(this.squares, (square) =>
+    //   PieceFilters.blackKingPositionFilter(square)
+    // ).forEach((square) => {
+    //   const piece = new KingModel(!isWhite)
+    //   this.#blackKing = piece
+    //   this.paintPieceInSquare(piece, square)
+    // })
   }
 
   clickSquare = (squareClicked: SquareModelType): void => {
@@ -234,6 +240,56 @@ export class ChessboardModel implements ChessboardModelType {
         } else {
           this.selectSquare(squareClicked)
         }
+      }
+    }
+  }
+
+  showChangePawnModal = (pawn: PieceModelType): void => {
+    let colorLetter = 'b'
+    if (pawn.isWhite) {
+      colorLetter = 'w'
+    }
+
+    this.#currentChangePawn = pawn
+
+    const popupElement = document.getElementById('popup-root')
+    if (popupElement instanceof HTMLDivElement) {
+      popupElement.hidden = false
+
+      const queenButtonElement = document.getElementById('button-choose-queen')
+      const bishopButtonElement = document.getElementById('button-choose-bishop')
+      const knightButtonElement = document.getElementById('button-choose-knight')
+      const rookButtonElement = document.getElementById('button-choose-rook')
+
+      if (queenButtonElement instanceof HTMLImageElement) {
+        queenButtonElement.src = `./src/assets/Pieces/${colorLetter}q.png`
+      }
+      if (bishopButtonElement instanceof HTMLImageElement) {
+        bishopButtonElement.src = `./src/assets/Pieces/${colorLetter}b.png`
+      }
+      if (knightButtonElement instanceof HTMLImageElement) {
+        knightButtonElement.src = `./src/assets/Pieces/${colorLetter}n.png`
+      }
+      if (rookButtonElement instanceof HTMLImageElement) {
+        rookButtonElement.src = `./src/assets/Pieces/${colorLetter}r.png`
+      }
+    }
+  }
+
+  changePawn = (newTypePiece: NewChoosePiece): void => {
+    if (this.currentChangePawn !== undefined) {
+      if (this.currentChangePawn.square !== undefined) {
+        const isWhite = this.currentChangePawn.isWhite
+        const newPiece = newTypePiece === 'Queen'
+          ? new QueenModel(isWhite)
+          : newTypePiece === 'Bishop'
+            ? new BishopModel(isWhite)
+            : newTypePiece === 'Knight'
+              ? new KnightModel(isWhite)
+              : new RookModel(isWhite)
+        newPiece.paintInSquare(this.currentChangePawn.square)
+        this.#pieces = [...this.pieces.filter(piece => piece !== this.currentChangePawn), newPiece]
+        this.#currentChangePawn = undefined
       }
     }
   }
