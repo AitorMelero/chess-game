@@ -78,6 +78,10 @@ export class ChessboardModel implements ChessboardModelType {
 
   private selectPossibleMoveSquare (squaredSelected: SquareModelType): void {
     if (this.currentPiece?.square !== undefined) {
+      // Check if is castling
+      if (this.isCastlingMove(squaredSelected)) {
+        this.moveRookInCastling(squaredSelected)
+      }
       this.unselectSquare(this.currentPiece.square)
       this.currentPiece.unpaintInSquare()
       this.currentPiece.paintInSquare(squaredSelected)
@@ -89,6 +93,53 @@ export class ChessboardModel implements ChessboardModelType {
       if (newCurrentPlayer !== undefined) {
         this.#currentPlayer = newCurrentPlayer
       }
+    }
+  }
+
+  private isCastlingMove (squaredSelected: SquareModelType): boolean {
+    let isCastling = false
+
+    if (this.currentPiece instanceof KingModel) {
+      const pieceCurrentSquare = this.currentPiece?.square
+      if (pieceCurrentSquare !== undefined) {
+        if (pieceCurrentSquare.xPosition === squaredSelected.xPosition - 2 ||
+          pieceCurrentSquare.xPosition === squaredSelected.xPosition + 2) {
+          isCastling = true
+        }
+      }
+    }
+
+    return isCastling
+  }
+
+  private moveRookInCastling (squaredSelected: SquareModelType): void {
+    let rook: PieceModelType | undefined
+    let rookCurrentSquare: SquareModelType | undefined
+    let rookNewSquare: SquareModelType | undefined
+
+    if (squaredSelected.xPosition === 7 && squaredSelected.yPosition === 1) {
+      rookCurrentSquare = this.getSquareFromPosition({ xPosition: 8, yPosition: 1 })
+      rookNewSquare = this.getSquareFromPosition({ xPosition: 6, yPosition: 1 })
+      rook = rookCurrentSquare?.piece
+    } else if (squaredSelected.xPosition === 7 && squaredSelected.yPosition === 8) {
+      rookCurrentSquare = this.getSquareFromPosition({ xPosition: 8, yPosition: 8 })
+      rookNewSquare = this.getSquareFromPosition({ xPosition: 6, yPosition: 8 })
+      rook = rookCurrentSquare?.piece
+    } else if (squaredSelected.xPosition === 3 && squaredSelected.yPosition === 1) {
+      rookCurrentSquare = this.getSquareFromPosition({ xPosition: 1, yPosition: 1 })
+      rookNewSquare = this.getSquareFromPosition({ xPosition: 4, yPosition: 1 })
+      rook = rookCurrentSquare?.piece
+    } else {
+      rookCurrentSquare = this.getSquareFromPosition({ xPosition: 1, yPosition: 8 })
+      rookNewSquare = this.getSquareFromPosition({ xPosition: 4, yPosition: 8 })
+      rook = rookCurrentSquare?.piece
+    }
+
+    // Paint move rook
+    if (rookCurrentSquare !== undefined && rookNewSquare !== undefined && rook !== undefined) {
+      rookCurrentSquare.unpaintPiece()
+      rookNewSquare.paintPiece(rook)
+      rookNewSquare.unpaintPossibleMove()
     }
   }
 
