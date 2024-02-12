@@ -11,7 +11,7 @@ A continuación se muestra la lista de tareas a realizar para completar la versi
 - [X] Implementar el peón (Pawn) y testar.
 - [X] Implementar el rey (King) y testar.
 - [X] Comer piezas y testar. Mostrar piezas comidas donde corresponde.
-- [ ] Implementar la captura al paso (en passant) y testar.
+- [X] Implementar la captura al paso (en passant) y testar.
 - [ ] Implementar el enroque y testar.
 - [ ] Implementar el jaque y jaque mate y testar.
 - [ ] Implementar historial de la partida y testar.
