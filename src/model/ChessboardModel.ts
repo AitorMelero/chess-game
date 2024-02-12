@@ -1,5 +1,5 @@
 import { PieceFilters } from '../helpers'
-import { type ChessboardModelType } from '../types/Chessboard'
+import { type PossibleEnPassant, type ChessboardModelType } from '../types/Chessboard'
 import { type NewChoosePiece, type PieceModelType } from '../types/Piece'
 import { type PlayerModelType } from '../types/Player'
 import { type SquarePosition, type SquareModelType } from '../types/Square'
@@ -23,6 +23,7 @@ export class ChessboardModel implements ChessboardModelType {
   #pieces: PieceModelType[]
   #currentPiece: PieceModelType | undefined
   #currentChangePawn: PieceModelType | undefined
+  #possibleEnPassant: PossibleEnPassant | undefined
 
   constructor () {
     const isWhite = true
@@ -36,6 +37,7 @@ export class ChessboardModel implements ChessboardModelType {
     this.#pieces = []
     this.#currentPiece = undefined
     this.#currentChangePawn = undefined
+    this.#possibleEnPassant = undefined
     this.createChessboard()
   }
 
@@ -80,6 +82,7 @@ export class ChessboardModel implements ChessboardModelType {
       this.currentPiece.unpaintInSquare()
       this.currentPiece.paintInSquare(squaredSelected)
       squaredSelected.paintSelected()
+      squaredSelected.unpaintPossibleMove()
 
       // Change player turn
       const newCurrentPlayer = this.players.find(player => player !== this.currentPlayer)
@@ -87,6 +90,43 @@ export class ChessboardModel implements ChessboardModelType {
         this.#currentPlayer = newCurrentPlayer
       }
     }
+  }
+
+  private checkPossibleEnPassant (squaredSelected: SquareModelType): void {
+    let possibleEnPassant: PossibleEnPassant | undefined
+
+    if (this.currentPiece instanceof PawnModel) {
+      if (this.possibleEnPassant?.square === squaredSelected) {
+        // Eat en passant
+        this.possibleEnPassant.pawn.unpaintInSquare()
+        this.#possibleEnPassant = undefined
+      } else if (this.currentPiece instanceof PawnModel) {
+        // Possible en passant
+        if (this.currentPiece.isWhite) {
+          if (this.currentPiece.square?.yPosition === squaredSelected.yPosition - 2) {
+            possibleEnPassant = {
+              pawn: this.currentPiece,
+              square: this.getSquareFromPosition({
+                xPosition: squaredSelected.xPosition,
+                yPosition: squaredSelected.yPosition - 1
+              })
+            }
+          }
+        } else {
+          if (this.currentPiece.square?.yPosition === squaredSelected.yPosition + 2) {
+            possibleEnPassant = {
+              pawn: this.currentPiece,
+              square: this.getSquareFromPosition({
+                xPosition: squaredSelected.xPosition,
+                yPosition: squaredSelected.yPosition + 1
+              })
+            }
+          }
+        }
+      }
+    }
+
+    this.#possibleEnPassant = possibleEnPassant
   }
 
   get players (): PlayerModelType[] {
@@ -119,6 +159,10 @@ export class ChessboardModel implements ChessboardModelType {
 
   get currentChangePawn (): PieceModelType | undefined {
     return this.#currentChangePawn
+  }
+
+  get possibleEnPassant (): PossibleEnPassant | undefined {
+    return this.#possibleEnPassant
   }
 
   getSquareFromPosition (squarePosition: SquarePosition): SquareModelType | undefined {
@@ -232,6 +276,7 @@ export class ChessboardModel implements ChessboardModelType {
       } else {
         if (this.currentPiece?.square !== undefined) {
           if (squareClicked.isPossibleMove) {
+            this.checkPossibleEnPassant(squareClicked)
             this.selectPossibleMoveSquare(squareClicked)
           } else {
             this.unselectSquare(this.currentPiece.square)

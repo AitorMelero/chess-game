@@ -53,7 +53,7 @@ export class PawnModel extends PieceModel {
     return yPositions
   }
 
-  private pawnCanEatPiece (squareTarget: SquareModelType): boolean {
+  private canEatPiece (squareTarget: SquareModelType): boolean {
     let pawnCanEat = false
 
     if (squareTarget.piece?.isWhite !== this.isWhite && this.square !== undefined) {
@@ -75,14 +75,34 @@ export class PawnModel extends PieceModel {
     return pawnCanEat
   }
 
+  private canEatPawnEnPassant (squareTarget: SquareModelType): boolean {
+    let canEat = false
+
+    if (this.isWhite) {
+      if (squareTarget.yPosition === 6 && this.square?.yPosition === 5 &&
+        (this.square?.xPosition === squareTarget.xPosition - 1 ||
+          this.square?.xPosition === squareTarget.xPosition + 1)
+      ) {
+        canEat = squareTarget === this.square?.chessboard.possibleEnPassant?.square
+      }
+    } else if (squareTarget.yPosition === 3 && this.square?.yPosition === 4 &&
+        (this.square?.xPosition === squareTarget.xPosition - 1 ||
+          this.square?.xPosition === squareTarget.xPosition + 1)
+    ) {
+      canEat = squareTarget === this.square?.chessboard.possibleEnPassant?.square
+    }
+
+    return canEat
+  }
+
   calculatePossibleNextSquares (): SquareModelType[] {
     let nextPossibleSquares: SquareModelType[] = []
 
     if (this.square !== undefined) {
       nextPossibleSquares = this.square.chessboard.squares.filter(
         square =>
-          (square.piece !== undefined && square.piece.isWhite !== this.isWhite && this.pawnCanEatPiece(square)) ||
-          (this.isSquareInPossibleMove(square) && square.piece === undefined)
+          (square.piece !== undefined && square.piece.isWhite !== this.isWhite && this.canEatPiece(square)) ||
+          (square.piece === undefined && (this.isSquareInPossibleMove(square) || this.canEatPawnEnPassant(square)))
       )
     }
 
