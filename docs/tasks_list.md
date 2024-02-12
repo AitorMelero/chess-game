@@ -1,16 +1,16 @@
 A continuación se muestra la lista de tareas a realizar para completar la versión 1 del proyecto:
 
 - [X] Crear y configurar el proyecto (Git, GitHub, React, Vite, ESLint, ...).
-- [ ] Implementar la casilla (Square) y testar.
-- [ ] Implementar el tablero (ChessBoard) y testar.
-- [ ] Implementar las piezas (Piece) y testar.
-- [ ] Implementar el alfil (Bishop) y testar.
-- [ ] Implementar el caballo (Knight) y testar.
-- [ ] Implementar la torre (Rook) y testar.
-- [ ] Implementar la dama (Queen) y testar.
-- [ ] Implementar el peón (Pawn) y testar.
-- [ ] Implementar el rey (King) y testar.
-- [ ] Comer piezas y testar. Mostrar piezas comidas donde corresponde.
+- [X] Implementar la casilla (Square) y testar.
+- [X] Implementar el tablero (ChessBoard) y testar.
+- [X] Implementar las piezas (Piece) y testar.
+- [X] Implementar el alfil (Bishop) y testar.
+- [X] Implementar el caballo (Knight) y testar.
+- [X] Implementar la torre (Rook) y testar.
+- [X] Implementar la dama (Queen) y testar.
+- [X] Implementar el peón (Pawn) y testar.
+- [X] Implementar el rey (King) y testar.
+- [X] Comer piezas y testar. Mostrar piezas comidas donde corresponde.
 - [ ] Implementar la captura al paso (en passant) y testar.
 - [ ] Implementar el enroque y testar.
 - [ ] Implementar el jaque y jaque mate y testar.
