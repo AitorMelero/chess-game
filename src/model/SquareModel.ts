@@ -1,3 +1,4 @@
+import { KingModel, RookModel } from '.'
 import { type ChessboardModelType } from '../types/Chessboard'
 import { type PieceModelType } from '../types/Piece'
 import { type SquareModelType } from '../types/Square'
@@ -161,6 +162,12 @@ export class SquareModel implements SquareModelType {
     const squarePieceElement = document.getElementById(this.squarePieceIdElement)
     if (squarePieceElement !== null) {
       squarePieceElement.querySelector('img')?.remove()
+
+      // If king or rook moves, set first move state variable
+      if (this.piece instanceof KingModel || this.piece instanceof RookModel) {
+        this.piece.isFirstMove = false
+      }
+
       this.piece = undefined
     } else {
       throw new Error('Square Unpaint Piece')
