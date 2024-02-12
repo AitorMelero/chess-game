@@ -1,4 +1,4 @@
-import { getRookNextPossibleMoves } from '../helpers'
+import { getRookNextPossibleMoves, isCheck } from '../helpers'
 import { type SquareModelType } from '../types/Square'
 import { PieceModel } from './PieceModel'
 
@@ -28,6 +28,6 @@ export class RookModel extends PieceModel {
       nextPossibleSquares = getRookNextPossibleMoves(this.square)
     }
 
-    return nextPossibleSquares
+    return nextPossibleSquares.filter(nextPossibleSquare => !isCheck(this, nextPossibleSquare))
   }
 }

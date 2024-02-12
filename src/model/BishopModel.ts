@@ -1,4 +1,4 @@
-import { getBishopNextPossibleMoves } from '../helpers'
+import { getBishopNextPossibleMoves, isCheck } from '../helpers'
 import { type SquareModelType } from '../types/Square'
 import { PieceModel } from './PieceModel'
 
@@ -17,6 +17,6 @@ export class BishopModel extends PieceModel {
       nextPossibleSquares = getBishopNextPossibleMoves(this.square)
     }
 
-    return nextPossibleSquares
+    return nextPossibleSquares.filter(nextPossibleSquare => !isCheck(this, nextPossibleSquare))
   }
 }

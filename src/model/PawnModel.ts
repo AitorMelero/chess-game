@@ -1,3 +1,4 @@
+import { isCheck } from '../helpers'
 import { type SquareModelType } from '../types/Square'
 import { PieceModel } from './PieceModel'
 
@@ -106,7 +107,7 @@ export class PawnModel extends PieceModel {
       )
     }
 
-    return nextPossibleSquares
+    return nextPossibleSquares.filter(nextPossibleSquare => !isCheck(this, nextPossibleSquare))
   }
 
   paintInSquare (square: SquareModelType): void {

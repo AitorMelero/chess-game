@@ -1,5 +1,5 @@
 import { RookModel } from '.'
-import { getKingNextPossibleMoves } from '../helpers'
+import { getKingNextPossibleMoves, isCheck } from '../helpers'
 import { type PieceModelType } from '../types/Piece'
 import { type SquarePosition, type SquareModelType } from '../types/Square'
 import { PieceModel } from './PieceModel'
@@ -295,7 +295,7 @@ export class KingModel extends PieceModel {
       }
     }
 
-    return nextPossibleSquares
+    return nextPossibleSquares.filter(nextPossibleSquare => !isCheck(this, nextPossibleSquare))
   }
 
   isInCheck (): boolean {
