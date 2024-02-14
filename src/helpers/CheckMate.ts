@@ -7,9 +7,6 @@ export const isCheck = (piece: PieceModelType, possibleSquare: SquareModelType):
   const isWhite = piece.isWhite
   const chessboard = possibleSquare.chessboard
   const king = isWhite ? chessboard.whiteKing : chessboard.blackKing
-  const opponentPieces = chessboard.pieces.filter(opponentPiece =>
-    opponentPiece.isWhite !== isWhite && !(opponentPiece instanceof KingModel)
-  )
   const opponentMoves: SquareModelType[] = []
   let isCheck = false
   const oldSquare = piece.square
@@ -26,6 +23,11 @@ export const isCheck = (piece: PieceModelType, possibleSquare: SquareModelType):
       yPosition: possibleSquare.yPosition
     }
     simulateMove(chessboard, oldPosition, newPosition)
+
+    // Check if it is check
+    const opponentPieces = chessboard.pieces.filter(opponentPiece =>
+      opponentPiece.isWhite !== isWhite && !(opponentPiece instanceof KingModel)
+    )
 
     opponentPieces.forEach(opponentPiece => {
       opponentPiece.calculatePossibleNextSquares().forEach(moveSquare =>

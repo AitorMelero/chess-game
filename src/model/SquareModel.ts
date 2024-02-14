@@ -152,6 +152,9 @@ export class SquareModel implements SquareModelType {
     const squarePieceElement = document.getElementById(this.squarePieceIdElement)
     if (squarePieceElement !== null) {
       squarePieceElement.innerHTML = `<img src=${piece.image} alt="Chess Piece" />`
+      if (this.piece !== undefined) {
+        this.piece.square = undefined
+      }
       this.piece = piece
     } else {
       throw new Error('Square Paint Piece')
