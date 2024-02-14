@@ -1,4 +1,4 @@
-import { KingModel } from '../model'
+import { KingModel, PawnModel } from '../model'
 import { type ChessboardModelType } from '../types/Chessboard'
 import { type PieceModelType } from '../types/Piece'
 import { type SquarePosition, type SquareModelType } from '../types/Square'
@@ -53,8 +53,15 @@ const simulateMove = (
   const square = chessboard.getSquareFromPosition(finishPosition)
 
   if (piece !== undefined && square !== undefined) {
+    const isPawn = piece instanceof PawnModel
+    const isSimulation = true
     piece.unpaintInSquare()
-    piece.paintInSquare(square)
+    if (isPawn) {
+      // Don't show the popup to change pawn for new piece
+      piece.paintInSquare(square, isSimulation)
+    } else {
+      piece.paintInSquare(square)
+    }
   }
 }
 

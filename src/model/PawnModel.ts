@@ -111,11 +111,11 @@ export class PawnModel extends PieceModel {
     return possibleNextSquares
   }
 
-  paintInSquare (square: SquareModelType): void {
+  paintInSquare (square: SquareModelType, isSimulation = false): void {
     const isWhiteChange = square.yPosition === 8 && this.isWhite
     const isBlackChange = square.yPosition === 1 && !this.isWhite
 
-    if (isWhiteChange || isBlackChange) {
+    if (!isSimulation && (isWhiteChange || isBlackChange)) {
       square.chessboard.showChangePawnModal(this)
     }
 
