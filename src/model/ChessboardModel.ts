@@ -357,23 +357,28 @@ export class ChessboardModel implements ChessboardModelType {
     const popupElement = document.getElementById('popup-root')
     if (popupElement instanceof HTMLDivElement) {
       popupElement.hidden = false
+      const popupChoosePieceElement = document.getElementById('popup-choose-piece')
 
-      const queenButtonElement = document.getElementById('button-choose-queen')
-      const bishopButtonElement = document.getElementById('button-choose-bishop')
-      const knightButtonElement = document.getElementById('button-choose-knight')
-      const rookButtonElement = document.getElementById('button-choose-rook')
+      if (popupChoosePieceElement !== null) {
+        popupChoosePieceElement.hidden = false
 
-      if (queenButtonElement instanceof HTMLImageElement) {
-        queenButtonElement.src = `./src/assets/Pieces/${colorLetter}q.png`
-      }
-      if (bishopButtonElement instanceof HTMLImageElement) {
-        bishopButtonElement.src = `./src/assets/Pieces/${colorLetter}b.png`
-      }
-      if (knightButtonElement instanceof HTMLImageElement) {
-        knightButtonElement.src = `./src/assets/Pieces/${colorLetter}n.png`
-      }
-      if (rookButtonElement instanceof HTMLImageElement) {
-        rookButtonElement.src = `./src/assets/Pieces/${colorLetter}r.png`
+        const queenButtonElement = document.getElementById('button-choose-queen')
+        const bishopButtonElement = document.getElementById('button-choose-bishop')
+        const knightButtonElement = document.getElementById('button-choose-knight')
+        const rookButtonElement = document.getElementById('button-choose-rook')
+
+        if (queenButtonElement instanceof HTMLImageElement) {
+          queenButtonElement.src = `./src/assets/Pieces/${colorLetter}q.png`
+        }
+        if (bishopButtonElement instanceof HTMLImageElement) {
+          bishopButtonElement.src = `./src/assets/Pieces/${colorLetter}b.png`
+        }
+        if (knightButtonElement instanceof HTMLImageElement) {
+          knightButtonElement.src = `./src/assets/Pieces/${colorLetter}n.png`
+        }
+        if (rookButtonElement instanceof HTMLImageElement) {
+          rookButtonElement.src = `./src/assets/Pieces/${colorLetter}r.png`
+        }
       }
     }
   }
@@ -389,13 +394,20 @@ export class ChessboardModel implements ChessboardModelType {
             : newTypePiece === 'Knight'
               ? new KnightModel(isWhite)
               : new RookModel(isWhite)
+
         newPiece.paintInSquare(this.currentChangePawn.square)
+        this.#currentPiece = newPiece
         this.#pieces = [...this.pieces.filter(piece => piece !== this.currentChangePawn), newPiece]
         this.#currentChangePawn = undefined
 
         const popupElement = document.getElementById('popup-root')
         if (popupElement instanceof HTMLDivElement) {
           popupElement.hidden = true
+
+          const popupChoosePieceElement = document.getElementById('popup-choose-piece')
+          if (popupChoosePieceElement !== null) {
+            popupChoosePieceElement.hidden = true
+          }
         }
       }
     }
