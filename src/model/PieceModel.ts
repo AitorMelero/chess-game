@@ -5,11 +5,13 @@ export abstract class PieceModel implements PieceModelType {
   readonly #isWhite: boolean
   readonly #image: string
   #square: SquareModelType | undefined
+  #possibleNextSquares: SquareModelType[]
 
   constructor (image: string, isWhite: boolean) {
     this.#isWhite = isWhite
     this.#image = image
     this.#square = undefined
+    this.#possibleNextSquares = this.calculatePossibleNextSquares()
   }
 
   get isWhite (): boolean {
@@ -26,6 +28,14 @@ export abstract class PieceModel implements PieceModelType {
 
   set square (square: SquareModelType | undefined) {
     this.#square = square
+  }
+
+  get possibleNextSquares (): SquareModelType[] {
+    return this.#possibleNextSquares
+  }
+
+  set possibleNextSquares (possibleNextSquares: SquareModelType[]) {
+    this.#possibleNextSquares = possibleNextSquares
   }
 
   calculatePossibleNextSquares (): SquareModelType[] {

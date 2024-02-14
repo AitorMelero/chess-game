@@ -1,4 +1,3 @@
-import { isCheck } from '../helpers'
 import { type SquareModelType } from '../types/Square'
 import { PieceModel } from './PieceModel'
 
@@ -97,17 +96,19 @@ export class PawnModel extends PieceModel {
   }
 
   calculatePossibleNextSquares (): SquareModelType[] {
-    let nextPossibleSquares: SquareModelType[] = []
+    let possibleNextSquares: SquareModelType[] = []
 
     if (this.square !== undefined) {
-      nextPossibleSquares = this.square.chessboard.squares.filter(
+      possibleNextSquares = this.square.chessboard.squares.filter(
         square =>
           (square.piece !== undefined && square.piece.isWhite !== this.isWhite && this.canEatPiece(square)) ||
           (square.piece === undefined && (this.isSquareInPossibleMove(square) || this.canEatPawnEnPassant(square)))
       )
     }
 
-    return nextPossibleSquares.filter(nextPossibleSquare => !isCheck(this, nextPossibleSquare))
+    this.possibleNextSquares = possibleNextSquares
+
+    return possibleNextSquares
   }
 
   paintInSquare (square: SquareModelType): void {

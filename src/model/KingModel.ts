@@ -1,5 +1,5 @@
 import { RookModel } from '.'
-import { getKingNextPossibleMoves, isCheck } from '../helpers'
+import { getKingNextPossibleMoves } from '../helpers'
 import { type PieceModelType } from '../types/Piece'
 import { type SquarePosition, type SquareModelType } from '../types/Square'
 import { PieceModel } from './PieceModel'
@@ -276,29 +276,7 @@ export class KingModel extends PieceModel {
     return isCheck
   }
 
-  calculatePossibleNextSquares (): SquareModelType[] {
-    let nextPossibleSquares: SquareModelType[] = []
-
-    if (this.square !== undefined) {
-      const pieceSquare = this.square
-
-      nextPossibleSquares = [
-        ...getKingNextPossibleMoves(pieceSquare)
-      ]
-
-      if (this.isShortCastling()) {
-        nextPossibleSquares = [...nextPossibleSquares, ...this.getShortCastlingSquares()]
-      }
-
-      if (this.isLongCastling()) {
-        nextPossibleSquares = [...nextPossibleSquares, ...this.getLongCastlingSquares()]
-      }
-    }
-
-    return nextPossibleSquares.filter(nextPossibleSquare => !isCheck(this, nextPossibleSquare))
-  }
-
-  isInCheck (): boolean {
+  private isInCheck (): boolean {
     let isCheck = false
 
     if (this.square !== undefined) {
@@ -306,5 +284,29 @@ export class KingModel extends PieceModel {
     }
 
     return isCheck
+  }
+
+  calculatePossibleNextSquares (): SquareModelType[] {
+    let possibleNextSquares: SquareModelType[] = []
+
+    if (this.square !== undefined) {
+      const pieceSquare = this.square
+
+      possibleNextSquares = [
+        ...getKingNextPossibleMoves(pieceSquare)
+      ]
+
+      if (this.isShortCastling()) {
+        possibleNextSquares = [...possibleNextSquares, ...this.getShortCastlingSquares()]
+      }
+
+      if (this.isLongCastling()) {
+        possibleNextSquares = [...possibleNextSquares, ...this.getLongCastlingSquares()]
+      }
+    }
+
+    this.possibleNextSquares = possibleNextSquares
+
+    return possibleNextSquares
   }
 }

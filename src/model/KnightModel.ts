@@ -1,4 +1,3 @@
-import { isCheck } from '../helpers'
 import { type SquarePosition, type SquareModelType } from '../types/Square'
 import { PieceModel } from './PieceModel'
 
@@ -61,6 +60,8 @@ export class KnightModel extends PieceModel {
       })
     }
 
-    return possibleNextSquares.filter(nextPossibleSquare => !isCheck(this, nextPossibleSquare))
+    this.possibleNextSquares = possibleNextSquares
+
+    return possibleNextSquares
   }
 }

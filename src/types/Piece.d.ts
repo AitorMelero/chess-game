@@ -5,6 +5,8 @@ export interface PieceModelType {
   get image(): string
   get square(): SquareModelType | undefined
   set square(square: SquareModelType | undefined): void
+  get possibleNextSquares (): SquareModelType[]
+  set possibleNextSquares (possibleNextSquares: SquareModelType[])
   calculatePossibleNextSquares: () => SquareModelType[]
   paintInSquare: (square: SquareModelType) => void
   unpaintInSquare: () => void

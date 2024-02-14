@@ -1,4 +1,4 @@
-import { getBishopNextPossibleMoves, getRookNextPossibleMoves, isCheck } from '../helpers'
+import { getBishopNextPossibleMoves, getRookNextPossibleMoves } from '../helpers'
 import { type SquareModelType } from '../types/Square'
 import { PieceModel } from './PieceModel'
 
@@ -11,15 +11,17 @@ export class QueenModel extends PieceModel {
   }
 
   calculatePossibleNextSquares (): SquareModelType[] {
-    let nextPossibleSquares: SquareModelType[] = []
+    let possibleNextSquares: SquareModelType[] = []
 
     if (this.square !== undefined) {
-      nextPossibleSquares = [
+      possibleNextSquares = [
         ...getRookNextPossibleMoves(this.square),
         ...getBishopNextPossibleMoves(this.square)
       ]
     }
 
-    return nextPossibleSquares.filter(nextPossibleSquare => !isCheck(this, nextPossibleSquare))
+    this.possibleNextSquares = possibleNextSquares
+
+    return possibleNextSquares
   }
 }

@@ -1,4 +1,4 @@
-import { PieceFilters } from '../helpers'
+import { PieceFilters, isCheck } from '../helpers'
 import { type PossibleEnPassant, type ChessboardModelType } from '../types/Chessboard'
 import { type NewChoosePiece, type PieceModelType } from '../types/Piece'
 import { type PlayerModelType } from '../types/Player'
@@ -67,8 +67,14 @@ export class ChessboardModel implements ChessboardModelType {
 
   private selectSquare (squareSelected: SquareModelType): void {
     squareSelected.paintSelected()
-    squareSelected.piece?.calculatePossibleNextSquares().forEach(square => { square.paintPossibleMove() })
-    this.#currentPiece = squareSelected.piece
+    if (squareSelected.piece !== undefined) {
+      const squarePiece = squareSelected.piece
+      squarePiece.possibleNextSquares = squarePiece.calculatePossibleNextSquares().filter(
+        square => !isCheck(squarePiece, square)
+      )
+      squarePiece.possibleNextSquares.forEach(square => { square.paintPossibleMove() })
+      this.#currentPiece = squareSelected.piece
+    }
   }
 
   private unselectSquare (squareUnselected: SquareModelType): void {
