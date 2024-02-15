@@ -100,7 +100,7 @@ export class ChessboardModel implements ChessboardModelType {
         this.#currentPlayer = newCurrentPlayer
         // Check if is checkmate
         if (isCheckmate(this)) {
-          console.log('Checkmate')
+          this.showCheckmateModal()
         }
       }
     }
@@ -383,6 +383,18 @@ export class ChessboardModel implements ChessboardModelType {
         if (rookButtonElement instanceof HTMLImageElement) {
           rookButtonElement.src = `./src/assets/Pieces/${colorLetter}r.png`
         }
+      }
+    }
+  }
+
+  showCheckmateModal = (): void => {
+    const popupElement = document.getElementById('popup-root')
+    if (popupElement instanceof HTMLDivElement) {
+      popupElement.hidden = false
+      const popupCheckmateElement = document.getElementById('popup-checkmate')
+
+      if (popupCheckmateElement !== null) {
+        popupCheckmateElement.hidden = false
       }
     }
   }

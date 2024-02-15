@@ -13,7 +13,7 @@ export const PopupChoosePiece: React.FC<Props> = ({ onChoosePiece }) => {
   const [knightImage] = useState('./src/assets/Pieces/wn.png')
 
   return (
-    <article id='popup-choose-piece' className="bg-slate-600 rounded-lg p-5" hidden={false}>
+    <article id='popup-choose-piece' className="bg-slate-600 rounded-lg p-5" hidden={true}>
       <header className="text-white text-lg">Choose a piece</header>
       <br />
       <div className="flex flex-row justify-between">
