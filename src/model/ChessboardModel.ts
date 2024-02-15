@@ -1,4 +1,4 @@
-import { PieceFilters, isCheck } from '../helpers'
+import { PieceFilters, isCheck, isCheckmate } from '../helpers'
 import { type PossibleEnPassant, type ChessboardModelType } from '../types/Chessboard'
 import { type NewChoosePiece, type PieceModelType } from '../types/Piece'
 import { type PlayerModelType } from '../types/Player'
@@ -98,6 +98,10 @@ export class ChessboardModel implements ChessboardModelType {
       const newCurrentPlayer = this.players.find(player => player !== this.currentPlayer)
       if (newCurrentPlayer !== undefined) {
         this.#currentPlayer = newCurrentPlayer
+        // Check if is checkmate
+        if (isCheckmate(this)) {
+          console.log('Checkmate')
+        }
       }
     }
   }

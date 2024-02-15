@@ -3,6 +3,26 @@ import { type ChessboardModelType } from '../types/Chessboard'
 import { type PieceModelType } from '../types/Piece'
 import { type SquarePosition, type SquareModelType } from '../types/Square'
 
+export const isCheckmate = (chessboard: ChessboardModelType): boolean => {
+  const isWhiteTurn = chessboard.currentPlayer.isWhite
+  const king = isWhiteTurn ? chessboard.whiteKing : chessboard.blackKing
+  const pieces = chessboard.pieces.filter(piece => piece.isWhite === isWhiteTurn)
+  let isMate = false
+
+  if (isKingInCheck(king?.square, isWhiteTurn)) {
+    const isPossibleMoves = pieces.filter(
+      piece => piece.calculatePossibleNextSquares().filter(
+        possibleSquare => !isCheck(piece, possibleSquare)
+      ).length > 0).length > 0
+
+    if (!isPossibleMoves) {
+      isMate = true
+    }
+  }
+
+  return isMate
+}
+
 export const isCheck = (piece: PieceModelType, possibleSquare: SquareModelType): boolean => {
   const isWhite = piece.isWhite
   const chessboard = possibleSquare.chessboard
@@ -42,6 +62,28 @@ export const isCheck = (piece: PieceModelType, possibleSquare: SquareModelType):
     // Unsimulate the move
     unsimulateMove(chessboard, oldPosition, newPosition, oldPiece)
   }
+
+  return isCheck
+}
+
+export const isKingInCheck = (square: SquareModelType | undefined, isWhite: boolean): boolean => {
+  let isCheck = false
+
+  if (square !== undefined) {
+    isCheck = isCheckInSquare(square, isWhite)
+  }
+
+  return isCheck
+}
+
+export const isCheckInSquare = (square: SquareModelType, isWhite: boolean): boolean => {
+  let isCheck = false
+
+  isCheck = square.chessboard.pieces.filter(
+    piece => !(piece instanceof KingModel) && piece.isWhite !== isWhite && piece.calculatePossibleNextSquares().find(
+      compareSquare => compareSquare === square
+    )
+  ).length > 0
 
   return isCheck
 }

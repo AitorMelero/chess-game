@@ -1,5 +1,5 @@
 import { RookModel } from '.'
-import { getKingNextPossibleMoves } from '../helpers'
+import { getKingNextPossibleMoves, isCheckInSquare, isKingInCheck } from '../helpers'
 import { type PieceModelType } from '../types/Piece'
 import { type SquarePosition, type SquareModelType } from '../types/Square'
 import { PieceModel } from './PieceModel'
@@ -26,7 +26,7 @@ export class KingModel extends PieceModel {
   private isShortCastling (): boolean {
     let isShortCastling = true
 
-    if (this.isInCheck()) {
+    if (isKingInCheck(this.square, this.isWhite)) {
       isShortCastling = false
     } else if (!this.isFirstMoveRookInShortCastling() || !this.isFirstMove) {
       isShortCastling = false
@@ -42,7 +42,7 @@ export class KingModel extends PieceModel {
   private isLongCastling (): boolean {
     let isLongCastling = true
 
-    if (this.isInCheck()) {
+    if (isKingInCheck(this.square, this.isWhite)) {
       isLongCastling = false
     } else if (!this.isFirstMoveRookInLongCastling() || !this.isFirstMove) {
       isLongCastling = false
@@ -235,7 +235,7 @@ export class KingModel extends PieceModel {
       }
 
       if (square1 !== undefined && square2 !== undefined) {
-        isCheck = this.isCheckInSquare(square1) || this.isCheckInSquare(square2)
+        isCheck = isCheckInSquare(square1, this.isWhite) || isCheckInSquare(square2, this.isWhite)
       }
     }
 
@@ -257,30 +257,8 @@ export class KingModel extends PieceModel {
       }
 
       if (square1 !== undefined && square2 !== undefined) {
-        isCheck = this.isCheckInSquare(square1) || this.isCheckInSquare(square2)
+        isCheck = isCheckInSquare(square1, this.isWhite) || isCheckInSquare(square2, this.isWhite)
       }
-    }
-
-    return isCheck
-  }
-
-  private isCheckInSquare (square: SquareModelType): boolean {
-    let isCheck = false
-
-    isCheck = square.chessboard.pieces.filter(
-      piece => !(piece instanceof KingModel) && piece.isWhite !== this.isWhite && piece.calculatePossibleNextSquares().find(
-        compareSquare => compareSquare === square
-      )
-    ).length > 0
-
-    return isCheck
-  }
-
-  private isInCheck (): boolean {
-    let isCheck = false
-
-    if (this.square !== undefined) {
-      isCheck = this.isCheckInSquare(this.square)
     }
 
     return isCheck
