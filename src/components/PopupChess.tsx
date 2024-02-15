@@ -6,9 +6,10 @@ import { PopupCheckMate } from './PopupCheckMate'
 interface Props {
   isLoading: boolean
   onChoosePiece: (newTypePiece: NewChoosePiece) => void
+  onRestartGame: () => void
 }
 
-export const PopupChess: React.FC<Props> = ({ isLoading, onChoosePiece }) => {
+export const PopupChess: React.FC<Props> = ({ isLoading, onChoosePiece, onRestartGame }) => {
   return (
     <Popup modal nested open={true} position="center center">
       {isLoading
@@ -18,7 +19,7 @@ export const PopupChess: React.FC<Props> = ({ isLoading, onChoosePiece }) => {
         : (
           <section className='h-[100vh] w-[100vw] bg-transparent flex flex-row justify-center items-center'>
             <PopupChoosePiece onChoosePiece={onChoosePiece} />
-            <PopupCheckMate />
+            <PopupCheckMate onRestartGame={onRestartGame}/>
           </section>
           )}
     </Popup>

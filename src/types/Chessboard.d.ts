@@ -23,6 +23,7 @@ export interface ChessboardModelType {
   clickSquare: (squareClicked: SquareModelType) => void
   showChangePawnModal: (pawn: PieceModelType) => void
   changePawn: (newTypePiece: NewChoosePiece) => void
+  restartGame: () => void
 }
 
 export interface ChessboardProps {

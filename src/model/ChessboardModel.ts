@@ -399,6 +399,18 @@ export class ChessboardModel implements ChessboardModelType {
     }
   }
 
+  hideCheckmateModal = (): void => {
+    const popupElement = document.getElementById('popup-root')
+    if (popupElement instanceof HTMLDivElement) {
+      const popupCheckmateElement = document.getElementById('popup-checkmate')
+      if (popupCheckmateElement !== null) {
+        popupCheckmateElement.hidden = true
+      }
+
+      popupElement.hidden = true
+    }
+  }
+
   changePawn = (newTypePiece: NewChoosePiece): void => {
     if (this.currentChangePawn !== undefined) {
       if (this.currentChangePawn.square !== undefined) {
@@ -427,5 +439,24 @@ export class ChessboardModel implements ChessboardModelType {
         }
       }
     }
+  }
+
+  restartGame = (): void => {
+    this.players.forEach(player => { player.pieces = [] })
+    this.pieces.forEach(piece => { piece.unpaintInSquare() })
+    this.#pieces = []
+    this.squares.forEach(square => {
+      square.piece = undefined
+      square.unpaintSelected()
+      square.unpaintPossibleMove()
+    })
+    this.#whiteKing = undefined
+    this.#blackKing = undefined
+    this.#currentPlayer = this.players[0]
+    this.#currentPiece = undefined
+    this.#currentChangePawn = undefined
+    this.#possibleEnPassant = undefined
+    this.createPieces()
+    this.hideCheckmateModal()
   }
 }
