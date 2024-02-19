@@ -94,7 +94,10 @@ export class ChessboardModel implements ChessboardModelType {
       }
       this.unselectSquare(this.currentPiece.square)
       // Save play in Game History
-      this.gameHistory.addPlay(this.currentPiece.square, squaredSelected, this.currentPiece)
+      const isEatPiece = squaredSelected.piece !== undefined
+      this.gameHistory.addPlay(this.currentPiece.square, squaredSelected, this.currentPiece, isEatPiece)
+
+      // Paint piece move
       this.currentPiece.unpaintInSquare()
       this.currentPiece.paintInSquare(squaredSelected)
       squaredSelected.paintSelected()

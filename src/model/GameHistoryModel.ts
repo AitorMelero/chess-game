@@ -20,21 +20,31 @@ export class GameHistoryModel implements GameHistoryModelType {
     return this.#playsHistory
   }
 
-  private writePlay (newSquare: SquareModelType, piece: PieceModelType): void {
+  private writePlay (
+    oldSquare: SquareModelType,
+    newSquare: SquareModelType,
+    piece: PieceModelType,
+    isEatPiece: boolean
+  ): void {
     const squarePosition = String.fromCharCode(newSquare.xPosition + 96) + newSquare.yPosition
     let playString: string
+
     if (piece instanceof PawnModel) {
-      playString = squarePosition
+      if (isEatPiece) {
+        playString = String.fromCharCode(oldSquare.xPosition + 96) + 'x' + squarePosition
+      } else {
+        playString = squarePosition
+      }
     } else if (piece instanceof RookModel) {
-      playString = 'R' + squarePosition
+      playString = 'R' + `${isEatPiece ? 'x' : ''}` + squarePosition
     } else if (piece instanceof KnightModel) {
-      playString = 'N' + squarePosition
+      playString = 'N' + `${isEatPiece ? 'x' : ''}` + squarePosition
     } else if (piece instanceof BishopModel) {
-      playString = 'B' + squarePosition
+      playString = 'B' + `${isEatPiece ? 'x' : ''}` + squarePosition
     } else if (piece instanceof QueenModel) {
-      playString = 'Q' + squarePosition
+      playString = 'Q' + `${isEatPiece ? 'x' : ''}` + squarePosition
     } else {
-      playString = 'K' + squarePosition
+      playString = 'K' + `${isEatPiece ? 'x' : ''}` + squarePosition
     }
 
     this.playsHistory.push(playString)
@@ -71,15 +81,21 @@ export class GameHistoryModel implements GameHistoryModelType {
     }
   }
 
-  addPlay (oldSquare: SquareModelType, newSquare: SquareModelType, piece: PieceModelType): void {
+  addPlay (
+    oldSquare: SquareModelType,
+    newSquare: SquareModelType,
+    piece: PieceModelType,
+    isEatPiece: boolean
+  ): void {
     console.log('Add Play: ', oldSquare, newSquare, piece)
     const newPlay: PlayType = {
       oldSquare,
       newSquare,
       piece
     }
+
     this.chessboardHistory.push(newPlay)
-    this.writePlay(newSquare, piece)
+    this.writePlay(oldSquare, newSquare, piece, isEatPiece)
   }
 
   goPlay (indexPlay: number): void {
