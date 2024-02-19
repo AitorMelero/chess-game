@@ -9,7 +9,8 @@ export interface GameHistoryModelType {
     newSquare: SquareModelType,
     piece: PieceModelType,
     isEatPiece: boolean,
-    isCheck: boolean
+    isCheck: boolean,
+    isCheckmate: boolean
   ) => void
   goPlay: (indexPlay: number) => void
   goPreviousPlay: () => void

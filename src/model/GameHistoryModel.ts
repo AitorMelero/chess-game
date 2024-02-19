@@ -25,7 +25,8 @@ export class GameHistoryModel implements GameHistoryModelType {
     newSquare: SquareModelType,
     piece: PieceModelType,
     isEatPiece: boolean,
-    isCheck: boolean
+    isCheck: boolean,
+    isCheckmate: boolean
   ): void {
     const squarePosition = String.fromCharCode(newSquare.xPosition + 96) + newSquare.yPosition
     let playString: string
@@ -48,7 +49,9 @@ export class GameHistoryModel implements GameHistoryModelType {
       playString = 'K' + `${isEatPiece ? 'x' : ''}` + squarePosition
     }
 
-    if (isCheck) {
+    if (isCheckmate) {
+      playString = playString + '#'
+    } else if (isCheck) {
       playString = playString + '+'
     }
 
@@ -91,7 +94,8 @@ export class GameHistoryModel implements GameHistoryModelType {
     newSquare: SquareModelType,
     piece: PieceModelType,
     isEatPiece: boolean,
-    isCheck: boolean
+    isCheck: boolean,
+    isCheckmate: boolean
   ): void {
     console.log('Add Play: ', oldSquare, newSquare, piece)
     const newPlay: PlayType = {
@@ -101,7 +105,7 @@ export class GameHistoryModel implements GameHistoryModelType {
     }
 
     this.chessboardHistory.push(newPlay)
-    this.writePlay(oldSquare, newSquare, piece, isEatPiece, isCheck)
+    this.writePlay(oldSquare, newSquare, piece, isEatPiece, isCheck, isCheckmate)
   }
 
   goPlay (indexPlay: number): void {

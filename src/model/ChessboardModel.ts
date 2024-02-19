@@ -93,6 +93,7 @@ export class ChessboardModel implements ChessboardModelType {
       const piece = this.currentPiece
       const isEatPiece = squaredSelected.piece !== undefined
       let isCheckPlay = false
+      let isMate = false
 
       // Check if is castling
       if (this.isCastlingMove(squaredSelected)) {
@@ -113,6 +114,7 @@ export class ChessboardModel implements ChessboardModelType {
         // Check if is checkmate
         if (isCheckmate(this)) {
           this.showCheckmateModal()
+          isMate = true
         } else if (isCheck(this)) {
           isCheckPlay = true
         }
@@ -124,7 +126,8 @@ export class ChessboardModel implements ChessboardModelType {
         newSquare,
         piece,
         isEatPiece,
-        isCheckPlay
+        isCheckPlay,
+        isMate
       )
     }
   }
