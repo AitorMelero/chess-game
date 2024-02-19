@@ -46,28 +46,28 @@ export class GameHistoryModel implements GameHistoryModelType {
     const playHistoryElement = document.getElementById('play-history')
     const currentTurn = Math.round(this.playsHistory.length / 2)
     const currentTurnId = `play-history-${currentTurn}`
-    const playHistoryTurnElement = document.getElementById(currentTurnId)
+    let playHistoryTurnElement = document.getElementById(currentTurnId)
 
     if (playHistoryElement !== null) {
-      if (playHistoryTurnElement !== null) {
-        const playButton = document.createElement('button')
-        playButton.className = 'h-20 bg-slate-600'
-        playButton.innerHTML = playString
-        playHistoryTurnElement.appendChild(playButton)
-      } else {
-        const turnElement = document.createElement('article')
-        turnElement.id = currentTurnId
-        turnElement.className = 'grid grid-flow-row grid-cols-3'
+      if (playHistoryTurnElement === null) {
+        // Create article turn play element
+        playHistoryTurnElement = document.createElement('article')
+        playHistoryTurnElement.id = currentTurnId
+        playHistoryTurnElement.className = 'grid grid-flow-row grid-cols-3'
+
+        // Create paragraph turn play element
         const paragraphElement = document.createElement('p')
         paragraphElement.className = 'h-20 text-center pt-[35%]'
         paragraphElement.innerHTML = currentTurn + '.'
-        const playButton = document.createElement('button')
-        playButton.className = 'h-20 bg-slate-600'
-        playButton.innerHTML = playString
-        turnElement.appendChild(paragraphElement)
-        turnElement.appendChild(playButton)
-        playHistoryElement.appendChild(turnElement)
+        playHistoryTurnElement.appendChild(paragraphElement)
+        playHistoryElement.appendChild(playHistoryTurnElement)
       }
+
+      // Add button play element
+      const playButton = document.createElement('button')
+      playButton.className = 'h-20 bg-slate-600'
+      playButton.innerHTML = playString
+      playHistoryTurnElement.appendChild(playButton)
     }
   }
 
