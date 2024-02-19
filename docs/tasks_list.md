@@ -13,7 +13,7 @@ A continuación se muestra la lista de tareas a realizar para completar la versi
 - [X] Comer piezas y testar. Mostrar piezas comidas donde corresponde.
 - [X] Implementar la captura al paso (en passant) y testar.
 - [X] Implementar el enroque y testar.
-- [ ] Implementar el jaque y jaque mate y testar.
+- [X] Implementar el jaque y jaque mate y testar.
 - [ ] Implementar historial de la partida y testar.
 - [ ] Implementar botón de reiniciar partida.
 - [ ] Implementar botones de retroceder y avanzar una jugada y testar.
