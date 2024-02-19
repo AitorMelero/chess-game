@@ -8,7 +8,8 @@ export interface GameHistoryModelType {
     oldSquare: SquareModelType,
     newSquare: SquareModelType,
     piece: PieceModelType,
-    isEatPiece: boolean
+    isEatPiece: boolean,
+    isCheck: boolean
   ) => void
   goPlay: (indexPlay: number) => void
   goPreviousPlay: () => void

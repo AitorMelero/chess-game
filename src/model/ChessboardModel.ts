@@ -1,4 +1,4 @@
-import { PieceFilters, isCheck, isCheckmate } from '../helpers'
+import { PieceFilters, isCheck, isCheckmate, isKingInCheck } from '../helpers'
 import { type PossibleEnPassant, type ChessboardModelType } from '../types/Chessboard'
 import { type NewChoosePiece, type PieceModelType } from '../types/Piece'
 import { type PlayerModelType } from '../types/Player'
@@ -88,16 +88,19 @@ export class ChessboardModel implements ChessboardModelType {
 
   private selectPossibleMoveSquare (squaredSelected: SquareModelType): void {
     if (this.currentPiece?.square !== undefined) {
+      const oldSquare = this.currentPiece.square
+      const newSquare = squaredSelected
+      const piece = this.currentPiece
+      const isEatPiece = squaredSelected.piece !== undefined
+      let isCheckPlay = false
+
       // Check if is castling
       if (this.isCastlingMove(squaredSelected)) {
         this.moveRookInCastling(squaredSelected)
       }
-      this.unselectSquare(this.currentPiece.square)
-      // Save play in Game History
-      const isEatPiece = squaredSelected.piece !== undefined
-      this.gameHistory.addPlay(this.currentPiece.square, squaredSelected, this.currentPiece, isEatPiece)
 
       // Paint piece move
+      this.unselectSquare(this.currentPiece.square)
       this.currentPiece.unpaintInSquare()
       this.currentPiece.paintInSquare(squaredSelected)
       squaredSelected.paintSelected()
@@ -105,13 +108,26 @@ export class ChessboardModel implements ChessboardModelType {
 
       // Change player turn
       const newCurrentPlayer = this.players.find(player => player !== this.currentPlayer)
+      const newCurrentPlayerKing = this.currentPlayer.isWhite ? this.whiteKing : this.blackKing
+
       if (newCurrentPlayer !== undefined) {
         this.#currentPlayer = newCurrentPlayer
         // Check if is checkmate
         if (isCheckmate(this)) {
           this.showCheckmateModal()
+        } else if (isKingInCheck(newCurrentPlayerKing?.square, this.currentPlayer.isWhite)) {
+          isCheckPlay = true
         }
       }
+
+      // Save play in Game History
+      this.gameHistory.addPlay(
+        oldSquare,
+        newSquare,
+        piece,
+        isEatPiece,
+        isCheckPlay
+      )
     }
   }
 
