@@ -26,7 +26,7 @@ export class ChessboardModel implements ChessboardModelType {
   #currentPiece: PieceModelType | undefined
   #currentChangePawn: PieceModelType | undefined
   #possibleEnPassant: PossibleEnPassant | undefined
-  readonly #gameHistory: GameHistoryModelType
+  #gameHistory: GameHistoryModelType
 
   constructor () {
     const isWhite = true
@@ -93,6 +93,8 @@ export class ChessboardModel implements ChessboardModelType {
         this.moveRookInCastling(squaredSelected)
       }
       this.unselectSquare(this.currentPiece.square)
+      // Save play in Game History
+      this.gameHistory.addPlay(this.currentPiece.square, squaredSelected, this.currentPiece)
       this.currentPiece.unpaintInSquare()
       this.currentPiece.paintInSquare(squaredSelected)
       squaredSelected.paintSelected()
@@ -464,6 +466,7 @@ export class ChessboardModel implements ChessboardModelType {
     this.#currentPiece = undefined
     this.#currentChangePawn = undefined
     this.#possibleEnPassant = undefined
+    this.#gameHistory = new GameHistoryModel()
     this.createPieces()
     this.hideCheckmateModal()
   }

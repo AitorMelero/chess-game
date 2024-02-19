@@ -7,11 +7,11 @@ const App = (): JSX.Element => {
   const [appModel] = useState(new AppModel())
 
   const goPreviousPlay = (): void => {
-    console.log('Go Previous Play')
+    appModel.chessboard.gameHistory.goPreviousPlay()
   }
 
   const goNextPlay = (): void => {
-    console.log('Go Next Play')
+    appModel.chessboard.gameHistory.goNextPlay()
   }
 
   const restart = (): void => {
