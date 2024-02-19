@@ -94,6 +94,7 @@ export class ChessboardModel implements ChessboardModelType {
       let isEatPiece = squaredSelected.piece !== undefined
       let isCheckPlay = false
       let isMate = false
+      let isCastling = false
 
       // Check if pawn is eating en passant
       if (piece instanceof PawnModel &&
@@ -106,6 +107,7 @@ export class ChessboardModel implements ChessboardModelType {
       // Check if is castling
       if (this.isCastlingMove(squaredSelected)) {
         this.moveRookInCastling(squaredSelected)
+        isCastling = true
       }
 
       // Paint piece move
@@ -135,7 +137,8 @@ export class ChessboardModel implements ChessboardModelType {
         piece,
         isEatPiece,
         isCheckPlay,
-        isMate
+        isMate,
+        isCastling
       )
     }
   }

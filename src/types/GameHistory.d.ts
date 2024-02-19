@@ -10,7 +10,8 @@ export interface GameHistoryModelType {
     piece: PieceModelType,
     isEatPiece: boolean,
     isCheck: boolean,
-    isCheckmate: boolean
+    isCheckmate: boolean,
+    isCastling: boolean
   ) => void
   goPlay: (indexPlay: number) => void
   goPreviousPlay: () => void
