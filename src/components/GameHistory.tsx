@@ -1,4 +1,5 @@
 import { ButtonHistory } from './ButtonHistory'
+import { PlaysHistory } from './PlaysHistory'
 
 interface Props {
   goPreviousPlay: () => void
@@ -10,9 +11,9 @@ export const GameHistory: React.FC<Props> = ({ goPreviousPlay, goNextPlay, resta
   return (
     <section className="game-history">
       <h1 className='text-light-square'>Game History</h1>
-      <article className='bg-light-square h-[75%]'>
 
-      </article>
+      <PlaysHistory />
+
       <article className='flex flex-row justify-between'>
         <ButtonHistory content={'<'} onClick={goPreviousPlay} />
         <ButtonHistory content={'>'} onClick={goNextPlay} />

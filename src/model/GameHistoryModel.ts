@@ -38,6 +38,37 @@ export class GameHistoryModel implements GameHistoryModelType {
     }
 
     this.playsHistory.push(playString)
+
+    this.paintPlayString(playString)
+  }
+
+  private paintPlayString (playString: string): void {
+    const playHistoryElement = document.getElementById('play-history')
+    const currentTurn = Math.round(this.playsHistory.length / 2)
+    const currentTurnId = `play-history-${currentTurn}`
+    const playHistoryTurnElement = document.getElementById(currentTurnId)
+
+    if (playHistoryElement !== null) {
+      if (playHistoryTurnElement !== null) {
+        const playButton = document.createElement('button')
+        playButton.className = 'h-20 bg-slate-600'
+        playButton.innerHTML = playString
+        playHistoryTurnElement.appendChild(playButton)
+      } else {
+        const turnElement = document.createElement('article')
+        turnElement.id = currentTurnId
+        turnElement.className = 'grid grid-flow-row grid-cols-3'
+        const paragraphElement = document.createElement('p')
+        paragraphElement.className = 'h-20 text-center pt-[35%]'
+        paragraphElement.innerHTML = currentTurn + '.'
+        const playButton = document.createElement('button')
+        playButton.className = 'h-20 bg-slate-600'
+        playButton.innerHTML = playString
+        turnElement.appendChild(paragraphElement)
+        turnElement.appendChild(playButton)
+        playHistoryElement.appendChild(turnElement)
+      }
+    }
   }
 
   addPlay (oldSquare: SquareModelType, newSquare: SquareModelType, piece: PieceModelType): void {
