@@ -3,6 +3,26 @@
 @tailwind utilities;
 
 @layer components {
+  /* Chessboard */
+  .chessboard-height {
+    @apply h-[90vw] lg:h-[70vw] xl:h-[45vw] min-h-80
+  }
+  .chessboard-width {
+    @apply w-[90vw] lg:w-[70vw] xl:w-[45vw] min-w-80
+  }
+  .chessboard {
+    @apply grid grid-cols-8 chessboard-height chessboard-width
+  }
+
+  /* Game History */
+  .game-history-width {
+    @apply w-[20vw]
+  }
+  .game-history {
+    @apply chessboard-height game-history-width flex flex-col justify-between
+  }
+
+  /* Squares */
   .selected-square {
     @apply bg-selected-square bg-opacity-60 w-full h-full flex justify-center items-center
   }
