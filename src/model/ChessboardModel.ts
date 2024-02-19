@@ -91,9 +91,17 @@ export class ChessboardModel implements ChessboardModelType {
       const oldSquare = this.currentPiece.square
       const newSquare = squaredSelected
       const piece = this.currentPiece
-      const isEatPiece = squaredSelected.piece !== undefined
+      let isEatPiece = squaredSelected.piece !== undefined
       let isCheckPlay = false
       let isMate = false
+
+      // Check if pawn is eating en passant
+      if (piece instanceof PawnModel &&
+        oldSquare.xPosition !== newSquare.xPosition &&
+        newSquare.piece === undefined
+      ) {
+        isEatPiece = true
+      }
 
       // Check if is castling
       if (this.isCastlingMove(squaredSelected)) {
