@@ -1,4 +1,4 @@
-import { PieceFilters, isCheck, isCheckmate, isKingInCheck } from '../helpers'
+import { PieceFilters, isMoveInCheck, isCheckmate, isCheck } from '../helpers'
 import { type PossibleEnPassant, type ChessboardModelType } from '../types/Chessboard'
 import { type NewChoosePiece, type PieceModelType } from '../types/Piece'
 import { type PlayerModelType } from '../types/Player'
@@ -74,7 +74,7 @@ export class ChessboardModel implements ChessboardModelType {
     if (squareSelected.piece !== undefined) {
       const squarePiece = squareSelected.piece
       squarePiece.possibleNextSquares = squarePiece.calculatePossibleNextSquares().filter(
-        square => !isCheck(squarePiece, square)
+        square => !isMoveInCheck(squarePiece, square)
       )
       squarePiece.possibleNextSquares.forEach(square => { square.paintPossibleMove() })
       this.#currentPiece = squareSelected.piece
@@ -108,14 +108,12 @@ export class ChessboardModel implements ChessboardModelType {
 
       // Change player turn
       const newCurrentPlayer = this.players.find(player => player !== this.currentPlayer)
-      const newCurrentPlayerKing = this.currentPlayer.isWhite ? this.whiteKing : this.blackKing
-
       if (newCurrentPlayer !== undefined) {
         this.#currentPlayer = newCurrentPlayer
         // Check if is checkmate
         if (isCheckmate(this)) {
           this.showCheckmateModal()
-        } else if (isKingInCheck(newCurrentPlayerKing?.square, this.currentPlayer.isWhite)) {
+        } else if (isCheck(this)) {
           isCheckPlay = true
         }
       }
