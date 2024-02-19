@@ -1,9 +1,15 @@
 interface Props {
   content: string
+  onClick: () => void
 }
 
-export const ButtonHistory: React.FC<Props> = ({ content }) => {
+export const ButtonHistory: React.FC<Props> = ({ content, onClick }) => {
   return (
-    <button>{content}</button>
+    <button
+      className="bg-dark-square w-1/4 rounded-md text-light-square"
+      onClick={onClick}
+    >
+      {content}
+    </button>
   )
 }

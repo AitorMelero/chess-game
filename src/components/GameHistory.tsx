@@ -1,17 +1,22 @@
 import { ButtonHistory } from './ButtonHistory'
 
-export const GameHistory: React.FC = () => {
+interface Props {
+  goPreviousPlay: () => void
+  goNextPlay: () => void
+  resign: () => void
+}
+
+export const GameHistory: React.FC<Props> = ({ goPreviousPlay, goNextPlay, resign }) => {
   return (
     <section className="game-history">
       <h1 className='text-light-square'>Game History</h1>
-      <article className='bg-light-square h-[85%]'>
+      <article className='bg-light-square h-[75%]'>
 
       </article>
-      <article>
-        <ButtonHistory content={'+'} />
-        <ButtonHistory content={'<'} />
-        <ButtonHistory content={'>'} />
-        <ButtonHistory content={'🏳️'} />
+      <article className='flex flex-row justify-between'>
+        <ButtonHistory content={'<'} onClick={goPreviousPlay} />
+        <ButtonHistory content={'>'} onClick={goNextPlay} />
+        <ButtonHistory content={'🏳️'} onClick={resign} />
       </article>
     </section>
   )
