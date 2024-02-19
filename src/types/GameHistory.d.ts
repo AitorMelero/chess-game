@@ -11,7 +11,8 @@ export interface GameHistoryModelType {
     isEatPiece: boolean,
     isCheck: boolean,
     isCheckmate: boolean,
-    isCastling: boolean
+    isCastling: boolean,
+    isAmbiguity: boolean
   ) => void
   goPlay: (indexPlay: number) => void
   goPreviousPlay: () => void
