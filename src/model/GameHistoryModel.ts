@@ -4,8 +4,8 @@ import { type PieceModelType } from '../types/Piece'
 import { type SquareModelType } from '../types/Square'
 
 export class GameHistoryModel implements GameHistoryModelType {
-  readonly #chessboardHistory: PlayType[]
-  readonly #playsHistory: string[]
+  #chessboardHistory: PlayType[]
+  #playsHistory: string[]
 
   constructor () {
     this.#chessboardHistory = []
@@ -118,5 +118,16 @@ export class GameHistoryModel implements GameHistoryModelType {
 
   goNextPlay (): void {
     console.log('Go Next Play')
+  }
+
+  restart (): void {
+    const playHistoryElement = document.getElementById('play-history')
+
+    if (playHistoryElement !== null) {
+      playHistoryElement.innerHTML = ''
+
+      this.#chessboardHistory = []
+      this.#playsHistory = []
+    }
   }
 }

@@ -26,7 +26,7 @@ export class ChessboardModel implements ChessboardModelType {
   #currentPiece: PieceModelType | undefined
   #currentChangePawn: PieceModelType | undefined
   #possibleEnPassant: PossibleEnPassant | undefined
-  #gameHistory: GameHistoryModelType
+  readonly #gameHistory: GameHistoryModelType
 
   constructor () {
     const isWhite = true
@@ -486,7 +486,7 @@ export class ChessboardModel implements ChessboardModelType {
     this.#currentPiece = undefined
     this.#currentChangePawn = undefined
     this.#possibleEnPassant = undefined
-    this.#gameHistory = new GameHistoryModel()
+    this.#gameHistory.restart()
     this.createPieces()
     this.hideCheckmateModal()
   }

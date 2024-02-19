@@ -15,6 +15,7 @@ export interface GameHistoryModelType {
   goPlay: (indexPlay: number) => void
   goPreviousPlay: () => void
   goNextPlay: () => void
+  restart: () => void
 }
 
 export interface PlayType {
