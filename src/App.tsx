@@ -14,7 +14,7 @@ const App = (): JSX.Element => {
     console.log('Go Next Play')
   }
 
-  const resign = (): void => {
+  const restart = (): void => {
     appModel.chessboard.restartGame()
   }
 
@@ -22,7 +22,7 @@ const App = (): JSX.Element => {
     <>
       <main className='flex justify-center lg:items-center h-[100vh] bg-slate-800'>
         <Chessboard chessboardModel={appModel.chessboard}/>
-        <GameHistory goPreviousPlay={goPreviousPlay} goNextPlay={goNextPlay} resign={resign} />
+        <GameHistory goPreviousPlay={goPreviousPlay} goNextPlay={goNextPlay} restart={restart} />
       </main>
     </>
   )

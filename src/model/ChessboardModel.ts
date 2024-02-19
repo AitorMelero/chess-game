@@ -13,6 +13,8 @@ import {
   RookModel,
   SquareModel
 } from '.'
+import { type GameHistoryModelType } from '../types/GameHistory'
+import { GameHistoryModel } from './GameHistoryModel'
 
 export class ChessboardModel implements ChessboardModelType {
   readonly #players: PlayerModelType[]
@@ -24,6 +26,7 @@ export class ChessboardModel implements ChessboardModelType {
   #currentPiece: PieceModelType | undefined
   #currentChangePawn: PieceModelType | undefined
   #possibleEnPassant: PossibleEnPassant | undefined
+  readonly #gameHistory: GameHistoryModelType
 
   constructor () {
     const isWhite = true
@@ -38,6 +41,7 @@ export class ChessboardModel implements ChessboardModelType {
     this.#currentPiece = undefined
     this.#currentChangePawn = undefined
     this.#possibleEnPassant = undefined
+    this.#gameHistory = new GameHistoryModel()
     this.createChessboard()
   }
 
@@ -224,6 +228,10 @@ export class ChessboardModel implements ChessboardModelType {
 
   get possibleEnPassant (): PossibleEnPassant | undefined {
     return this.#possibleEnPassant
+  }
+
+  get gameHistory (): GameHistoryModelType {
+    return this.#gameHistory
   }
 
   getSquareFromPosition (squarePosition: SquarePosition): SquareModelType | undefined {

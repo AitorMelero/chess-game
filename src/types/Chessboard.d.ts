@@ -1,4 +1,5 @@
 import { type PawnModel } from '../model'
+import { type GameHistoryModelType } from './GameHistory'
 import { type NewChoosePiece, type PieceModelType } from './Piece'
 import { type PlayerModelType } from './Player'
 import { type SquarePosition, type SquareModelType } from './Square'
@@ -18,6 +19,7 @@ export interface ChessboardModelType {
   get blackKing(): PieceModelType | undefined
   get currentChangePawn(): PieceModelType | undefined
   get possibleEnPassant(): PossibleEnPassant | undefined
+  get gameHistory(): GameHistoryModelType
   getSquareFromPosition: (squarePosition: SquarePosition) => SquareModelType | undefined
   createPieces: () => void
   clickSquare: (squareClicked: SquareModelType) => void
