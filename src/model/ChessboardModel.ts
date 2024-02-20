@@ -86,11 +86,67 @@ export class ChessboardModel implements ChessboardModelType {
     squareUnselected.piece?.calculatePossibleNextSquares().forEach(square => { square.unpaintPossibleMove() })
   }
 
+  private isHorizontalAmbiguity (piece: PieceModelType, newSquare: SquareModelType): boolean {
+    let otherPiece: PieceModelType | undefined
+    let isAmbiguity = false
+
+    if (piece instanceof RookModel) {
+      otherPiece = this.pieces.find(p => p.isWhite === piece.isWhite && p instanceof RookModel && p !== piece)
+    } else if (piece instanceof KnightModel) {
+      otherPiece = this.pieces.find(p => p.isWhite === piece.isWhite && p instanceof KnightModel && p !== piece)
+    } else if (piece instanceof BishopModel) {
+      otherPiece = this.pieces.find(p => p.isWhite === piece.isWhite && p instanceof BishopModel && p !== piece)
+    } else if (piece instanceof QueenModel) {
+      otherPiece = this.pieces.find(p => p.isWhite === piece.isWhite && p instanceof QueenModel && p !== piece)
+    }
+
+    if (otherPiece !== undefined) {
+      const hasEqualPossibleSquare = otherPiece.calculatePossibleNextSquares().find(square =>
+        square === newSquare
+      ) !== undefined
+
+      if (hasEqualPossibleSquare) {
+        isAmbiguity = true
+      }
+    }
+
+    return isAmbiguity
+  }
+
+  private isVerticalAmbiguity (piece: PieceModelType, newSquare: SquareModelType): boolean {
+    let otherPiece: PieceModelType | undefined
+    let isAmbiguity = false
+
+    if (piece instanceof RookModel) {
+      otherPiece = this.pieces.find(p => p.isWhite === piece.isWhite && p instanceof RookModel && p !== piece)
+    } else if (piece instanceof KnightModel) {
+      otherPiece = this.pieces.find(p => p.isWhite === piece.isWhite && p instanceof KnightModel && p !== piece)
+    } else if (piece instanceof BishopModel) {
+      otherPiece = this.pieces.find(p => p.isWhite === piece.isWhite && p instanceof BishopModel && p !== piece)
+    } else if (piece instanceof QueenModel) {
+      otherPiece = this.pieces.find(p => p.isWhite === piece.isWhite && p instanceof QueenModel && p !== piece)
+    }
+
+    if (otherPiece !== undefined) {
+      const hasEqualPossibleSquare = otherPiece.calculatePossibleNextSquares().find(square =>
+        square === newSquare
+      ) !== undefined
+
+      if (hasEqualPossibleSquare && piece.square?.xPosition === otherPiece.square?.xPosition) {
+        isAmbiguity = true
+      }
+    }
+
+    return isAmbiguity
+  }
+
   private selectPossibleMoveSquare (squaredSelected: SquareModelType): void {
     if (this.currentPiece?.square !== undefined) {
       const oldSquare = this.currentPiece.square
       const newSquare = squaredSelected
       const piece = this.currentPiece
+      const isVerticalAmbiguity = this.isVerticalAmbiguity(piece, squaredSelected)
+      const isHorizontalAmbiguity = isVerticalAmbiguity ? false : this.isHorizontalAmbiguity(piece, squaredSelected)
       let isEatPiece = squaredSelected.piece !== undefined
       let isCheckPlay = false
       let isMate = false
@@ -139,8 +195,8 @@ export class ChessboardModel implements ChessboardModelType {
         isCheckPlay,
         isMate,
         isCastling,
-        false,
-        true
+        isHorizontalAmbiguity,
+        isVerticalAmbiguity
       )
     }
   }
