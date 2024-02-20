@@ -139,7 +139,8 @@ export class ChessboardModel implements ChessboardModelType {
         isCheckPlay,
         isMate,
         isCastling,
-        false
+        false,
+        true
       )
     }
   }

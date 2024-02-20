@@ -12,7 +12,8 @@ export interface GameHistoryModelType {
     isCheck: boolean,
     isCheckmate: boolean,
     isCastling: boolean,
-    isAmbiguity: boolean
+    isHorizontalAmbiguity: boolean,
+    isVerticalAmbiguity: boolean
   ) => void
   goPlay: (indexPlay: number) => void
   goPreviousPlay: () => void

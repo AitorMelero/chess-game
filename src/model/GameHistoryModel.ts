@@ -28,10 +28,13 @@ export class GameHistoryModel implements GameHistoryModelType {
     isCheck: boolean,
     isCheckmate: boolean,
     isCastling: boolean,
-    isAmbiguity: boolean
+    isHorizontalAmbiguity: boolean,
+    isVerticalAmbiguity: boolean
   ): void {
     const newSquarePosition = String.fromCharCode(newSquare.xPosition + 96) + newSquare.yPosition
-    // const oldSquarePosition = String.fromCharCode(oldSquare.xPosition + 96) + newSquare.yPosition
+    const ambiguityNotation = isHorizontalAmbiguity
+      ? String.fromCharCode(oldSquare.xPosition + 96)
+      : isVerticalAmbiguity ? oldSquare.yPosition : ''
     let playString: string
 
     if (piece instanceof PawnModel) {
@@ -41,13 +44,13 @@ export class GameHistoryModel implements GameHistoryModelType {
         playString = newSquarePosition
       }
     } else if (piece instanceof RookModel) {
-      playString = 'R' + `${isEatPiece ? 'x' : ''}` + newSquarePosition
+      playString = 'R' + ambiguityNotation + `${isEatPiece ? 'x' : ''}` + newSquarePosition
     } else if (piece instanceof KnightModel) {
-      playString = 'N' + `${isEatPiece ? 'x' : ''}` + newSquarePosition
+      playString = 'N' + ambiguityNotation + `${isEatPiece ? 'x' : ''}` + newSquarePosition
     } else if (piece instanceof BishopModel) {
-      playString = 'B' + `${isEatPiece ? 'x' : ''}` + newSquarePosition
+      playString = 'B' + ambiguityNotation + `${isEatPiece ? 'x' : ''}` + newSquarePosition
     } else if (piece instanceof QueenModel) {
-      playString = 'Q' + `${isEatPiece ? 'x' : ''}` + newSquarePosition
+      playString = 'Q' + ambiguityNotation + `${isEatPiece ? 'x' : ''}` + newSquarePosition
     } else if (isCastling) {
       if (newSquare.xPosition === 7) {
         playString = '0-0'
@@ -106,7 +109,8 @@ export class GameHistoryModel implements GameHistoryModelType {
     isCheck: boolean,
     isCheckmate: boolean,
     isCastling: boolean,
-    isAmbiguity: boolean
+    isHorizontalAmbiguity: boolean,
+    isVerticalAmbiguity: boolean
   ): void {
     console.log('Add Play: ', oldSquare, newSquare, piece)
     const newPlay: PlayType = {
@@ -116,7 +120,17 @@ export class GameHistoryModel implements GameHistoryModelType {
     }
 
     this.chessboardHistory.push(newPlay)
-    this.writePlay(oldSquare, newSquare, piece, isEatPiece, isCheck, isCheckmate, isCastling, isAmbiguity)
+    this.writePlay(
+      oldSquare,
+      newSquare,
+      piece,
+      isEatPiece,
+      isCheck,
+      isCheckmate,
+      isCastling,
+      isHorizontalAmbiguity,
+      isVerticalAmbiguity
+    )
   }
 
   goPlay (indexPlay: number): void {
