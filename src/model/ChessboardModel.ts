@@ -19,6 +19,7 @@ import { GameHistoryModel } from './GameHistoryModel'
 export class ChessboardModel implements ChessboardModelType {
   readonly #players: PlayerModelType[]
   readonly #squares: SquareModelType[]
+  readonly #gameHistory: GameHistoryModelType
   #whiteKing: PieceModelType | undefined
   #blackKing: PieceModelType | undefined
   #currentPlayer: PlayerModelType
@@ -26,7 +27,6 @@ export class ChessboardModel implements ChessboardModelType {
   #currentPiece: PieceModelType | undefined
   #currentChangePawn: PieceModelType | undefined
   #possibleEnPassant: PossibleEnPassant | undefined
-  readonly #gameHistory: GameHistoryModelType
 
   constructor () {
     const isWhite = true
@@ -70,6 +70,7 @@ export class ChessboardModel implements ChessboardModelType {
   }
 
   private selectSquare (squareSelected: SquareModelType): void {
+    this.squares.forEach(square => { square.unpaintSelected() })
     squareSelected.paintSelected()
     if (squareSelected.piece !== undefined) {
       const squarePiece = squareSelected.piece
@@ -86,7 +87,7 @@ export class ChessboardModel implements ChessboardModelType {
     squareUnselected.piece?.calculatePossibleNextSquares().forEach(square => { square.unpaintPossibleMove() })
   }
 
-  private isHorizontalAmbiguity (piece: PieceModelType, newSquare: SquareModelType): boolean {
+  private isAmbiguity (piece: PieceModelType, newSquare: SquareModelType): boolean {
     let otherPiece: PieceModelType | undefined
     let isAmbiguity = false
 
@@ -146,18 +147,20 @@ export class ChessboardModel implements ChessboardModelType {
       const newSquare = squaredSelected
       const piece = this.currentPiece
       const isVerticalAmbiguity = this.isVerticalAmbiguity(piece, squaredSelected)
-      const isHorizontalAmbiguity = isVerticalAmbiguity ? false : this.isHorizontalAmbiguity(piece, squaredSelected)
-      let isEatPiece = squaredSelected.piece !== undefined
+      const isHorizontalAmbiguity = isVerticalAmbiguity ? false : this.isAmbiguity(piece, squaredSelected)
+      const isEatEnPassant = piece instanceof PawnModel &&
+        oldSquare.xPosition !== newSquare.xPosition &&
+        newSquare.piece === undefined
+      let eatenPiece = squaredSelected.piece
       let isCheckPlay = false
       let isMate = false
       let isCastling = false
 
       // Check if pawn is eating en passant
-      if (piece instanceof PawnModel &&
-        oldSquare.xPosition !== newSquare.xPosition &&
-        newSquare.piece === undefined
-      ) {
-        isEatPiece = true
+      if (isEatEnPassant) {
+        eatenPiece = this.pieces.find(piece =>
+          piece.isWhite !== this.currentPlayer.isWhite && piece.square === undefined && piece instanceof PawnModel
+        )
       }
 
       // Check if is castling
@@ -191,7 +194,8 @@ export class ChessboardModel implements ChessboardModelType {
         oldSquare,
         newSquare,
         piece,
-        isEatPiece,
+        eatenPiece,
+        isEatEnPassant,
         isCheckPlay,
         isMate,
         isCastling,
@@ -293,6 +297,10 @@ export class ChessboardModel implements ChessboardModelType {
     return this.#currentPlayer
   }
 
+  set currentPlayer (currentPlayer: PlayerModelType) {
+    this.#currentPlayer = currentPlayer
+  }
+
   get squares (): SquareModelType[] {
     return this.#squares
   }
@@ -319,6 +327,10 @@ export class ChessboardModel implements ChessboardModelType {
 
   get possibleEnPassant (): PossibleEnPassant | undefined {
     return this.#possibleEnPassant
+  }
+
+  set possibleEnPassant (possibleEnPassant: PossibleEnPassant | undefined) {
+    this.#possibleEnPassant = possibleEnPassant
   }
 
   get gameHistory (): GameHistoryModelType {

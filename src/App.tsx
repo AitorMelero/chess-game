@@ -7,7 +7,7 @@ const App = (): JSX.Element => {
   const [appModel] = useState(new AppModel())
 
   const goPreviousPlay = (): void => {
-    appModel.chessboard.gameHistory.goPreviousPlay()
+    appModel.chessboard.gameHistory.goPreviousPlay(appModel.chessboard)
   }
 
   const goNextPlay = (): void => {

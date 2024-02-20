@@ -1,14 +1,17 @@
+import { type ChessboardModelType } from './Chessboard'
 import { type PieceModelType } from './Piece'
 import { type SquareModelType } from './Square'
 
 export interface GameHistoryModelType {
   get chessboardHistory(): PlayType[]
   get playsHistory(): string[]
+  get currentPlayIndex(): number
   addPlay: (
     oldSquare: SquareModelType,
     newSquare: SquareModelType,
     piece: PieceModelType,
-    isEatPiece: boolean,
+    eatenPiece: PieceModelType | undefined,
+    isEatEnPassant: boolean,
     isCheck: boolean,
     isCheckmate: boolean,
     isCastling: boolean,
@@ -16,7 +19,7 @@ export interface GameHistoryModelType {
     isVerticalAmbiguity: boolean
   ) => void
   goPlay: (indexPlay: number) => void
-  goPreviousPlay: () => void
+  goPreviousPlay: (chessboard: ChessboardModelType) => void
   goNextPlay: () => void
   restart: () => void
 }
@@ -25,4 +28,6 @@ export interface PlayType {
   oldSquare: SquareModelType
   newSquare: SquareModelType
   piece: PieceModelType
+  eatenPiece: PieceModelType | undefined
+  isEatEnPassant: boolean
 }

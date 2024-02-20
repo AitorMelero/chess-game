@@ -12,6 +12,7 @@ export interface PossibleEnPassant {
 export interface ChessboardModelType {
   get players(): PlayerModelType[]
   get currentPlayer(): PlayerModelType
+  set currentPlayer(currentPlayer: PlayerModelType): void
   get squares(): SquareModelType[]
   get pieces(): PieceModelType[]
   get currentPiece(): PieceModelType | undefined
@@ -19,6 +20,7 @@ export interface ChessboardModelType {
   get blackKing(): PieceModelType | undefined
   get currentChangePawn(): PieceModelType | undefined
   get possibleEnPassant(): PossibleEnPassant | undefined
+  set possibleEnPassant(possibleEnPassant: PossibleEnPassant | undefined): void
   get gameHistory(): GameHistoryModelType
   getSquareFromPosition: (squarePosition: SquarePosition) => SquareModelType | undefined
   createPieces: () => void
