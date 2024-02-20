@@ -84,7 +84,8 @@ export class ChessboardModel implements ChessboardModelType {
 
   private unselectSquare (squareUnselected: SquareModelType): void {
     squareUnselected.unpaintSelected()
-    squareUnselected.piece?.calculatePossibleNextSquares().forEach(square => { square.unpaintPossibleMove() })
+    // squareUnselected.piece?.calculatePossibleNextSquares().forEach(square => { square.unpaintPossibleMove() })
+    this.squares.forEach(square => { square.unpaintPossibleMove() })
   }
 
   private isAmbiguity (piece: PieceModelType, newSquare: SquareModelType): boolean {
@@ -161,6 +162,8 @@ export class ChessboardModel implements ChessboardModelType {
         eatenPiece = this.pieces.find(piece =>
           piece.isWhite !== this.currentPlayer.isWhite && piece.square === undefined && piece instanceof PawnModel
         )
+        console.log(this.possibleEnPassant)
+        this.#possibleEnPassant = undefined
       }
 
       // Check if is castling
@@ -253,18 +256,18 @@ export class ChessboardModel implements ChessboardModelType {
   }
 
   private checkPossibleEnPassant (squaredSelected: SquareModelType): void {
-    let possibleEnPassant: PossibleEnPassant | undefined
+    // let possibleEnPassant: PossibleEnPassant | undefined
 
     if (this.currentPiece instanceof PawnModel) {
       if (this.possibleEnPassant?.square === squaredSelected) {
         // Eat en passant
         this.possibleEnPassant.pawn.unpaintInSquare()
-        this.#possibleEnPassant = undefined
+        // this.#possibleEnPassant = undefined
       } else if (this.currentPiece instanceof PawnModel) {
         // Possible en passant
         if (this.currentPiece.isWhite) {
           if (this.currentPiece.square?.yPosition === squaredSelected.yPosition - 2) {
-            possibleEnPassant = {
+            this.possibleEnPassant = {
               pawn: this.currentPiece,
               square: this.getSquareFromPosition({
                 xPosition: squaredSelected.xPosition,
@@ -274,7 +277,7 @@ export class ChessboardModel implements ChessboardModelType {
           }
         } else {
           if (this.currentPiece.square?.yPosition === squaredSelected.yPosition + 2) {
-            possibleEnPassant = {
+            this.possibleEnPassant = {
               pawn: this.currentPiece,
               square: this.getSquareFromPosition({
                 xPosition: squaredSelected.xPosition,
@@ -286,7 +289,7 @@ export class ChessboardModel implements ChessboardModelType {
       }
     }
 
-    this.#possibleEnPassant = possibleEnPassant
+    // this.#possibleEnPassant = possibleEnPassant
   }
 
   get players (): PlayerModelType[] {

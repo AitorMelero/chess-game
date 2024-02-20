@@ -214,6 +214,7 @@ export class GameHistoryModel implements GameHistoryModelType {
 
       this.#chessboardHistory = []
       this.#playsHistory = []
+      this.#currentPlayIndex = -1
     }
   }
 }
