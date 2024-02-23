@@ -1,5 +1,5 @@
 import { BishopModel, KnightModel, PawnModel, QueenModel, RookModel } from '.'
-import { type ChessboardModelType } from '../types/Chessboard'
+import { type PossibleEnPassant, type ChessboardModelType } from '../types/Chessboard'
 import { type PlayType, type GameHistoryModelType } from '../types/GameHistory'
 import { type PieceModelType } from '../types/Piece'
 import { type SquareModelType } from '../types/Square'
@@ -117,6 +117,36 @@ export class GameHistoryModel implements GameHistoryModelType {
     }
   }
 
+  private getPossibleEnPassant (chessboard: ChessboardModelType): PossibleEnPassant | undefined {
+    let possibleEnPassant: PossibleEnPassant | undefined
+
+    if (this.currentPlayIndex > -1) {
+      const { piece, oldSquare, newSquare } = this.chessboardHistory[this.currentPlayIndex]
+
+      if (piece instanceof PawnModel) {
+        if (oldSquare.yPosition + 2 === newSquare.yPosition) {
+          possibleEnPassant = {
+            pawn: piece,
+            square: chessboard.getSquareFromPosition({
+              xPosition: oldSquare.xPosition,
+              yPosition: oldSquare.yPosition + 1
+            })
+          }
+        } else if (oldSquare.yPosition - 2 === newSquare.yPosition) {
+          possibleEnPassant = {
+            pawn: piece,
+            square: chessboard.getSquareFromPosition({
+              xPosition: oldSquare.xPosition,
+              yPosition: oldSquare.yPosition - 1
+            })
+          }
+        }
+      }
+    }
+
+    return possibleEnPassant
+  }
+
   addPlay (
     oldSquare: SquareModelType,
     newSquare: SquareModelType,
@@ -196,6 +226,8 @@ export class GameHistoryModel implements GameHistoryModelType {
         const previousPlay = this.chessboardHistory[this.currentPlayIndex]
         previousPlay.newSquare.paintSelected()
       }
+
+      chessboard.possibleEnPassant = this.getPossibleEnPassant(chessboard)
 
       const newCurrentPlayer = chessboard.players.find(player => player !== chessboard.currentPlayer)
       if (newCurrentPlayer !== undefined) {
