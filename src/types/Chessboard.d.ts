@@ -16,6 +16,7 @@ export interface ChessboardModelType {
   get squares(): SquareModelType[]
   get pieces(): PieceModelType[]
   get currentPiece(): PieceModelType | undefined
+  set currentPiece(currentPiece: PieceModelType | undefined): void
   get whiteKing(): PieceModelType | undefined
   get blackKing(): PieceModelType | undefined
   get currentChangePawn(): PieceModelType | undefined

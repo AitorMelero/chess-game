@@ -184,10 +184,12 @@ export class GameHistoryModel implements GameHistoryModelType {
           currentPlay.eatenPiece?.paintInSquare(currentPlay.newSquare)
         }
       }
+
       chessboard.squares.forEach(square => {
         square.unpaintSelected()
         square.unpaintPossibleMove()
       })
+
       this.#currentPlayIndex = this.currentPlayIndex - 1
 
       if (this.currentPlayIndex > -1) {

@@ -162,7 +162,6 @@ export class ChessboardModel implements ChessboardModelType {
         eatenPiece = this.pieces.find(piece =>
           piece.isWhite !== this.currentPlayer.isWhite && piece.square === undefined && piece instanceof PawnModel
         )
-        console.log(this.possibleEnPassant)
         this.#possibleEnPassant = undefined
       }
 
@@ -256,13 +255,11 @@ export class ChessboardModel implements ChessboardModelType {
   }
 
   private checkPossibleEnPassant (squaredSelected: SquareModelType): void {
-    // let possibleEnPassant: PossibleEnPassant | undefined
-
     if (this.currentPiece instanceof PawnModel) {
       if (this.possibleEnPassant?.square === squaredSelected) {
         // Eat en passant
         this.possibleEnPassant.pawn.unpaintInSquare()
-        // this.#possibleEnPassant = undefined
+        this.possibleEnPassant = undefined
       } else if (this.currentPiece instanceof PawnModel) {
         // Possible en passant
         if (this.currentPiece.isWhite) {
@@ -288,8 +285,6 @@ export class ChessboardModel implements ChessboardModelType {
         }
       }
     }
-
-    // this.#possibleEnPassant = possibleEnPassant
   }
 
   get players (): PlayerModelType[] {
@@ -318,6 +313,10 @@ export class ChessboardModel implements ChessboardModelType {
 
   get currentPiece (): PieceModelType | undefined {
     return this.#currentPiece
+  }
+
+  set currentPiece (currentPiece: PieceModelType | undefined) {
+    this.#currentPiece = currentPiece
   }
 
   get pieces (): PieceModelType[] {
