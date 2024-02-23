@@ -18,7 +18,7 @@ export interface GameHistoryModelType {
     isHorizontalAmbiguity: boolean,
     isVerticalAmbiguity: boolean
   ) => void
-  goPlay: (indexPlay: number) => void
+  goPlay: (indexPlay: number, chessboard: ChessboardModelType) => void
   goPreviousPlay: (chessboard: ChessboardModelType) => void
   goNextPlay: (chessboard: ChessboardModelType) => void
   restart: () => void

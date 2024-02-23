@@ -76,12 +76,11 @@ export class GameHistoryModel implements GameHistoryModelType {
 
     this.playsHistory.push(playString)
 
-    this.paintPlayString(playString, Math.round((this.currentPlayIndex + 1) / 2))
+    this.paintPlayString(playString, Math.round((this.currentPlayIndex + 1) / 2), oldSquare.chessboard, this.currentPlayIndex)
   }
 
-  private paintPlayString (playString: string, currentTurn: number): void {
+  private paintPlayString (playString: string, currentTurn: number, chessboard: ChessboardModelType, playIndex: number): void {
     const playHistoryElement = document.getElementById('play-history')
-    // const currentTurn = Math.round(this.currentPlayIndex + 1 / 2)
     const currentTurnId = `play-history-${currentTurn}`
     let playHistoryTurnElement = document.getElementById(currentTurnId)
 
@@ -103,17 +102,20 @@ export class GameHistoryModel implements GameHistoryModelType {
       // Add button play element
       const playButton = document.createElement('button')
       playButton.className = 'h-20 bg-slate-600'
+      playButton.addEventListener('click', () => {
+        this.goPlay(playIndex, chessboard)
+      })
       playButton.innerHTML = playString
       playHistoryTurnElement.appendChild(playButton)
     }
   }
 
-  private paintAllPlayString (): void {
+  private paintAllPlayString (chessboard: ChessboardModelType): void {
     const playHistoryElement = document.getElementById('play-history')
 
     if (playHistoryElement !== null) {
       playHistoryElement.innerHTML = ''
-      this.playsHistory.forEach((play, index) => { this.paintPlayString(play, Math.round((index + 1) / 2)) })
+      this.playsHistory.forEach((play, index) => { this.paintPlayString(play, Math.round((index + 1) / 2), chessboard, index) })
     }
   }
 
@@ -170,7 +172,7 @@ export class GameHistoryModel implements GameHistoryModelType {
     this.#currentPlayIndex = this.currentPlayIndex + 1
     this.playsHistory.length = this.currentPlayIndex
     this.chessboardHistory.length = this.currentPlayIndex
-    this.paintAllPlayString()
+    this.paintAllPlayString(oldSquare.chessboard)
     this.chessboardHistory.push(newPlay)
     this.writePlay(
       oldSquare,
@@ -185,8 +187,18 @@ export class GameHistoryModel implements GameHistoryModelType {
     )
   }
 
-  goPlay (indexPlay: number): void {
-    console.log('Go Play: ', indexPlay)
+  goPlay (indexPlay: number, chessboard: ChessboardModelType): void {
+    const currentPlay = this.currentPlayIndex
+
+    if (indexPlay < currentPlay) {
+      for (let i = currentPlay; i > indexPlay; i--) {
+        this.goPreviousPlay(chessboard)
+      }
+    } else if (indexPlay > currentPlay) {
+      for (let i = currentPlay; i < indexPlay; i++) {
+        this.goNextPlay(chessboard)
+      }
+    }
   }
 
   goPreviousPlay (chessboard: ChessboardModelType): void {
