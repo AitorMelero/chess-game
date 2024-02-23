@@ -11,7 +11,7 @@ const App = (): JSX.Element => {
   }
 
   const goNextPlay = (): void => {
-    appModel.chessboard.gameHistory.goNextPlay()
+    appModel.chessboard.gameHistory.goNextPlay(appModel.chessboard)
   }
 
   const restart = (): void => {

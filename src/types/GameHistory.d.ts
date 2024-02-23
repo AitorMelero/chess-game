@@ -20,7 +20,7 @@ export interface GameHistoryModelType {
   ) => void
   goPlay: (indexPlay: number) => void
   goPreviousPlay: (chessboard: ChessboardModelType) => void
-  goNextPlay: () => void
+  goNextPlay: (chessboard: ChessboardModelType) => void
   restart: () => void
 }
 

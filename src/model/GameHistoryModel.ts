@@ -208,7 +208,8 @@ export class GameHistoryModel implements GameHistoryModelType {
               pawn: currentPlay.eatenPiece as PawnModel,
               square: currentPlay.newSquare
             }
-            currentPlay.eatenPiece?.paintInSquare(eatenPawnSquare)
+            const previousPlay = this.chessboardHistory[this.currentPlayIndex - 1]
+            previousPlay.piece.paintInSquare(previousPlay.newSquare)
           }
         } else {
           currentPlay.eatenPiece?.paintInSquare(currentPlay.newSquare)
@@ -236,8 +237,36 @@ export class GameHistoryModel implements GameHistoryModelType {
     }
   }
 
-  goNextPlay (): void {
-    console.log('Go Next Play')
+  goNextPlay (chessboard: ChessboardModelType): void {
+    if (this.currentPlayIndex + 1 < this.playsHistory.length) {
+      this.#currentPlayIndex = this.currentPlayIndex + 1
+
+      const currentPlay = this.chessboardHistory[this.currentPlayIndex]
+      currentPlay.piece.unpaintInSquare()
+      currentPlay.piece.paintInSquare(currentPlay.newSquare)
+
+      if (currentPlay.eatenPiece !== undefined) {
+        if (currentPlay.isEatEnPassant) {
+          chessboard.possibleEnPassant?.pawn.unpaintInSquare()
+          chessboard.possibleEnPassant = undefined
+        }
+        currentPlay.eatenPiece.unpaintInSquare()
+      }
+
+      chessboard.squares.forEach(square => {
+        square.unpaintSelected()
+        square.unpaintPossibleMove()
+      })
+
+      currentPlay.newSquare.paintSelected()
+
+      chessboard.possibleEnPassant = this.getPossibleEnPassant(chessboard)
+
+      const newCurrentPlayer = chessboard.players.find(player => player !== chessboard.currentPlayer)
+      if (newCurrentPlayer !== undefined) {
+        chessboard.currentPlayer = newCurrentPlayer
+      }
+    }
   }
 
   restart (): void {
