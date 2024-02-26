@@ -89,11 +89,11 @@ export class GameHistoryModel implements GameHistoryModelType {
         // Create article turn play element
         playHistoryTurnElement = document.createElement('article')
         playHistoryTurnElement.id = currentTurnId
-        playHistoryTurnElement.className = 'grid grid-flow-row grid-cols-3'
+        playHistoryTurnElement.className = 'game-history-turn'
 
         // Create paragraph turn play element
         const paragraphElement = document.createElement('p')
-        paragraphElement.className = 'h-20 text-center pt-[35%]'
+        paragraphElement.className = 'game-history-turn-number'
         paragraphElement.innerHTML = currentTurn + '.'
         playHistoryTurnElement.appendChild(paragraphElement)
         playHistoryElement.appendChild(playHistoryTurnElement)
@@ -101,7 +101,7 @@ export class GameHistoryModel implements GameHistoryModelType {
 
       // Add button play element
       const playButton = document.createElement('button')
-      playButton.className = 'h-20 bg-slate-600'
+      playButton.className = 'game-history-play-button'
       playButton.addEventListener('click', () => {
         this.goPlay(playIndex, chessboard)
       })
