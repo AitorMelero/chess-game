@@ -19,12 +19,10 @@ const App = (): JSX.Element => {
   }
 
   return (
-    <>
-      <main className='flex justify-center lg:items-center h-[100vh] bg-slate-800'>
-        <Chessboard chessboardModel={appModel.chessboard}/>
-        <GameHistory goPreviousPlay={goPreviousPlay} goNextPlay={goNextPlay} restart={restart} />
-      </main>
-    </>
+    <main className='flex flex-col content-around items-center justify-around lg:flex-row min-h-[100vh] bg-slate-800'>
+      <Chessboard chessboardModel={appModel.chessboard}/>
+      <GameHistory goPreviousPlay={goPreviousPlay} goNextPlay={goNextPlay} restart={restart} />
+    </main>
   )
 }
 
