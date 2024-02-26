@@ -152,6 +152,28 @@ export class GameHistoryModel implements GameHistoryModelType {
     return possibleEnPassant
   }
 
+  private paintSelectedPlayButton (indexPlay: number): void {
+    const playHistoryChilds = document.getElementById('play-history')?.childNodes
+
+    if (playHistoryChilds !== undefined) {
+      const buttons: HTMLButtonElement[] = []
+
+      playHistoryChilds.forEach(turn => {
+        const plays = turn.childNodes
+        plays.forEach(item => {
+          if (item instanceof HTMLButtonElement) {
+            buttons.push(item)
+          }
+        })
+      })
+
+      buttons.forEach((button, index) => {
+        const classStyle = index === indexPlay ? 'game-history-play-current-button' : 'game-history-play-button'
+        button.className = classStyle
+      })
+    }
+  }
+
   addPlay (
     oldSquare: SquareModelType,
     newSquare: SquareModelType,
@@ -266,6 +288,8 @@ export class GameHistoryModel implements GameHistoryModelType {
       if (newCurrentPlayer !== undefined) {
         chessboard.currentPlayer = newCurrentPlayer
       }
+
+      this.paintSelectedPlayButton(this.currentPlayIndex)
     }
   }
 
@@ -308,6 +332,8 @@ export class GameHistoryModel implements GameHistoryModelType {
       if (newCurrentPlayer !== undefined) {
         chessboard.currentPlayer = newCurrentPlayer
       }
+
+      this.paintSelectedPlayButton(this.currentPlayIndex)
     }
   }
 
