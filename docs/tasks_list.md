@@ -14,8 +14,9 @@ A continuación se muestra la lista de tareas a realizar para completar la versi
 - [X] Implementar la captura al paso (en passant) y testar.
 - [X] Implementar el enroque y testar.
 - [X] Implementar el jaque y jaque mate y testar.
-- [ ] Implementar historial de la partida y testar.
-- [ ] Implementar botón de reiniciar partida.
-- [ ] Implementar botones de retroceder y avanzar una jugada y testar.
-- [ ] Implementar botón de rendirse y testar.
-- [ ] Implementar la navegación por el historial y testar.
+- [X] Implementar historial de la partida.
+- [X] Implementar botón de reiniciar partida.
+- [X] Implementar botones de retroceder y avanzar una jugada.
+- [X] Implementar la navegación por el historial y testar.
+- [ ] Implementar estilos.
+- [ ] Testar jugando partidas partidas.
