@@ -21,7 +21,7 @@ export interface SquareModelType {
   enableButton: () => void
   disableButton: () => void
   paintPiece: (piece: PieceModelType) => void
-  unpaintPiece: () => void
+  unpaintPiece: (isSimulate?: boolean) => void
 }
 
 export interface SquareProps {

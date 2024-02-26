@@ -228,9 +228,9 @@ export class GameHistoryModel implements GameHistoryModelType {
           rook.unpaintInSquare()
           rookOldSquare.unpaintPiece()
           rook.paintInSquare(rookNewSquare)
-          rook.isFirstMove = true
+          rook.isFirstMove = false
           const king = (rook.isWhite ? chessboard.whiteKing : chessboard.blackKing) as KingModel
-          king.isFirstMove = true
+          king.isFirstMove = false
         }
       }
     }

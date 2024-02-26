@@ -54,10 +54,10 @@ export abstract class PieceModel implements PieceModelType {
     }
   }
 
-  unpaintInSquare (): void {
+  unpaintInSquare (isSimulate?: boolean): void {
     try {
       if (this.square !== undefined && this.square.isPainted) {
-        this.square.unpaintPiece()
+        this.square.unpaintPiece(isSimulate)
         this.square.disableButton()
         this.square = undefined
       }

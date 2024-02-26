@@ -113,7 +113,7 @@ const simulateMove = (
   if (piece !== undefined && square !== undefined) {
     const isPawn = piece instanceof PawnModel
     const isSimulation = true
-    piece.unpaintInSquare()
+    piece.unpaintInSquare(isSimulation)
     if (isPawn) {
       // Don't show the popup to change pawn for new piece
       piece.paintInSquare(square, isSimulation)
@@ -134,7 +134,7 @@ const unsimulateMove = (
   const finishSquare = chessboard.getSquareFromPosition(finishPosition)
 
   if (piece !== undefined && initSquare !== undefined && finishSquare !== undefined) {
-    piece.unpaintInSquare()
+    piece.unpaintInSquare(true)
     piece.paintInSquare(initSquare)
     finishSquare.piece = oldPiece
     if (oldPiece !== undefined) {

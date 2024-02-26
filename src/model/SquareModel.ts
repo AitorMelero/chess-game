@@ -161,13 +161,13 @@ export class SquareModel implements SquareModelType {
     }
   }
 
-  unpaintPiece (): void {
+  unpaintPiece (isSimulate?: boolean): void {
     const squarePieceElement = document.getElementById(this.squarePieceIdElement)
     if (squarePieceElement !== null) {
       squarePieceElement.querySelector('img')?.remove()
 
       // If king or rook moves, set first move state variable
-      if (this.piece instanceof KingModel || this.piece instanceof RookModel) {
+      if ((this.piece instanceof KingModel || this.piece instanceof RookModel) && isSimulate !== true) {
         this.piece.isFirstMove = false
       }
 

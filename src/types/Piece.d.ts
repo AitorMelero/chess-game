@@ -9,7 +9,7 @@ export interface PieceModelType {
   set possibleNextSquares (possibleNextSquares: SquareModelType[])
   calculatePossibleNextSquares: () => SquareModelType[]
   paintInSquare: (square: SquareModelType) => void
-  unpaintInSquare: () => void
+  unpaintInSquare: (isSimulate?: boolean) => void
 }
 
 type NewChoosePiece = 'Queen' | 'Bishop' | 'Knight' | 'Rook'
