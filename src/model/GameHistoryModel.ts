@@ -174,6 +174,38 @@ export class GameHistoryModel implements GameHistoryModelType {
     }
   }
 
+  private paintPieceBeforeCastling (oldSquare: SquareModelType, newSquare: SquareModelType, chessboard: ChessboardModelType): void {
+    const isShortCastling = oldSquare.xPosition + 2 === newSquare.xPosition
+    const isLongCastling = oldSquare.xPosition - 2 === newSquare.xPosition
+    const newSquareXPosition = isShortCastling
+      ? oldSquare.xPosition + 1
+      : oldSquare.xPosition - 1
+    const oldSquareXPosition = isShortCastling ? 8 : 1
+
+    if (isShortCastling || isLongCastling) {
+      const rookNewSquare = chessboard.getSquareFromPosition({
+        xPosition: newSquareXPosition,
+        yPosition: oldSquare.yPosition
+      })
+      const rookOldSquare = chessboard.getSquareFromPosition({
+        xPosition: oldSquareXPosition,
+        yPosition: oldSquare.yPosition
+      })
+      if (rookNewSquare !== undefined && rookOldSquare !== undefined) {
+        const rook = chessboard.getSquareFromPosition(rookNewSquare)?.piece as RookModel
+
+        if (rook !== undefined) {
+          rook.unpaintInSquare()
+          rookNewSquare.unpaintPiece()
+          rook.paintInSquare(rookOldSquare)
+          rook.isFirstMove = true
+          const king = (rook.isWhite ? chessboard.whiteKing : chessboard.blackKing) as KingModel
+          king.isFirstMove = true
+        }
+      }
+    }
+  }
+
   addPlay (
     oldSquare: SquareModelType,
     newSquare: SquareModelType,
@@ -240,49 +272,7 @@ export class GameHistoryModel implements GameHistoryModelType {
 
       // Castling
       if (currentPlay.piece instanceof KingModel) {
-        if (currentPlay.oldSquare.xPosition + 2 === currentPlay.newSquare.xPosition) {
-          const rookNewSquare = chessboard.getSquareFromPosition({
-            xPosition: currentPlay.oldSquare.xPosition + 1,
-            yPosition: currentPlay.oldSquare.yPosition
-          })
-          const rookOldSquare = chessboard.getSquareFromPosition({
-            xPosition: 8,
-            yPosition: currentPlay.oldSquare.yPosition
-          })
-          if (rookNewSquare !== undefined && rookOldSquare !== undefined) {
-            const rook = chessboard.getSquareFromPosition(rookNewSquare)?.piece as RookModel
-
-            if (rook !== undefined) {
-              rook.unpaintInSquare()
-              rookNewSquare.unpaintPiece()
-              rook.paintInSquare(rookOldSquare)
-              rook.isFirstMove = true
-              const king = (rook.isWhite ? chessboard.whiteKing : chessboard.blackKing) as KingModel
-              king.isFirstMove = true
-            }
-          }
-        } else if (currentPlay.oldSquare.xPosition - 2 === currentPlay.newSquare.xPosition) {
-          const rookNewSquare = chessboard.getSquareFromPosition({
-            xPosition: currentPlay.oldSquare.xPosition - 1,
-            yPosition: currentPlay.oldSquare.yPosition
-          })
-          const rookOldSquare = chessboard.getSquareFromPosition({
-            xPosition: 1,
-            yPosition: currentPlay.oldSquare.yPosition
-          })
-          if (rookNewSquare !== undefined && rookOldSquare !== undefined) {
-            const rook = chessboard.getSquareFromPosition(rookNewSquare)?.piece as RookModel
-
-            if (rook !== undefined) {
-              rook.unpaintInSquare()
-              rookNewSquare.unpaintPiece()
-              rook.paintInSquare(rookOldSquare)
-              rook.isFirstMove = true
-              const king = (rook.isWhite ? chessboard.whiteKing : chessboard.blackKing) as KingModel
-              king.isFirstMove = true
-            }
-          }
-        }
+        this.paintPieceBeforeCastling(currentPlay.oldSquare, currentPlay.newSquare, chessboard)
       }
 
       if (currentPlay.eatenPiece !== undefined) {
