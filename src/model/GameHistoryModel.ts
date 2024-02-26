@@ -205,7 +205,13 @@ export class GameHistoryModel implements GameHistoryModelType {
     if (this.currentPlayIndex > -1) {
       const currentPlay = this.chessboardHistory[this.currentPlayIndex]
       currentPlay.piece.unpaintInSquare()
-      currentPlay.piece.paintInSquare(currentPlay.oldSquare)
+
+      if (currentPlay.isChangePawn instanceof PawnModel) {
+        const isSimulation = true
+        currentPlay.isChangePawn.paintInSquare(currentPlay.oldSquare, isSimulation)
+      } else {
+        currentPlay.piece.paintInSquare(currentPlay.oldSquare)
+      }
 
       if (currentPlay.eatenPiece !== undefined) {
         if (currentPlay.isEatEnPassant) {
@@ -221,10 +227,21 @@ export class GameHistoryModel implements GameHistoryModelType {
               square: currentPlay.newSquare
             }
             const previousPlay = this.chessboardHistory[this.currentPlayIndex - 1]
-            previousPlay.piece.paintInSquare(previousPlay.newSquare)
+
+            if (previousPlay.piece instanceof PawnModel) {
+              const isSimulation = true
+              previousPlay.piece.paintInSquare(previousPlay.newSquare, isSimulation)
+            } else {
+              previousPlay.piece.paintInSquare(previousPlay.newSquare)
+            }
           }
         } else {
-          currentPlay.eatenPiece?.paintInSquare(currentPlay.newSquare)
+          if (currentPlay.eatenPiece instanceof PawnModel) {
+            const isSimulation = true
+            currentPlay.eatenPiece?.paintInSquare(currentPlay.newSquare, isSimulation)
+          } else {
+            currentPlay.eatenPiece?.paintInSquare(currentPlay.newSquare)
+          }
         }
       }
 
@@ -254,8 +271,18 @@ export class GameHistoryModel implements GameHistoryModelType {
       this.#currentPlayIndex = this.currentPlayIndex + 1
 
       const currentPlay = this.chessboardHistory[this.currentPlayIndex]
-      currentPlay.piece.unpaintInSquare()
-      currentPlay.piece.paintInSquare(currentPlay.newSquare)
+      if (currentPlay.isChangePawn !== undefined) {
+        currentPlay.isChangePawn.unpaintInSquare()
+      } else {
+        currentPlay.piece.unpaintInSquare()
+      }
+
+      if (currentPlay.piece instanceof PawnModel) {
+        const isSimulation = true
+        currentPlay.piece.paintInSquare(currentPlay.newSquare, isSimulation)
+      } else {
+        currentPlay.piece.paintInSquare(currentPlay.newSquare)
+      }
 
       if (currentPlay.eatenPiece !== undefined) {
         if (currentPlay.isEatEnPassant) {

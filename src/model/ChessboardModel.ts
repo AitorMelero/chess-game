@@ -536,6 +536,11 @@ export class ChessboardModel implements ChessboardModelType {
               ? new KnightModel(isWhite)
               : new RookModel(isWhite)
 
+        // Save new piece in history game
+        const currentPlay = this.gameHistory.chessboardHistory[this.gameHistory.currentPlayIndex]
+        currentPlay.piece = newPiece
+        currentPlay.isChangePawn = this.currentChangePawn
+
         newPiece.paintInSquare(this.currentChangePawn.square)
         this.#currentPiece = newPiece
         this.#pieces = [...this.pieces.filter(piece => piece !== this.currentChangePawn), newPiece]

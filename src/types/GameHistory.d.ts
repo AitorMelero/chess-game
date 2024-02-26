@@ -30,4 +30,5 @@ export interface PlayType {
   piece: PieceModelType
   eatenPiece: PieceModelType | undefined
   isEatEnPassant: boolean
+  isChangePawn?: PieceModelType
 }
