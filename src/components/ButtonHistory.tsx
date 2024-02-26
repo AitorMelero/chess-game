@@ -6,7 +6,7 @@ interface Props {
 export const ButtonHistory: React.FC<Props> = ({ content, onClick }) => {
   return (
     <button
-      className="bg-dark-square w-1/4 rounded-md text-light-square"
+      className="bg-dark-square w-[30%] border-2 border-light-square rounded-md text-light-square"
       onClick={onClick}
     >
       {content}

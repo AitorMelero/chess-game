@@ -10,11 +10,11 @@ interface Props {
 export const GameHistory: React.FC<Props> = ({ goPreviousPlay, goNextPlay, restart }) => {
   return (
     <section className="game-history">
-      <h1 className='text-light-square font-bold text-2xl'>Game History</h1>
+      <h1 className='text-light-square font-bold text-2xl h-[5%]'>Game History</h1>
 
       <PlaysHistory />
 
-      <article className='flex flex-row justify-between'>
+      <article className='flex flex-row justify-between h-[7.5%]'>
         <ButtonHistory content={'<'} onClick={goPreviousPlay} />
         <ButtonHistory content={'>'} onClick={goNextPlay} />
         <ButtonHistory content={'🏳️'} onClick={restart} />
