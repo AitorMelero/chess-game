@@ -16,7 +16,7 @@
 
   /* Game History */
   .game-history-width {
-    @apply w-[80vw] lg:w-[20vw]
+    @apply w-[80vw] lg:w-[20vw] min-w-80
   }
   .game-history {
     @apply h-[50vh] lg:chessboard-height game-history-width flex flex-col justify-between mt-24 lg:mt-0

@@ -15,9 +15,9 @@ export const GameHistory: React.FC<Props> = ({ goPreviousPlay, goNextPlay, resta
       <PlaysHistory />
 
       <article className='flex flex-row justify-between h-[7.5%]'>
-        <ButtonHistory content={'<'} onClick={goPreviousPlay} />
-        <ButtonHistory content={'>'} onClick={goNextPlay} />
-        <ButtonHistory content={'🏳️'} onClick={restart} />
+        <ButtonHistory content={'Previous'} onClick={goPreviousPlay} />
+        <ButtonHistory content={'Next'} onClick={goNextPlay} />
+        <ButtonHistory content={'️Restart'} onClick={restart} />
       </article>
     </section>
   )
