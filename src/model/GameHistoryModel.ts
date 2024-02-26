@@ -100,8 +100,11 @@ export class GameHistoryModel implements GameHistoryModelType {
       }
 
       // Add button play element
+      const buttonStyle = playIndex === this.currentPlayIndex
+        ? 'game-history-play-current-button'
+        : 'game-history-play-button'
       const playButton = document.createElement('button')
-      playButton.className = 'game-history-play-button'
+      playButton.className = buttonStyle
       playButton.addEventListener('click', () => {
         this.goPlay(playIndex, chessboard)
       })
