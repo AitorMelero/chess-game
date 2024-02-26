@@ -11,7 +11,7 @@
     @apply w-[90vw] lg:w-[70vw] xl:w-[45vw] min-w-80
   }
   .chessboard {
-    @apply grid grid-cols-8 chessboard-height chessboard-width
+    @apply grid grid-cols-8 chessboard-height chessboard-width border-2 rounded-lg border-dark-square
   }
 
   /* Game History */

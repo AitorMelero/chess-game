@@ -10,7 +10,7 @@ interface Props {
 export const GameHistory: React.FC<Props> = ({ goPreviousPlay, goNextPlay, restart }) => {
   return (
     <section className="game-history">
-      <h1 className='text-light-square font-bold text-2xl h-[5%]'>Game History</h1>
+      <h1 className='text-light-square font-bold text-2xl h-[5%] underline decoration-dark-square decoration-2'>Game History</h1>
 
       <PlaysHistory />
 
