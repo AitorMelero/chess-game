@@ -206,6 +206,36 @@ export class GameHistoryModel implements GameHistoryModelType {
     }
   }
 
+  private paintPieceAfterCastling (oldSquare: SquareModelType, newSquare: SquareModelType, chessboard: ChessboardModelType): void {
+    const isShortCastling = oldSquare.xPosition + 2 === newSquare.xPosition
+    const isLongCastling = oldSquare.xPosition - 2 === newSquare.xPosition
+    const newSquareXPosition = isShortCastling ? 6 : 4
+    const oldSquareXPosition = isShortCastling ? 8 : 1
+
+    if (isShortCastling || isLongCastling) {
+      const rookNewSquare = chessboard.getSquareFromPosition({
+        xPosition: newSquareXPosition,
+        yPosition: oldSquare.yPosition
+      })
+      const rookOldSquare = chessboard.getSquareFromPosition({
+        xPosition: oldSquareXPosition,
+        yPosition: oldSquare.yPosition
+      })
+      if (rookNewSquare !== undefined && rookOldSquare !== undefined) {
+        const rook = chessboard.getSquareFromPosition(rookOldSquare)?.piece as RookModel
+
+        if (rook !== undefined) {
+          rook.unpaintInSquare()
+          rookOldSquare.unpaintPiece()
+          rook.paintInSquare(rookNewSquare)
+          rook.isFirstMove = true
+          const king = (rook.isWhite ? chessboard.whiteKing : chessboard.blackKing) as KingModel
+          king.isFirstMove = true
+        }
+      }
+    }
+  }
+
   addPlay (
     oldSquare: SquareModelType,
     newSquare: SquareModelType,
@@ -346,6 +376,11 @@ export class GameHistoryModel implements GameHistoryModelType {
         currentPlay.piece.paintInSquare(currentPlay.newSquare, isSimulation)
       } else {
         currentPlay.piece.paintInSquare(currentPlay.newSquare)
+      }
+
+      // Castling
+      if (currentPlay.piece instanceof KingModel) {
+        this.paintPieceAfterCastling(currentPlay.oldSquare, currentPlay.newSquare, chessboard)
       }
 
       if (currentPlay.eatenPiece !== undefined) {
