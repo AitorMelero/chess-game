@@ -92,9 +92,9 @@ export class GameHistoryModel implements GameHistoryModelType {
         playHistoryTurnElement.className = 'game-history-turn'
 
         // Create paragraph turn play element
-        const paragraphElement = document.createElement('p')
-        paragraphElement.className = 'game-history-turn-number'
-        paragraphElement.innerHTML = currentTurn + '.'
+        const paragraphElement = document.createElement('div')
+        paragraphElement.className = 'game-history-turn-container'
+        paragraphElement.innerHTML = `<p class='game-history-turn-number'>${currentTurn + '.'}</p>`
         playHistoryTurnElement.appendChild(paragraphElement)
         playHistoryElement.appendChild(playHistoryTurnElement)
       }

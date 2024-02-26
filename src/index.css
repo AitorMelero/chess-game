@@ -25,11 +25,14 @@
   .game-history-turn {
     @apply grid grid-flow-row grid-cols-3
   }
+  .game-history-turn-container {
+    @apply h-20 bg-light-square flex flex-row justify-center items-center
+  }
   .game-history-turn-number {
-    @apply h-20 text-center pt-[35%]
+    @apply font-bold text-dark-square 
   }
   .game-history-play-button {
-    @apply h-20 bg-slate-600
+    @apply h-20 bg-dark-square text-light-square font-bold
   }
 
   /* Squares */
