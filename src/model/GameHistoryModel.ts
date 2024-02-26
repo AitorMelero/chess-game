@@ -8,11 +8,15 @@ export class GameHistoryModel implements GameHistoryModelType {
   #chessboardHistory: PlayType[]
   #playsHistory: string[]
   #currentPlayIndex: number
+  #whiteKingOrRookFirstMove: number
+  #blackKingOrRookFirstMove: number
 
   constructor () {
     this.#chessboardHistory = []
     this.#playsHistory = []
     this.#currentPlayIndex = -1
+    this.#whiteKingOrRookFirstMove = -1
+    this.#blackKingOrRookFirstMove = -1
   }
 
   get chessboardHistory (): PlayType[] {
@@ -25,6 +29,22 @@ export class GameHistoryModel implements GameHistoryModelType {
 
   get currentPlayIndex (): number {
     return this.#currentPlayIndex
+  }
+
+  get whiteKingOrRookFirstMove (): number {
+    return this.#whiteKingOrRookFirstMove
+  }
+
+  set whiteKingOrRookFirstMove (playIndex: number) {
+    this.#whiteKingOrRookFirstMove = playIndex
+  }
+
+  get blackKingOrRookFirstMove (): number {
+    return this.#blackKingOrRookFirstMove
+  }
+
+  set blackKingOrRookFirstMove (playIndex: number) {
+    this.#blackKingOrRookFirstMove = playIndex
   }
 
   private writePlay (
@@ -344,6 +364,19 @@ export class GameHistoryModel implements GameHistoryModelType {
 
       this.#currentPlayIndex = this.currentPlayIndex - 1
 
+      // Check if king or rook has first move to castling
+      if (currentPlay.piece instanceof KingModel || currentPlay.piece instanceof RookModel) {
+        if (currentPlay.piece.isWhite) {
+          if (this.currentPlayIndex === this.whiteKingOrRookFirstMove) {
+            currentPlay.piece.isFirstMove = true
+          }
+        } else {
+          if (this.currentPlayIndex === this.blackKingOrRookFirstMove) {
+            currentPlay.piece.isFirstMove = true
+          }
+        }
+      }
+
       if (this.currentPlayIndex > -1) {
         const previousPlay = this.chessboardHistory[this.currentPlayIndex]
         previousPlay.newSquare.paintSelected()
@@ -397,6 +430,19 @@ export class GameHistoryModel implements GameHistoryModelType {
       })
 
       currentPlay.newSquare.paintSelected()
+
+      // Check if king or rook has first move to castling
+      if (currentPlay.piece instanceof KingModel || currentPlay.piece instanceof RookModel) {
+        if (currentPlay.piece.isWhite) {
+          if (this.currentPlayIndex > this.whiteKingOrRookFirstMove) {
+            currentPlay.piece.isFirstMove = false
+          }
+        } else {
+          if (this.currentPlayIndex > this.blackKingOrRookFirstMove) {
+            currentPlay.piece.isFirstMove = false
+          }
+        }
+      }
 
       chessboard.possibleEnPassant = this.getPossibleEnPassant(chessboard)
 

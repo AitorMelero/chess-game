@@ -6,6 +6,10 @@ export interface GameHistoryModelType {
   get chessboardHistory(): PlayType[]
   get playsHistory(): string[]
   get currentPlayIndex(): number
+  get whiteKingOrRookFirstMove(): number
+  set whiteKingOrRookFirstMove(playIndex: number)
+  get blackKingOrRookFirstMove(): number
+  set blackKingOrRookFirstMove(playIndex: number)
   addPlay: (
     oldSquare: SquareModelType,
     newSquare: SquareModelType,

@@ -167,8 +167,17 @@ export class SquareModel implements SquareModelType {
       squarePieceElement.querySelector('img')?.remove()
 
       // If king or rook moves, set first move state variable
-      if ((this.piece instanceof KingModel || this.piece instanceof RookModel) && isSimulate !== true) {
+      if ((this.piece instanceof KingModel || this.piece instanceof RookModel) && this.piece.isFirstMove && isSimulate !== true) {
         this.piece.isFirstMove = false
+
+        const whiteFirstMove = this.chessboard.gameHistory.whiteKingOrRookFirstMove
+        const blackFirstMove = this.chessboard.gameHistory.blackKingOrRookFirstMove
+        const currentPlayIndex = this.chessboard.gameHistory.currentPlayIndex
+        if (this.piece.isWhite && (whiteFirstMove === -1 || whiteFirstMove > currentPlayIndex)) {
+          this.chessboard.gameHistory.whiteKingOrRookFirstMove = currentPlayIndex
+        } else if (!this.piece.isWhite && (blackFirstMove === -1 || blackFirstMove > currentPlayIndex)) {
+          this.chessboard.gameHistory.blackKingOrRookFirstMove = currentPlayIndex
+        }
       }
 
       this.piece = undefined
