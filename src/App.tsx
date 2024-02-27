@@ -19,7 +19,7 @@ const App = (): JSX.Element => {
   }
 
   return (
-    <main className="flex flex-col content-around items-center justify-around lg:flex-row min-h-[100vh] bg-[url('assets/bg.avif')]">
+    <main className="flex flex-col content-around items-center justify-around py-8 lg:py-0 lg:flex-row min-h-[100vh] bg-[url('assets/bg.avif')]">
       <Chessboard chessboardModel={appModel.chessboard}/>
       <GameHistory goPreviousPlay={goPreviousPlay} goNextPlay={goNextPlay} restart={restart} />
     </main>
