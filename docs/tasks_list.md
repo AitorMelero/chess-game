@@ -18,5 +18,5 @@ A continuación se muestra la lista de tareas a realizar para completar la versi
 - [X] Implementar botón de reiniciar partida.
 - [X] Implementar botones de retroceder y avanzar una jugada.
 - [X] Implementar la navegación por el historial y testar.
-- [ ] Implementar estilos.
+- [X] Implementar estilos.
 - [ ] Testar jugando partidas partidas.
