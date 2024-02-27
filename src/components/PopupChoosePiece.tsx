@@ -7,10 +7,10 @@ interface Props {
 }
 
 export const PopupChoosePiece: React.FC<Props> = ({ onChoosePiece }) => {
-  const [queenImage] = useState('./src/assets/Pieces/wq.png')
-  const [rookImage] = useState('./src/assets/Pieces/wr.png')
-  const [bishopImage] = useState('./src/assets/Pieces/wb.png')
-  const [knightImage] = useState('./src/assets/Pieces/wn.png')
+  const [queenImage] = useState('/assets/Pieces/wq.png')
+  const [rookImage] = useState('/assets/Pieces/wr.png')
+  const [bishopImage] = useState('/assets/Pieces/wb.png')
+  const [knightImage] = useState('/assets/Pieces/wn.png')
 
   return (
     <article id='popup-choose-piece' className="bg-dark-square border-2 border-light-square rounded-lg p-5" hidden={true}>

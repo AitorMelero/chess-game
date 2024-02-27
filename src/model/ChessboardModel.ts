@@ -487,16 +487,16 @@ export class ChessboardModel implements ChessboardModelType {
         const rookButtonElement = document.getElementById('button-choose-rook')
 
         if (queenButtonElement instanceof HTMLImageElement) {
-          queenButtonElement.src = `./src/assets/Pieces/${colorLetter}q.png`
+          queenButtonElement.src = `/assets/Pieces/${colorLetter}q.png`
         }
         if (bishopButtonElement instanceof HTMLImageElement) {
-          bishopButtonElement.src = `./src/assets/Pieces/${colorLetter}b.png`
+          bishopButtonElement.src = `/assets/Pieces/${colorLetter}b.png`
         }
         if (knightButtonElement instanceof HTMLImageElement) {
-          knightButtonElement.src = `./src/assets/Pieces/${colorLetter}n.png`
+          knightButtonElement.src = `/assets/Pieces/${colorLetter}n.png`
         }
         if (rookButtonElement instanceof HTMLImageElement) {
-          rookButtonElement.src = `./src/assets/Pieces/${colorLetter}r.png`
+          rookButtonElement.src = `/assets/Pieces/${colorLetter}r.png`
         }
       }
     }

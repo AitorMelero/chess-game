@@ -8,8 +8,8 @@ export class KingModel extends PieceModel {
   #isFirstMove: boolean
 
   constructor (isWhite: boolean) {
-    const whiteKingImage = './src/assets/Pieces/wk.png'
-    const blackKingImage = './src/assets/Pieces/bk.png'
+    const whiteKingImage = '/assets/Pieces/wk.png'
+    const blackKingImage = '/assets/Pieces/bk.png'
     const image = isWhite ? whiteKingImage : blackKingImage
     super(image, isWhite)
     this.#isFirstMove = true
