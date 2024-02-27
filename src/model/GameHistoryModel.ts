@@ -368,11 +368,19 @@ export class GameHistoryModel implements GameHistoryModelType {
       if (currentPlay.piece instanceof KingModel || currentPlay.piece instanceof RookModel) {
         if (currentPlay.piece.isWhite) {
           if (this.currentPlayIndex === this.whiteKingOrRookFirstMove) {
-            currentPlay.piece.isFirstMove = true
+            chessboard.pieces.forEach(p => {
+              if ((p instanceof KingModel || p instanceof RookModel) && p.isWhite) {
+                p.isFirstMove = true
+              }
+            })
           }
         } else {
           if (this.currentPlayIndex === this.blackKingOrRookFirstMove) {
-            currentPlay.piece.isFirstMove = true
+            chessboard.pieces.forEach(p => {
+              if ((p instanceof KingModel || p instanceof RookModel) && !p.isWhite) {
+                p.isFirstMove = true
+              }
+            })
           }
         }
       }
@@ -435,11 +443,19 @@ export class GameHistoryModel implements GameHistoryModelType {
       if (currentPlay.piece instanceof KingModel || currentPlay.piece instanceof RookModel) {
         if (currentPlay.piece.isWhite) {
           if (this.currentPlayIndex > this.whiteKingOrRookFirstMove) {
-            currentPlay.piece.isFirstMove = false
+            chessboard.pieces.forEach(p => {
+              if ((p instanceof KingModel || p instanceof RookModel) && p.isWhite) {
+                p.isFirstMove = false
+              }
+            })
           }
         } else {
           if (this.currentPlayIndex > this.blackKingOrRookFirstMove) {
-            currentPlay.piece.isFirstMove = false
+            chessboard.pieces.forEach(p => {
+              if ((p instanceof KingModel || p instanceof RookModel) && !p.isWhite) {
+                p.isFirstMove = false
+              }
+            })
           }
         }
       }
