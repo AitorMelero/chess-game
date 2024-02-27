@@ -5,10 +5,10 @@
 @layer components {
   /* Chessboard */
   .chessboard-height {
-    @apply h-[90vw] lg:h-[70vw] xl:h-[45vw] min-h-80
+    @apply h-[40vw] lg:h-[70vw] xl:h-[45vw] min-h-80
   }
   .chessboard-width {
-    @apply w-[90vw] lg:w-[70vw] xl:w-[45vw] min-w-80
+    @apply w-[40vw] lg:w-[70vw] xl:w-[45vw] min-w-80
   }
   .chessboard {
     @apply grid grid-cols-8 chessboard-height chessboard-width border-2 rounded-lg border-dark-square
@@ -19,7 +19,7 @@
     @apply w-[30vw] lg:w-[20vw] min-w-80
   }
   .game-history {
-    @apply h-[50vh] lg:chessboard-height game-history-width flex flex-col justify-between mt-24 lg:mt-0
+    @apply h-[75vh] lg:chessboard-height game-history-width flex flex-col justify-between mt-24 lg:mt-0
   }
 
   .game-history-turn {

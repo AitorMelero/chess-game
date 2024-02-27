@@ -9,7 +9,7 @@ export const Square: React.FC<SquareProps> = ({ squareModel }) => {
     <button
       id={squareModel.squareIdElement}
       disabled={squareModel.piece === undefined}
-      className={bgColor + ' relative font-semibold text-[8px] sm:text-sm lg:text-lg xl:text-xl'}
+      className={bgColor + ' relative font-semibold text-[8px] lg:text-lg xl:text-xl'}
     >
       <p className={coordinateColor + ' absolute top-1 left-2'}>
         {numberPosition}
