@@ -17,7 +17,7 @@ export const PopupChess: React.FC<Props> = ({ isLoading, onChoosePiece, onRestar
         <></>
           )
         : (
-          <section className='h-[100vh] w-[100vw] bg-transparent flex flex-row justify-center items-center'>
+          <section className='h-[100vh] w-[100vw] bg-black bg-opacity-50 flex flex-row justify-center items-center'>
             <PopupChoosePiece onChoosePiece={onChoosePiece} />
             <PopupCheckMate onRestartGame={onRestartGame}/>
           </section>

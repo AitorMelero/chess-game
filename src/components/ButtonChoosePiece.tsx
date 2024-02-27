@@ -23,7 +23,7 @@ export const ButtonChoosePiece: React.FC<Props> = ({ id, image, onChoosePiece })
 
   return (
     <button
-      className='bg-dark-square border-2 border-white w-[20%]'
+      className='bg-light-square border-2 border-white w-[20%] hover:opacity-60'
       onClick={handleClick}
     >
       <img id={id} src={image} alt="Chess Piece" />

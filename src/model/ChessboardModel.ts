@@ -546,14 +546,14 @@ export class ChessboardModel implements ChessboardModelType {
         this.#pieces = [...this.pieces.filter(piece => piece !== this.currentChangePawn), newPiece]
         this.#currentChangePawn = undefined
 
+        const popupChoosePieceElement = document.getElementById('popup-choose-piece')
+        if (popupChoosePieceElement !== null) {
+          popupChoosePieceElement.hidden = true
+        }
+
         const popupElement = document.getElementById('popup-root')
         if (popupElement instanceof HTMLDivElement) {
           popupElement.hidden = true
-
-          const popupChoosePieceElement = document.getElementById('popup-choose-piece')
-          if (popupChoosePieceElement !== null) {
-            popupChoosePieceElement.hidden = true
-          }
         }
       }
     }
