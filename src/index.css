@@ -16,7 +16,7 @@
 
   /* Game History */
   .game-history-width {
-    @apply w-[80vw] lg:w-[20vw] min-w-80
+    @apply w-[30vw] lg:w-[20vw] min-w-80
   }
   .game-history {
     @apply h-[50vh] lg:chessboard-height game-history-width flex flex-col justify-between mt-24 lg:mt-0
@@ -26,16 +26,16 @@
     @apply grid grid-flow-row grid-cols-3
   }
   .game-history-turn-container {
-    @apply h-20 bg-light-square flex flex-row justify-center items-center
+    @apply h-10 bg-light-square flex flex-row justify-center items-center
   }
   .game-history-turn-number {
     @apply font-bold text-dark-square 
   }
   .game-history-play-current-button {
-    @apply h-20 bg-dark-square text-selected-square font-bold border-2 border-selected-square
+    @apply h-10 bg-dark-square text-selected-square font-bold border-2 border-selected-square
   }
   .game-history-play-button {
-    @apply h-20 bg-dark-square text-light-square font-bold
+    @apply h-10 bg-dark-square text-light-square font-bold
   }
 
   /* Squares */
