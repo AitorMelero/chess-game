@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Chessboard } from './components/Chessboard'
 import { AppModel } from './model/AppModel'
 import { GameHistory } from './components/GameHistory'
+import { Footer } from './components/Footer'
 
 const App = (): JSX.Element => {
   const [appModel] = useState(new AppModel())
@@ -19,10 +20,14 @@ const App = (): JSX.Element => {
   }
 
   return (
-    <main className="flex flex-col content-around items-center justify-around py-8 lg:py-0 lg:flex-row min-h-[100vh] bg-[url('/assets/bg.avif')]">
-      <Chessboard chessboardModel={appModel.chessboard}/>
-      <GameHistory goPreviousPlay={goPreviousPlay} goNextPlay={goNextPlay} restart={restart} />
-    </main>
+    <div className="py-8 min-h-[100vh] bg-[url('/assets/bg.avif')]">
+      <main className="flex flex-col content-around items-center justify-around py-8 lg:flex-row min-h-[90vh]">
+        <Chessboard chessboardModel={appModel.chessboard}/>
+        <GameHistory goPreviousPlay={goPreviousPlay} goNextPlay={goNextPlay} restart={restart} />
+      </main>
+
+      <Footer />
+    </div>
   )
 }
 
