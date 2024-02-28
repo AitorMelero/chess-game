@@ -249,7 +249,7 @@ export class ChessboardModel implements ChessboardModelType {
     // Paint move rook
     if (rookCurrentSquare !== undefined && rookNewSquare !== undefined && rook !== undefined) {
       rookCurrentSquare.unpaintPiece()
-      rookNewSquare.paintPiece(rook)
+      rook.paintInSquare(rookNewSquare)
       rookNewSquare.unpaintPossibleMove()
     }
   }
