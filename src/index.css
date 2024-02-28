@@ -32,10 +32,10 @@
     @apply font-bold text-dark-square 
   }
   .game-history-play-current-button {
-    @apply h-10 bg-dark-square text-selected-square font-bold border-2 border-selected-square
+    @apply h-10 bg-dark-square text-selected-square font-bold border-2 border-selected-square hover:bg-dark-square-hover
   }
   .game-history-play-button {
-    @apply h-10 bg-dark-square text-light-square font-bold
+    @apply h-10 bg-dark-square text-light-square font-bold hover:bg-dark-square-hover
   }
 
   /* Squares */
