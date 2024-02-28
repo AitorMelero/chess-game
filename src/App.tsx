@@ -21,7 +21,7 @@ const App = (): JSX.Element => {
 
   return (
     <div className="py-8 min-h-[100vh] bg-[url('/assets/bg.avif')]">
-      <main className="flex flex-col content-around items-center justify-around py-8 lg:flex-row min-h-[90vh]">
+      <main className="flex flex-col content-around items-center justify-around py-8 lg:flex-row min-h-[85vh]">
         <Chessboard chessboardModel={appModel.chessboard}/>
         <GameHistory goPreviousPlay={goPreviousPlay} goNextPlay={goNextPlay} restart={restart} />
       </main>
