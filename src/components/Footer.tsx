@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
       <Link
         name="GitHub"
         url="https://github.com/AitorMelero"
-        svg="/assets/brand-github-filled.svg"
+        svg="/assets/brand-github.svg"
       />
     </footer>
   )
