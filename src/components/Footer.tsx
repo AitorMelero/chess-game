@@ -10,7 +10,7 @@ export const Footer: React.FC = () => {
       />
       <Link
         name="GitHub"
-        url="https://github.com/AitorMelero"
+        url="https://github.com/AitorMelero/chess-game"
         svg="/assets/brand-github.svg"
       />
     </footer>
